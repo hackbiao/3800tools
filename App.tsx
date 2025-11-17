@@ -50,9 +50,11 @@ const App: React.FC = () => {
             <aside className="sticky top-0 h-screen w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark p-4 hidden md:flex flex-col">
                 <div className="flex h-full flex-col">
                     <div className="flex items-center gap-3 px-2 pb-4">
-                        <div className="bg-primary/10 text-primary p-2 rounded-lg">
-                            <span className="material-symbols-outlined text-2xl">auto_fix</span>
-                        </div>
+                        <img
+                            src="/logo.png"
+                            alt="FreeTool Logo"
+                            className="w-10 h-10 rounded-lg object-cover"
+                        />
                         <div className="flex flex-col">
                             <h1 className="text-text-light dark:text-text-dark text-base font-medium leading-normal">FreeTool 工具箱</h1>
                             <p className="text-subtle-light dark:text-subtle-dark text-sm font-normal leading-normal">在线小工具</p>
