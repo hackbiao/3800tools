@@ -154,6 +154,15 @@ const SYMBOL_CATEGORIES = {
         { symbol: '|2×2|', latex: '\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}' },
         { symbol: 'cases', latex: '\\begin{cases} x & x > 0 \\\\ -x & x \\leq 0 \\end{cases}' },
     ],
+    '文本': [
+        { symbol: '文本', latex: '\\text{文本}' },
+        { symbol: '中文', latex: '\\text{中文}' },
+        { symbol: '加粗', latex: '\\textbf{粗体}' },
+        { symbol: '斜体', latex: '\\textit{斜体}' },
+        { symbol: '空格', latex: '\\quad' },
+        { symbol: '大空格', latex: '\\qquad' },
+        { symbol: '小空格', latex: '\\,' },
+    ],
 };
 
 // 常用公式模板
@@ -250,17 +259,23 @@ const MathFormulaEditor: React.FC = () => {
         }
 
         try {
+            // 处理公式,使 KaTeX 支持中文
+            // 使用 strict: false 允许更多的 LaTeX 语法
             const html = window.katex.renderToString(latex, {
-                throwOnError: true,
+                throwOnError: false,
                 displayMode: true,
-                output: 'html'
+                output: 'html',
+                strict: false,
+                trust: true
             });
             setRenderedHtml(html);
 
             const mathml = window.katex.renderToString(latex, {
-                throwOnError: true,
+                throwOnError: false,
                 displayMode: true,
-                output: 'mathml'
+                output: 'mathml',
+                strict: false,
+                trust: true
             });
             setMathmlOutput(mathml);
 
@@ -423,6 +438,9 @@ const MathFormulaEditor: React.FC = () => {
                                     输入公式后将在此处显示预览
                                 </div>
                             )}
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                            <p>💡 提示: 输入中文请使用 \text{'{'}中文{'}'} 格式,或点击"文本"分类中的模板</p>
                         </div>
                     </div>
                 </div>
