@@ -3,8 +3,9 @@ import TranslateTool from './components/TranslateTool';
 import ImageConverterTool from './components/ImageConverterTool';
 import CodeHighlightTool from './components/CodeHighlightTool';
 import TextFormatterTool from './components/TextFormatterTool';
+import MathFormulaEditor from './components/MathFormulaEditor';
 
-type ToolType = 'translate' | 'image-converter' | 'code-highlight' | 'text-formatter';
+type ToolType = 'translate' | 'image-converter' | 'code-highlight' | 'text-formatter' | 'math-formula';
 
 interface Tool {
     id: ToolType;
@@ -31,6 +32,12 @@ const TOOLS: Tool[] = [
         name: '文本格式化',
         icon: 'description',
         component: TextFormatterTool,
+    },
+    {
+        id: 'math-formula',
+        name: '数学公式编辑',
+        icon: 'functions',
+        component: MathFormulaEditor,
     },
     {
         id: 'image-converter',
