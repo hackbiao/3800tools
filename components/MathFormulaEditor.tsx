@@ -255,7 +255,7 @@ const MathFormulaEditor: React.FC = () => {
 
     const showNotification = useCallback((message: string) => {
         setNotificationMessage(message);
-        setCopyLatexSuccess(message.includes('LaTeX'));
+        setCopyLatexSuccess(message.includes('LaTeX') || message.includes('Word'));
         setCopyMathmlSuccess(message.includes('MathML'));
         setIsNotificationFadingOut(false);
 
@@ -274,11 +274,29 @@ const MathFormulaEditor: React.FC = () => {
         }).catch(err => console.error('Failed to copy LaTeX: ', err));
     }, [latexInput, showNotification]);
 
-    const handleCopyMathML = useCallback(() => {
+    const handleCopyForWord = useCallback(async () => {
         if (!mathmlOutput) return;
-        navigator.clipboard.writeText(mathmlOutput).then(() => {
-            showNotification('已复制 MathML 格式到剪贴板!');
-        }).catch(err => console.error('Failed to copy MathML: ', err));
+
+        try {
+            // 为 Word 兼容性，同时复制 HTML 和纯文本格式
+            const blob = new Blob([mathmlOutput], { type: 'text/html' });
+            const clipboardItem = new ClipboardItem({
+                'text/html': blob,
+                'text/plain': new Blob([mathmlOutput], { type: 'text/plain' })
+            });
+
+            await navigator.clipboard.write([clipboardItem]);
+            showNotification('已复制到 Word 格式!');
+        } catch (err) {
+            // 如果浏览器不支持 ClipboardItem，回退到普通复制
+            console.error('Failed to copy for Word with ClipboardItem: ', err);
+            try {
+                await navigator.clipboard.writeText(mathmlOutput);
+                showNotification('已复制到 Word 格式!');
+            } catch (fallbackErr) {
+                console.error('Failed to copy for Word: ', fallbackErr);
+            }
+        }
     }, [mathmlOutput, showNotification]);
 
     const insertSymbol = useCallback((latex: string) => {
@@ -483,12 +501,12 @@ const MathFormulaEditor: React.FC = () => {
                         复制 LaTeX 代码
                     </button>
                     <button
-                        onClick={handleCopyMathML}
+                        onClick={handleCopyForWord}
                         disabled={!mathmlOutput}
-                        className="flex items-center gap-1 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded text-sm font-medium hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex items-center gap-1 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-sm font-medium hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span className="material-symbols-outlined text-base">content_copy</span>
-                        复制 MathML 格式
+                        复制到 Word
                     </button>
                 </div>
             </div>
