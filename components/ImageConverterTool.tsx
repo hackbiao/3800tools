@@ -286,7 +286,7 @@ const ImageConverterTool: React.FC = () => {
         <div className="flex w-full flex-col items-center px-4 py-10 sm:px-6 lg:px-8">
             <div className="flex w-full max-w-6xl flex-col items-center gap-2 text-center mb-8">
                 <p className="text-3xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white sm:text-4xl">在线图片格式转换</p>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">快速将您的图片转换为 JPG, PNG, WEBP 等多种格式。免费、安全。</p>
+                <p className="text-base font-normal text-gray-500 dark:text-gray-400">快速将您的图片转换为 JPG, PNG, WEBP 等多种格式。</p>
             </div>
 
             <div className="w-full max-w-6xl flex flex-col gap-10">
