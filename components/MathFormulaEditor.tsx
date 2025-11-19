@@ -368,9 +368,10 @@ const MathFormulaEditor: React.FC = () => {
                 <div className="bg-white dark:bg-gray-800 rounded-t-xl border border-gray-200 dark:border-gray-700 flex items-center">
                     <button
                         onClick={() => setActiveTab('symbols')}
+                        style={activeTab === 'symbols' ? { backgroundColor: '#607AFB', color: 'white' } : {}}
                         className={`px-6 py-3 text-sm font-medium transition-colors ${
                             activeTab === 'symbols'
-                                ? 'bg-primary text-white rounded-tl-xl'
+                                ? 'rounded-tl-xl'
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                     >
@@ -378,9 +379,10 @@ const MathFormulaEditor: React.FC = () => {
                     </button>
                     <button
                         onClick={() => setActiveTab('templates')}
+                        style={activeTab === 'templates' ? { backgroundColor: '#607AFB', color: 'white' } : {}}
                         className={`px-6 py-3 text-sm font-medium transition-colors ${
                             activeTab === 'templates'
-                                ? 'bg-primary text-white'
+                                ? ''
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                     >
