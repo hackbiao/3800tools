@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import mammoth from 'mammoth';
 
 interface DiffLine {
     type: 'same' | 'added' | 'removed' | 'modified';
@@ -148,16 +149,42 @@ const TextDiffTool: React.FC = () => {
 
     // 处理文件上传
     const handleFileUpload = useCallback((side: 'left' | 'right', file: File) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const text = e.target?.result as string;
-            if (side === 'left') {
-                setLeftText(text);
-            } else {
-                setRightText(text);
-            }
-        };
-        reader.readAsText(file);
+        const fileName = file.name.toLowerCase();
+
+        // 检查是否为 Word 文档
+        if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
+            // 使用 mammoth 解析 Word 文档
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const arrayBuffer = e.target?.result as ArrayBuffer;
+                try {
+                    const result = await mammoth.extractRawText({ arrayBuffer });
+                    const text = result.value;
+
+                    if (side === 'left') {
+                        setLeftText(text);
+                    } else {
+                        setRightText(text);
+                    }
+                } catch (error) {
+                    console.error('Failed to parse Word document:', error);
+                    alert('解析 Word 文档失败，请确保文件格式正确');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        } else {
+            // 普通文本文件
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const text = e.target?.result as string;
+                if (side === 'left') {
+                    setLeftText(text);
+                } else {
+                    setRightText(text);
+                }
+            };
+            reader.readAsText(file);
+        }
     }, []);
 
     // 复制文本
@@ -183,7 +210,7 @@ const TextDiffTool: React.FC = () => {
     }, [leftText, rightText]);
 
     // 根据实际文本行生成行号
-    const generateLineNumbers = useCallback((side: 'left' | 'right', text: string) => {
+    const generateLineNumbers = useCallback((text: string) => {
         const lines = text.split('\n');
         const lineCount = Math.max(lines.length, 1);
 
@@ -271,10 +298,10 @@ const TextDiffTool: React.FC = () => {
     }, [diffResult]);
 
     return (
-        <div className="flex w-full flex-col items-center px-4 py-10 sm:px-6 lg:px-8">
+        <div className="flex w-full flex-col items-center px-4 py-10 sm:px-6 lg:px-8 overflow-hidden">
             <div className="flex w-full max-w-7xl flex-col items-center gap-2 text-center mb-6">
                 <p className="text-3xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white sm:text-4xl">文本差异对比</p>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">对比两段文本的差异，支持直接编辑或上传文件。</p>
+                <p className="text-base font-normal text-gray-500 dark:text-gray-400">对比两段文本的差异，支持直接编辑、上传文件或 Word 文档。</p>
             </div>
 
             {/* 全局通知 */}
@@ -378,7 +405,7 @@ const TextDiffTool: React.FC = () => {
                     <input
                         ref={leftFileInputRef}
                         type="file"
-                        accept=".txt,.md,.json,.xml,.html,.css,.js,.ts,.tsx,.jsx,.py,.java,.c,.cpp,.h,.hpp"
+                        accept=".txt,.md,.json,.xml,.html,.css,.js,.ts,.tsx,.jsx,.py,.java,.c,.cpp,.h,.hpp,.doc,.docx"
                         onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) handleFileUpload('left', file);
@@ -388,7 +415,7 @@ const TextDiffTool: React.FC = () => {
                     <input
                         ref={rightFileInputRef}
                         type="file"
-                        accept=".txt,.md,.json,.xml,.html,.css,.js,.ts,.tsx,.jsx,.py,.java,.c,.cpp,.h,.hpp"
+                        accept=".txt,.md,.json,.xml,.html,.css,.js,.ts,.tsx,.jsx,.py,.java,.c,.cpp,.h,.hpp,.doc,.docx"
                         onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) handleFileUpload('right', file);
@@ -414,7 +441,7 @@ const TextDiffTool: React.FC = () => {
                                     paddingTop: '4px',
                                     paddingBottom: '4px'
                                 }}>
-                                    {generateLineNumbers('left', leftText)}
+                                    {generateLineNumbers(leftText)}
                                 </div>
                             </div>
 
@@ -480,7 +507,7 @@ const TextDiffTool: React.FC = () => {
                                     paddingTop: '4px',
                                     paddingBottom: '4px'
                                 }}>
-                                    {generateLineNumbers('right', rightText)}
+                                    {generateLineNumbers(rightText)}
                                 </div>
                             </div>
 
