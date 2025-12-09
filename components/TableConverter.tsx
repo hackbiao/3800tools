@@ -27,7 +27,7 @@ const loadDataGridXLScript = () =>
             return;
         }
         const script = document.createElement('script');
-        script.src = 'https://code.datagridxl.com/datagridxl.js';
+        script.src = 'https://code.datagridxl.com/datagridxl2.js';
         script.async = true;
         script.onload = () => resolve();
         script.onerror = () => reject(new Error('load_failed'));
