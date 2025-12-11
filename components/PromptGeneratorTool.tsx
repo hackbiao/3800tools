@@ -443,7 +443,7 @@ const PromptGeneratorTool: React.FC = () => {
         <div className="flex w-full flex-col items-center px-4 py-10 sm:px-6 lg:px-8">
             <div className="flex w-full max-w-6xl flex-col items-center gap-2 text-center mb-8">
                 <p className="text-3xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white sm:text-4xl">
-                    AI 提示词生成器
+                    提示词生成器
                 </p>
                 <p className="text-base font-normal text-gray-500 dark:text-gray-400">
                     输入主题内容，选择可选修饰项，快速生成专业提示词
@@ -555,7 +555,7 @@ const PromptGeneratorTool: React.FC = () => {
                 <button
                     onClick={handleGenerate}
                     disabled={!mainSubject.trim()}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary text-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl font-semibold text-lg shadow-md hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary text-white border border-gray-300 dark:border-gray-600 rounded-xl font-semibold text-lg shadow-md hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                 >
                     <span className="material-symbols-outlined text-2xl">auto_awesome</span>
                     <span>生成提示词</span>

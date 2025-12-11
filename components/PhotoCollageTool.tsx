@@ -431,7 +431,7 @@ const PhotoCollageTool: React.FC = () => {
                                             accept="image/*"
                                             multiple
                                             onChange={handleFileSelect}
-                                            className="flex-1 text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-gray-900 hover:file:opacity-90"
+                                            className="flex-1 text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:opacity-90"
                                         />
                                         {images.length > 0 && (
                                             <button
@@ -720,7 +720,7 @@ const PhotoCollageTool: React.FC = () => {
                         {previewUrl && (
                             <button
                                 onClick={handleDownload}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg font-semibold shadow hover:opacity-90 transition-opacity"
+                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white border border-gray-300 dark:border-gray-600 rounded-lg font-semibold shadow hover:opacity-90 transition-opacity"
                             >
                                 <span className="material-symbols-outlined text-xl">download</span>
                                 <span>保存图像</span>

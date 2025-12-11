@@ -174,7 +174,7 @@ const PdfToPptTool: React.FC = () => {
                                     type="file"
                                     accept=".pdf,application/pdf"
                                     onChange={handleFileSelect}
-                                    className="flex-1 text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-gray-900 hover:file:opacity-90"
+                                    className="flex-1 text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:opacity-90"
                                 />
                                 {pdfFile && !isConverting && (
                                     <button
@@ -226,7 +226,7 @@ const PdfToPptTool: React.FC = () => {
                             <button
                                 onClick={handleConvert}
                                 disabled={isConverting}
-                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg font-semibold shadow hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+                                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white border border-gray-300 dark:border-gray-600 rounded-lg font-semibold shadow hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
                             >
                                 <span className="material-symbols-outlined text-xl">transform</span>
                                 <span>开始转换</span>
