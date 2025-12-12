@@ -207,7 +207,7 @@ const App: React.FC = () => {
                         href="https://github.com/zstar1003/FreeTool"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center"
                         title="GitHub"
                     >
                         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -216,10 +216,10 @@ const App: React.FC = () => {
                     </a>
                     <button
                         onClick={() => setShowAboutDialog(true)}
-                        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center"
                         title="关于"
                     >
-                        <span className="material-symbols-outlined text-2xl">info</span>
+                        <span className="material-symbols-outlined w-6 h-6 flex items-center justify-center" style={{ fontSize: '24px' }}>info</span>
                     </button>
                 </div>
             </aside>
