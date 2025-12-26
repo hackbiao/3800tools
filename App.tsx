@@ -43,6 +43,8 @@ type ToolType =
     | 'pdf-to-ppt'
     | 'prompt-generator';
 
+type CategoryType = 'text' | 'image' | 'data' | 'media' | 'ai';
+
 interface Tool {
     id: ToolType;
     name: string;
@@ -50,108 +52,82 @@ interface Tool {
     component: React.FC;
 }
 
-const TOOLS: Tool[] = [
+interface ToolCategory {
+    id: CategoryType;
+    name: string;
+    icon: string;
+    tools: Tool[];
+}
+
+const TOOL_CATEGORIES: ToolCategory[] = [
     {
-        id: 'translate',
-        name: '在线翻译',
-        icon: 'translate',
-        component: TranslateTool,
+        id: 'text',
+        name: '文本工具',
+        icon: 'text_fields',
+        tools: [
+            { id: 'translate', name: '在线翻译', icon: 'translate', component: TranslateTool },
+            { id: 'code-highlight', name: '代码高亮', icon: 'code', component: CodeHighlightTool },
+            { id: 'text-formatter', name: '文本格式化', icon: 'description', component: TextFormatterTool },
+            { id: 'json-formatter', name: 'JSON 格式化', icon: 'data_object', component: JsonFormatterTool },
+            { id: 'xml-formatter', name: 'XML 格式化', icon: 'code', component: XmlFormatterTool },
+            { id: 'text-diff', name: '文本差异对比', icon: 'compare', component: TextDiffTool },
+        ],
     },
     {
-        id: 'code-highlight',
-        name: '代码高亮',
-        icon: 'code',
-        component: CodeHighlightTool,
-    },
-    {
-        id: 'text-formatter',
-        name: '文本格式化',
-        icon: 'description',
-        component: TextFormatterTool,
-    },
-    {
-        id: 'json-formatter',
-        name: 'JSON 格式化',
-        icon: 'data_object',
-        component: JsonFormatterTool,
-    },
-    {
-        id: 'xml-formatter',
-        name: 'XML 格式化',
-        icon: 'code',
-        component: XmlFormatterTool,
-    },
-    {
-        id: 'math-formula',
-        name: '数学公式编辑',
-        icon: 'functions',
-        component: MathFormulaEditor,
-    },
-    {
-        id: 'image-converter',
-        name: '图片格式转换',
+        id: 'image',
+        name: '图片工具',
         icon: 'image',
-        component: ImageConverterTool,
+        tools: [
+            { id: 'image-converter', name: '图片格式转换', icon: 'image', component: ImageConverterTool },
+            { id: 'image-editor', name: '图片快速编辑', icon: 'edit', component: ImageEditorTool },
+            { id: 'image-comparison', name: '多图自由拼接', icon: 'layers', component: ImageComparisonTool },
+            { id: 'image-round-corner', name: '图片圆角处理', icon: 'rounded_corner', component: ImageRoundCornerTool },
+            { id: 'photo-collage', name: '模板快速拼接', icon: 'grid_view', component: PhotoCollageTool },
+        ],
     },
     {
-        id: 'image-editor',
-        name: '图片快速编辑',
-        icon: 'edit',
-        component: ImageEditorTool,
+        id: 'data',
+        name: '数据工具',
+        icon: 'analytics',
+        tools: [
+            { id: 'table-converter', name: '表格格式转换', icon: 'table_chart', component: TableConverter },
+            { id: 'math-formula', name: '数学公式编辑', icon: 'functions', component: MathFormulaEditor },
+        ],
     },
     {
-        id: 'image-comparison',
-        name: '多图自由拼接',
-        icon: 'layers',
-        component: ImageComparisonTool,
+        id: 'media',
+        name: '媒体工具',
+        icon: 'perm_media',
+        tools: [
+            { id: 'video-aspect-converter', name: '视频比例转换', icon: 'aspect_ratio', component: VideoAspectConverter },
+            { id: 'pdf-to-ppt', name: 'PDF转PPT', icon: 'slideshow', component: PdfToPptTool },
+        ],
     },
     {
-        id: 'image-round-corner',
-        name: '图片圆角处理',
-        icon: 'rounded_corner',
-        component: ImageRoundCornerTool,
-    },
-    {
-        id: 'photo-collage',
-        name: '模板快速拼接',
-        icon: 'grid_view',
-        component: PhotoCollageTool,
-    },
-    {
-        id: 'table-converter',
-        name: '表格格式转换',
-        icon: 'table_chart',
-        component: TableConverter,
-    },
-    {
-        id: 'video-aspect-converter',
-        name: '视频比例转换',
-        icon: 'aspect_ratio',
-        component: VideoAspectConverter,
-    },
-    {
-        id: 'text-diff',
-        name: '文本差异对比',
-        icon: 'compare',
-        component: TextDiffTool,
-    },
-    {
-        id: 'pdf-to-ppt',
-        name: 'PDF转PPT',
-        icon: 'slideshow',
-        component: PdfToPptTool,
-    },
-    {
-        id: 'prompt-generator',
-        name: '提示词生成器',
-        icon: 'psychology',
-        component: PromptGeneratorTool,
+        id: 'ai',
+        name: 'AI 工具',
+        icon: 'smart_toy',
+        tools: [
+            { id: 'prompt-generator', name: '提示词生成器', icon: 'psychology', component: PromptGeneratorTool },
+        ],
     },
 ];
+
+// 扁平化工具列表，用于查找组件
+const TOOLS: Tool[] = TOOL_CATEGORIES.flatMap(category => category.tools);
 
 const App: React.FC = () => {
     const [activeTool, setActiveTool] = useState<ToolType>('translate');
     const [showAboutDialog, setShowAboutDialog] = useState(false);
+    const [expandedCategories, setExpandedCategories] = useState<CategoryType[]>(['text', 'image', 'data', 'media', 'ai']);
+
+    const toggleCategory = (categoryId: CategoryType) => {
+        setExpandedCategories(prev =>
+            prev.includes(categoryId)
+                ? prev.filter(id => id !== categoryId)
+                : [...prev, categoryId]
+        );
+    };
 
     const ActiveComponent = TOOLS.find(tool => tool.id === activeTool)?.component || TranslateTool;
 
@@ -187,25 +163,70 @@ const App: React.FC = () => {
 
                 {/* 中间：工具列表 - 可滚动 */}
                 <nav className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
-                    <div className="flex flex-col gap-2">
-                        {TOOLS.map(tool => (
-                            <button
-                                key={tool.id}
-                                onClick={() => setActiveTool(tool.id)}
-                                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
-                                    activeTool === tool.id
-                                        ? 'bg-gray-200/50 text-gray-900 dark:bg-gray-700/50 dark:text-gray-100 shadow-sm'
-                                        : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200/50 hover:text-gray-900 dark:hover:bg-gray-700/50 dark:hover:text-gray-100'
-                                }`}                            >
-                                <span
-                                    className="material-symbols-outlined text-xl"
-                                    style={activeTool === tool.id ? { fontVariationSettings: "'FILL' 1" } : {}}
-                                >
-                                    {tool.icon}
-                                </span>
-                                <p className="text-sm font-medium leading-normal">{tool.name}</p>
-                            </button>
-                        ))}
+                    <div className="flex flex-col gap-1">
+                        {TOOL_CATEGORIES.map(category => {
+                            const isExpanded = expandedCategories.includes(category.id);
+                            const hasActiveTool = category.tools.some(tool => tool.id === activeTool);
+
+                            return (
+                                <div key={category.id} className="flex flex-col">
+                                    {/* 分类标题 */}
+                                    <button
+                                        onClick={() => toggleCategory(category.id)}
+                                        className={`flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all duration-200 ${
+                                            hasActiveTool && !isExpanded
+                                                ? 'bg-gray-200/30 dark:bg-gray-700/30'
+                                                : 'hover:bg-gray-200/50 dark:hover:bg-gray-700/50'
+                                        }`}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <span className="material-symbols-outlined text-lg text-gray-500 dark:text-gray-400">
+                                                {category.icon}
+                                            </span>
+                                            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                                {category.name}
+                                            </span>
+                                        </div>
+                                        <span
+                                            className={`material-symbols-outlined text-lg text-gray-400 dark:text-gray-500 transition-transform duration-200 ${
+                                                isExpanded ? 'rotate-180' : ''
+                                            }`}
+                                        >
+                                            expand_more
+                                        </span>
+                                    </button>
+
+                                    {/* 子工具列表 */}
+                                    <div
+                                        className={`overflow-hidden transition-all duration-200 ${
+                                            isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                                        }`}
+                                    >
+                                        <div className="flex flex-col gap-1 pl-4 pt-1 pb-2">
+                                            {category.tools.map(tool => (
+                                                <button
+                                                    key={tool.id}
+                                                    onClick={() => setActiveTool(tool.id)}
+                                                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
+                                                        activeTool === tool.id
+                                                            ? 'bg-gray-200/50 text-gray-900 dark:bg-gray-700/50 dark:text-gray-100 shadow-sm'
+                                                            : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200/50 hover:text-gray-900 dark:hover:bg-gray-700/50 dark:hover:text-gray-100'
+                                                    }`}
+                                                >
+                                                    <span
+                                                        className="material-symbols-outlined text-xl"
+                                                        style={activeTool === tool.id ? { fontVariationSettings: "'FILL' 1" } : {}}
+                                                    >
+                                                        {tool.icon}
+                                                    </span>
+                                                    <p className="text-sm font-medium leading-normal">{tool.name}</p>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </nav>
 
