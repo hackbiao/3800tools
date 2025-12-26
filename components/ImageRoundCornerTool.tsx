@@ -3,7 +3,6 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 const ImageRoundCornerTool: React.FC = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string>('');
-    const [processedUrl, setProcessedUrl] = useState<string>('');
     const [borderRadius, setBorderRadius] = useState<number>(20);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -21,7 +20,6 @@ const ImageRoundCornerTool: React.FC = () => {
 
         setSelectedFile(file);
         setError(null);
-        setProcessedUrl('');
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -43,7 +41,6 @@ const ImageRoundCornerTool: React.FC = () => {
                     if (file) {
                         setSelectedFile(file);
                         setError(null);
-                        setProcessedUrl('');
 
                         const reader = new FileReader();
                         reader.onload = (ev) => {
@@ -72,9 +69,9 @@ const ImageRoundCornerTool: React.FC = () => {
         img.src = previewUrl;
     }, [previewUrl]);
 
-    // 处理圆角
-    const processImage = useCallback(() => {
-        if (!previewUrl) return;
+    // 下载时才真正处理图片
+    const handleDownload = useCallback(() => {
+        if (!previewUrl || !selectedFile) return;
 
         setIsProcessing(true);
         setError(null);
@@ -124,7 +121,7 @@ const ImageRoundCornerTool: React.FC = () => {
             // 绘制图片
             ctx.drawImage(img, 0, 0);
 
-            // 导出为 PNG（保持透明背景）
+            // 导出为 PNG 并下载
             canvas.toBlob((blob) => {
                 if (!blob) {
                     setError('图片处理失败');
@@ -133,7 +130,14 @@ const ImageRoundCornerTool: React.FC = () => {
                 }
 
                 const url = URL.createObjectURL(blob);
-                setProcessedUrl(url);
+                const a = document.createElement('a');
+                a.href = url;
+                const originalName = selectedFile.name.replace(/\.[^/.]+$/, '');
+                a.download = `${originalName}_rounded.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
                 setIsProcessing(false);
             }, 'image/png');
         };
@@ -144,30 +148,15 @@ const ImageRoundCornerTool: React.FC = () => {
         };
 
         img.src = previewUrl;
-    }, [previewUrl, borderRadius]);
-
-    // 当预览URL或圆角半径改变时自动处理
-    useEffect(() => {
-        if (previewUrl) {
-            processImage();
-        }
-    }, [previewUrl, borderRadius, processImage]);
-
-    const handleDownload = useCallback(() => {
-        if (!processedUrl || !selectedFile) return;
-
-        const a = document.createElement('a');
-        a.href = processedUrl;
-        const originalName = selectedFile.name.replace(/\.[^/.]+$/, '');
-        a.download = `${originalName}_rounded.png`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }, [processedUrl, selectedFile]);
+    }, [previewUrl, selectedFile, borderRadius]);
 
     // 计算最大圆角值对应的像素
     const maxRadiusPx = Math.min(imageSize.width, imageSize.height) / 2;
     const currentRadiusPx = Math.round((borderRadius / 100) * maxRadiusPx);
+
+    // 计算 CSS 预览的圆角百分比
+    // 对于 CSS border-radius，50% 就是正圆，所以需要映射 0-100 到 0-50
+    const cssRadiusPercent = borderRadius / 2;
 
     return (
         <div className="flex w-full flex-col items-center px-4 py-10 sm:px-6 lg:px-8">
@@ -218,7 +207,6 @@ const ImageRoundCornerTool: React.FC = () => {
                                         onClick={() => {
                                             setSelectedFile(null);
                                             setPreviewUrl('');
-                                            setProcessedUrl('');
                                             setImageSize({ width: 0, height: 0 });
                                         }}
                                         className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
@@ -249,7 +237,7 @@ const ImageRoundCornerTool: React.FC = () => {
                                     </h3>
                                 </div>
 
-                                {/* 圆角预览 - 使用棋盘格背景显示透明区域 */}
+                                {/* 圆角预览 - 使用棋盘格背景显示透明区域，CSS 实时预览 */}
                                 <div
                                     className="flex-1 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 p-4 min-h-[300px]"
                                     style={{
@@ -259,18 +247,12 @@ const ImageRoundCornerTool: React.FC = () => {
                                         backgroundColor: '#f5f5f5'
                                     }}
                                 >
-                                    {isProcessing ? (
-                                        <div className="flex flex-col items-center gap-3">
-                                            <div className="spinner" style={{ width: '32px', height: '32px', borderWidth: '3px' }}></div>
-                                            <p className="text-sm text-gray-500 dark:text-gray-400">处理中...</p>
-                                        </div>
-                                    ) : processedUrl ? (
-                                        <img
-                                            src={processedUrl}
-                                            alt="Rounded"
-                                            className="max-w-full max-h-[400px] object-contain"
-                                        />
-                                    ) : null}
+                                    <img
+                                        src={previewUrl}
+                                        alt="Rounded Preview"
+                                        className="max-w-full max-h-[400px] object-contain transition-[border-radius] duration-100"
+                                        style={{ borderRadius: `${cssRadiusPercent}%` }}
+                                    />
                                 </div>
 
                                 {/* 圆角调节 */}
@@ -321,12 +303,21 @@ const ImageRoundCornerTool: React.FC = () => {
 
                                 <button
                                     onClick={handleDownload}
-                                    disabled={!processedUrl || isProcessing}
+                                    disabled={!previewUrl || isProcessing}
                                     style={{ backgroundColor: '#607AFB' }}
                                     className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg px-6 text-sm font-bold text-white shadow-lg transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                                 >
-                                    <span className="material-symbols-outlined">download</span>
-                                    <span className="truncate">下载圆角图片 (PNG)</span>
+                                    {isProcessing ? (
+                                        <>
+                                            <div className="spinner" style={{ width: '16px', height: '16px', borderWidth: '2px' }}></div>
+                                            <span className="truncate">处理中...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span className="material-symbols-outlined">download</span>
+                                            <span className="truncate">下载圆角图片 (PNG)</span>
+                                        </>
+                                    )}
                                 </button>
 
                                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
