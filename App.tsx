@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense, useEffect, useCallback, useRef } from 'react';
 import BottomNavBar from './components/BottomNavBar';
 
 // 懒加载组件 - 提升首屏加载速度
@@ -24,6 +24,9 @@ const getAssetUrl = (path: string) => {
     const base = import.meta.env.BASE_URL || '/';
     return `${base}${path}`.replace(/\/+/g, '/');
 };
+
+// localStorage key
+const PINNED_TOOLS_KEY = 'freetool-pinned-tools';
 
 type ToolType =
     | 'translate'
@@ -57,6 +60,14 @@ interface ToolCategory {
     name: string;
     icon: string;
     tools: Tool[];
+}
+
+interface ContextMenuState {
+    visible: boolean;
+    x: number;
+    y: number;
+    toolId: ToolType | null;
+    isPinned: boolean;
 }
 
 const TOOL_CATEGORIES: ToolCategory[] = [
@@ -105,7 +116,7 @@ const TOOL_CATEGORIES: ToolCategory[] = [
     },
     {
         id: 'ai',
-        name: 'AI 工具',
+        name: '其它工具',
         icon: 'smart_toy',
         tools: [
             { id: 'prompt-generator', name: '提示词生成器', icon: 'psychology', component: PromptGeneratorTool },
@@ -116,10 +127,62 @@ const TOOL_CATEGORIES: ToolCategory[] = [
 // 扁平化工具列表，用于查找组件
 const TOOLS: Tool[] = TOOL_CATEGORIES.flatMap(category => category.tools);
 
+// 从 localStorage 读取置顶工具
+const loadPinnedTools = (): ToolType[] => {
+    try {
+        const saved = localStorage.getItem(PINNED_TOOLS_KEY);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            // 验证保存的工具ID是否有效
+            return parsed.filter((id: string) => TOOLS.some(tool => tool.id === id));
+        }
+    } catch (e) {
+        console.error('Failed to load pinned tools:', e);
+    }
+    return [];
+};
+
+// 保存置顶工具到 localStorage
+const savePinnedTools = (pinnedTools: ToolType[]) => {
+    try {
+        localStorage.setItem(PINNED_TOOLS_KEY, JSON.stringify(pinnedTools));
+    } catch (e) {
+        console.error('Failed to save pinned tools:', e);
+    }
+};
+
 const App: React.FC = () => {
     const [activeTool, setActiveTool] = useState<ToolType>('translate');
     const [showAboutDialog, setShowAboutDialog] = useState(false);
     const [expandedCategories, setExpandedCategories] = useState<CategoryType[]>(['text', 'image', 'data', 'media', 'ai']);
+    const [pinnedTools, setPinnedTools] = useState<ToolType[]>(loadPinnedTools);
+    const [pinnedExpanded, setPinnedExpanded] = useState(true);
+    const [contextMenu, setContextMenu] = useState<ContextMenuState>({
+        visible: false,
+        x: 0,
+        y: 0,
+        toolId: null,
+        isPinned: false,
+    });
+
+    // 拖拽状态
+    const [draggedTool, setDraggedTool] = useState<ToolType | null>(null);
+    const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+    const dragNodeRef = useRef<HTMLDivElement | null>(null);
+
+    // 保存置顶工具到 localStorage
+    useEffect(() => {
+        savePinnedTools(pinnedTools);
+    }, [pinnedTools]);
+
+    // 点击其他地方关闭右键菜单
+    useEffect(() => {
+        const handleClick = () => setContextMenu(prev => ({ ...prev, visible: false }));
+        if (contextMenu.visible) {
+            document.addEventListener('click', handleClick);
+            return () => document.removeEventListener('click', handleClick);
+        }
+    }, [contextMenu.visible]);
 
     const toggleCategory = (categoryId: CategoryType) => {
         setExpandedCategories(prev =>
@@ -129,7 +192,88 @@ const App: React.FC = () => {
         );
     };
 
+    // 右键菜单处理
+    const handleContextMenu = useCallback((e: React.MouseEvent, toolId: ToolType, isPinned: boolean) => {
+        e.preventDefault();
+        setContextMenu({
+            visible: true,
+            x: e.clientX,
+            y: e.clientY,
+            toolId,
+            isPinned,
+        });
+    }, []);
+
+    // 置顶工具
+    const pinTool = useCallback((toolId: ToolType) => {
+        setPinnedTools(prev => {
+            if (prev.includes(toolId)) return prev;
+            return [...prev, toolId];
+        });
+        setContextMenu(prev => ({ ...prev, visible: false }));
+    }, []);
+
+    // 取消置顶
+    const unpinTool = useCallback((toolId: ToolType) => {
+        setPinnedTools(prev => prev.filter(id => id !== toolId));
+        setContextMenu(prev => ({ ...prev, visible: false }));
+    }, []);
+
+    // 拖拽开始
+    const handleDragStart = useCallback((e: React.DragEvent, toolId: ToolType) => {
+        setDraggedTool(toolId);
+        e.dataTransfer.effectAllowed = 'move';
+        // 设置拖拽图像
+        if (e.currentTarget instanceof HTMLElement) {
+            dragNodeRef.current = e.currentTarget as HTMLDivElement;
+        }
+    }, []);
+
+    // 拖拽经过
+    const handleDragOver = useCallback((e: React.DragEvent, index: number) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        setDragOverIndex(index);
+    }, []);
+
+    // 拖拽离开
+    const handleDragLeave = useCallback(() => {
+        setDragOverIndex(null);
+    }, []);
+
+    // 放置
+    const handleDrop = useCallback((e: React.DragEvent, dropIndex: number) => {
+        e.preventDefault();
+        if (draggedTool === null) return;
+
+        setPinnedTools(prev => {
+            const dragIndex = prev.indexOf(draggedTool);
+            if (dragIndex === -1) return prev;
+
+            const newList = [...prev];
+            newList.splice(dragIndex, 1);
+            newList.splice(dropIndex, 0, draggedTool);
+            return newList;
+        });
+
+        setDraggedTool(null);
+        setDragOverIndex(null);
+    }, [draggedTool]);
+
+    // 拖拽结束
+    const handleDragEnd = useCallback(() => {
+        setDraggedTool(null);
+        setDragOverIndex(null);
+    }, []);
+
     const ActiveComponent = TOOLS.find(tool => tool.id === activeTool)?.component || TranslateTool;
+
+    // 获取置顶工具的完整信息
+    const getPinnedToolsInfo = () => {
+        return pinnedTools
+            .map(id => TOOLS.find(tool => tool.id === id))
+            .filter((tool): tool is Tool => tool !== undefined);
+    };
 
     // 加载中组件
     const LoadingFallback = () => (
@@ -164,6 +308,83 @@ const App: React.FC = () => {
                 {/* 中间：工具列表 - 可滚动 */}
                 <nav className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
                     <div className="flex flex-col gap-1">
+                        {/* 置顶工具分类 */}
+                        {pinnedTools.length > 0 && (
+                            <div className="flex flex-col mb-2">
+                                {/* 置顶分类标题 */}
+                                <button
+                                    onClick={() => setPinnedExpanded(!pinnedExpanded)}
+                                    className="flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all duration-200 hover:bg-gray-200/50 dark:hover:bg-gray-700/50"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-lg text-amber-500">
+                                            push_pin
+                                        </span>
+                                        <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                            置顶工具
+                                        </span>
+                                        <span className="text-xs text-gray-400 dark:text-gray-500">
+                                            ({pinnedTools.length})
+                                        </span>
+                                    </div>
+                                    <span
+                                        className={`material-symbols-outlined text-lg text-gray-400 dark:text-gray-500 transition-transform duration-200 ${
+                                            pinnedExpanded ? 'rotate-180' : ''
+                                        }`}
+                                    >
+                                        expand_more
+                                    </span>
+                                </button>
+
+                                {/* 置顶工具列表 */}
+                                <div
+                                    className={`overflow-hidden transition-all duration-200 ${
+                                        pinnedExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                                    }`}
+                                >
+                                    <div className="flex flex-col gap-1 pl-4 pt-1 pb-2">
+                                        {getPinnedToolsInfo().map((tool, index) => (
+                                            <div
+                                                key={tool.id}
+                                                draggable
+                                                onDragStart={(e) => handleDragStart(e, tool.id)}
+                                                onDragOver={(e) => handleDragOver(e, index)}
+                                                onDragLeave={handleDragLeave}
+                                                onDrop={(e) => handleDrop(e, index)}
+                                                onDragEnd={handleDragEnd}
+                                                onContextMenu={(e) => handleContextMenu(e, tool.id, true)}
+                                                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 cursor-grab active:cursor-grabbing select-none ${
+                                                    dragOverIndex === index ? 'border-t-2 border-primary' : ''
+                                                } ${
+                                                    draggedTool === tool.id ? 'opacity-50' : ''
+                                                } ${
+                                                    activeTool === tool.id
+                                                        ? 'bg-gray-200/50 text-gray-900 dark:bg-gray-700/50 dark:text-gray-100 shadow-sm'
+                                                        : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200/50 hover:text-gray-900 dark:hover:bg-gray-700/50 dark:hover:text-gray-100'
+                                                }`}
+                                                onClick={() => setActiveTool(tool.id)}
+                                            >
+                                                <span className="material-symbols-outlined text-xs text-gray-400 dark:text-gray-500 cursor-grab">
+                                                    drag_indicator
+                                                </span>
+                                                <span
+                                                    className="material-symbols-outlined text-xl"
+                                                    style={activeTool === tool.id ? { fontVariationSettings: "'FILL' 1" } : {}}
+                                                >
+                                                    {tool.icon}
+                                                </span>
+                                                <p className="text-sm font-medium leading-normal flex-1">{tool.name}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* 分隔线 */}
+                                <div className="mx-3 my-2 border-t border-gray-200 dark:border-gray-700"></div>
+                            </div>
+                        )}
+
+                        {/* 其他分类 */}
                         {TOOL_CATEGORIES.map(category => {
                             const isExpanded = expandedCategories.includes(category.id);
                             const hasActiveTool = category.tools.some(tool => tool.id === activeTool);
@@ -207,6 +428,7 @@ const App: React.FC = () => {
                                                 <button
                                                     key={tool.id}
                                                     onClick={() => setActiveTool(tool.id)}
+                                                    onContextMenu={(e) => handleContextMenu(e, tool.id, pinnedTools.includes(tool.id))}
                                                     className={`flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
                                                         activeTool === tool.id
                                                             ? 'bg-gray-200/50 text-gray-900 dark:bg-gray-700/50 dark:text-gray-100 shadow-sm'
@@ -220,6 +442,11 @@ const App: React.FC = () => {
                                                         {tool.icon}
                                                     </span>
                                                     <p className="text-sm font-medium leading-normal">{tool.name}</p>
+                                                    {pinnedTools.includes(tool.id) && (
+                                                        <span className="material-symbols-outlined text-xs text-amber-500 ml-auto">
+                                                            push_pin
+                                                        </span>
+                                                    )}
                                                 </button>
                                             ))}
                                         </div>
@@ -305,6 +532,36 @@ const App: React.FC = () => {
                             <p><strong>理念：</strong>致力于构建免费好用的产品</p>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* 右键菜单 */}
+            {contextMenu.visible && contextMenu.toolId && (
+                <div
+                    className="fixed z-50 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-1 min-w-[140px]"
+                    style={{
+                        left: contextMenu.x,
+                        top: contextMenu.y,
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {contextMenu.isPinned ? (
+                        <button
+                            onClick={() => unpinTool(contextMenu.toolId!)}
+                            className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        >
+                            <span className="material-symbols-outlined text-lg">push_pin</span>
+                            <span>取消置顶</span>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => pinTool(contextMenu.toolId!)}
+                            className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        >
+                            <span className="material-symbols-outlined text-lg text-amber-500">push_pin</span>
+                            <span>置顶</span>
+                        </button>
+                    )}
                 </div>
             )}
         </div>
