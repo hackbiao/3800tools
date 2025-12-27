@@ -330,28 +330,24 @@ const CATEGORY_INFO = {
     drawing: {
         name: 'AI 绘图',
         icon: 'palette',
-        description: '生成图像创作提示词',
         placeholder: '例如：一只可爱的橙色小猫',
         prefix: 'Create an image of',
     },
     video: {
         name: 'AI 视频',
         icon: 'videocam',
-        description: '生成视频创作提示词',
         placeholder: '例如：日落时分的海滩风景',
         prefix: 'Create a video of',
     },
     article: {
         name: 'AI 文章',
         icon: 'article',
-        description: '生成文章写作提示词',
         placeholder: '例如：如何提高工作效率',
         prefix: 'Write an article about',
     },
     ppt: {
-        name: 'AI 生成PPT',
+        name: 'AI PPT',
         icon: 'slideshow',
-        description: '生成PPT设计提示词',
         placeholder: '例如：公司年度总结报告',
         prefix: 'Create a PowerPoint presentation about',
     },
@@ -398,7 +394,6 @@ const PromptGeneratorTool: React.FC = () => {
         const prefix = CATEGORY_INFO[activeCategory].prefix;
         const parts: string[] = [prefix, mainSubject.trim()];
 
-        // 收集所有选中的修饰词
         const allModifiers: string[] = [];
         Object.values(selectedModifiers).forEach(modifierSet => {
             modifierSet.forEach(modifier => {
@@ -440,155 +435,149 @@ const PromptGeneratorTool: React.FC = () => {
     }, [selectedModifiers]);
 
     return (
-        <div className="flex w-full flex-col items-center px-4 py-10 sm:px-6 lg:px-8">
-            <div className="flex w-full max-w-6xl flex-col items-center gap-2 text-center mb-8">
-                <p className="text-3xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white sm:text-4xl">
+        <div className="flex w-full flex-col items-center px-4 py-4 sm:px-6 lg:px-8">
+            <div className="flex w-full max-w-7xl flex-col items-center gap-1 text-center mb-4">
+                <p className="text-2xl font-black leading-tight tracking-tighter text-gray-900 dark:text-white sm:text-3xl">
                     提示词生成器
                 </p>
-                <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-                    输入主题内容，选择可选修饰项，快速生成专业提示词
+                <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                    输入主题，选择修饰项，快速生成专业提示词
                 </p>
             </div>
 
-            <div className="w-full max-w-6xl flex flex-col gap-6">
-                {/* 分类选择 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {(Object.keys(CATEGORY_INFO) as PromptCategory[]).map(category => (
-                        <button
-                            key={category}
-                            onClick={() => handleCategoryChange(category)}
-                            className={`p-6 rounded-xl border-2 transition-all duration-200 ${
-                                activeCategory === category
-                                    ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-md'
-                                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/20 hover:border-primary/50'
-                            }`}
-                        >
-                            <div className="flex flex-col items-center gap-3">
-                                <span className={`material-symbols-outlined text-4xl ${
-                                    activeCategory === category ? 'text-primary' : 'text-gray-400'
-                                }`}>
+            <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {/* 左侧：输入区域 */}
+                <div className="flex flex-col gap-3">
+                    {/* 分类选择 - 紧凑横向排列 */}
+                    <div className="flex gap-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-xl">
+                        {(Object.keys(CATEGORY_INFO) as PromptCategory[]).map(category => (
+                            <button
+                                key={category}
+                                onClick={() => handleCategoryChange(category)}
+                                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                                    activeCategory === category
+                                        ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                }`}
+                            >
+                                <span className="material-symbols-outlined text-lg">
                                     {CATEGORY_INFO[category].icon}
                                 </span>
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                        {CATEGORY_INFO[category].name}
-                                    </h3>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                        {CATEGORY_INFO[category].description}
-                                    </p>
-                                </div>
-                            </div>
-                        </button>
-                    ))}
-                </div>
+                                <span className="hidden sm:inline">{CATEGORY_INFO[category].name}</span>
+                            </button>
+                        ))}
+                    </div>
 
-                {/* 主题输入 */}
-                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/20 shadow-sm p-6">
-                    <label className="block text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                        <span className="flex items-center gap-2">
-                            <span className="material-symbols-outlined text-primary">edit_note</span>
+                    {/* 主题输入 */}
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-3">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             主题内容（必填）
-                        </span>
-                    </label>
-                    <input
-                        type="text"
-                        value={mainSubject}
-                        onChange={(e) => setMainSubject(e.target.value)}
-                        placeholder={CATEGORY_INFO[activeCategory].placeholder}
-                        className="w-full px-4 py-3 text-lg rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
+                        </label>
+                        <input
+                            type="text"
+                            value={mainSubject}
+                            onChange={(e) => setMainSubject(e.target.value)}
+                            placeholder={CATEGORY_INFO[activeCategory].placeholder}
+                            className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+                        />
+                    </div>
+
+                    {/* 修饰选项 - 可滚动区域 */}
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-3 flex-1 overflow-hidden flex flex-col" style={{ maxHeight: '400px' }}>
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                可选修饰项
+                                {getSelectedCount() > 0 && (
+                                    <span className="text-gray-500 dark:text-gray-400 ml-1">
+                                        （已选 {getSelectedCount()} 项）
+                                    </span>
+                                )}
+                            </span>
+                            {getSelectedCount() > 0 && (
+                                <button
+                                    onClick={handleClearAll}
+                                    className="text-xs text-gray-500 hover:text-primary flex items-center gap-1"
+                                >
+                                    <span className="material-symbols-outlined text-sm">clear_all</span>
+                                    清空
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="overflow-y-auto flex-1 space-y-3 pr-1">
+                            {MODIFIERS[activeCategory].map(group => (
+                                <div key={group.id}>
+                                    <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">
+                                        {group.name}
+                                    </h4>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {group.options.map(option => {
+                                            const isSelected = selectedModifiers[group.id]?.has(option.value);
+                                            return (
+                                                <button
+                                                    key={option.value}
+                                                    onClick={() => handleModifierToggle(group.id, option.value)}
+                                                    className={`px-2 py-1 rounded text-xs font-medium transition-all ${
+                                                        isSelected
+                                                            ? 'bg-primary/20 text-primary border border-primary'
+                                                            : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-transparent hover:border-gray-300 dark:hover:border-gray-600'
+                                                    }`}
+                                                >
+                                                    {option.label}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* 生成按钮 */}
+                    <button
+                        onClick={handleGenerate}
+                        disabled={!mainSubject.trim()}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-semibold shadow-lg hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                    >
+                        <span className="material-symbols-outlined">auto_awesome</span>
+                        生成提示词
+                    </button>
                 </div>
 
-                {/* 修饰选项 */}
-                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800/20 shadow-sm p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                            <span className="material-symbols-outlined text-primary">tune</span>
-                            可选修饰项
-                            {getSelectedCount() > 0 && (
-                                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    （已选 {getSelectedCount()} 项）
-                                </span>
-                            )}
-                        </h3>
-                        {getSelectedCount() > 0 && (
+                {/* 右侧：结果区域 */}
+                <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 overflow-hidden flex flex-col" style={{ minHeight: '500px' }}>
+                    <div className="bg-white dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between flex-shrink-0">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                            <span className="material-symbols-outlined text-primary text-lg">stars</span>
+                            生成结果
+                        </span>
+                        {generatedPrompt && (
                             <button
-                                onClick={handleClearAll}
-                                className="text-sm text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary flex items-center gap-1"
+                                onClick={handleCopy}
+                                className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                             >
-                                <span className="material-symbols-outlined text-lg">clear_all</span>
-                                清空选择
+                                <span className="material-symbols-outlined text-sm">
+                                    {copied ? 'check' : 'content_copy'}
+                                </span>
+                                {copied ? '已复制' : '复制'}
                             </button>
                         )}
                     </div>
-
-                    <div className="space-y-6">
-                        {MODIFIERS[activeCategory].map(group => (
-                            <div key={group.id}>
-                                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                                    {group.name}
-                                </h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {group.options.map(option => {
-                                        const isSelected = selectedModifiers[group.id]?.has(option.value);
-                                        return (
-                                            <button
-                                                key={option.value}
-                                                onClick={() => handleModifierToggle(group.id, option.value)}
-                                                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                                    isSelected
-                                                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-2 border-blue-400 dark:border-blue-500 shadow-md font-semibold'
-                                                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-primary/50'
-                                                }`}
-                                            >
-                                                {option.label}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
+                    <div className="flex-1 p-4 flex items-center justify-center">
+                        {generatedPrompt ? (
+                            <div className="w-full h-full p-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                                <p className="text-gray-900 dark:text-white leading-relaxed break-words">
+                                    {generatedPrompt}
+                                </p>
                             </div>
-                        ))}
+                        ) : (
+                            <div className="flex flex-col items-center text-gray-400 dark:text-gray-500">
+                                <span className="material-symbols-outlined text-5xl mb-2">lightbulb</span>
+                                <p className="text-sm">输入主题并点击生成</p>
+                            </div>
+                        )}
                     </div>
                 </div>
-
-                {/* 生成按钮 */}
-                <button
-                    onClick={handleGenerate}
-                    disabled={!mainSubject.trim()}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary text-white border border-gray-300 dark:border-gray-600 rounded-xl font-semibold text-lg shadow-md hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                >
-                    <span className="material-symbols-outlined text-2xl">auto_awesome</span>
-                    <span>生成提示词</span>
-                </button>
-
-                {/* 生成结果 */}
-                {generatedPrompt && (
-                    <div className="rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-transparent dark:from-primary/10 shadow-lg p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                                <span className="material-symbols-outlined text-primary">stars</span>
-                                生成的提示词
-                            </h3>
-                            <button
-                                onClick={handleCopy}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm"
-                            >
-                                <span className="material-symbols-outlined text-lg">
-                                    {copied ? 'check' : 'content_copy'}
-                                </span>
-                                <span className="text-sm font-medium">
-                                    {copied ? '已复制' : '复制'}
-                                </span>
-                            </button>
-                        </div>
-
-                        <div className="p-5 rounded-lg bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 shadow-inner">
-                            <p className="text-gray-900 dark:text-white leading-relaxed break-words">
-                                {generatedPrompt}
-                            </p>
-                        </div>
-                    </div>
-                )}
             </div>
         </div>
     );
