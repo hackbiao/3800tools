@@ -471,11 +471,11 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ resumeData, themeColor, f
         fontSize: `${fontSize}pt`,
         fontWeight: 700,
         color: themeColor,
-        borderBottom: `1.5px solid ${themeColor}`,
-        paddingBottom: '3px',
-        marginBottom: '8px',
+        borderBottom: `1.5pt solid ${themeColor}`,
+        paddingBottom: '3pt',
+        marginBottom: '8pt',
         textTransform: 'uppercase',
-        letterSpacing: '1px',
+        letterSpacing: '1pt',
     };
 
     return (
@@ -483,50 +483,55 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ resumeData, themeColor, f
             style={{
                 fontFamily: '"Noto Sans SC", "Microsoft YaHei", sans-serif',
                 fontSize: `${fontSize}pt`,
-                padding: '40px 50px',
+                paddingTop: '40pt',
+                paddingBottom: '40pt',
+                paddingLeft: '50pt',
+                paddingRight: '50pt',
                 backgroundColor: '#ffffff',
                 color: '#1a1a1a',
                 lineHeight: 1.4,
+                height: '100%',
+                boxSizing: 'border-box',
             }}
         >
             {/* 头部信息 */}
-            <div style={{ textAlign: 'center', marginBottom: '12px' }}>
-                <div style={{ fontSize: `${fontSize + 10}pt`, fontWeight: 700, color: '#1a1a1a', marginBottom: '2px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '12pt' }}>
+                <div style={{ fontSize: `${fontSize + 10}pt`, fontWeight: 700, color: '#1a1a1a', marginBottom: '2pt' }}>
                     {personal.name || '您的姓名'}
                 </div>
                 {personal.title && (
-                    <div style={{ fontSize: `${fontSize}pt`, color: '#666666', marginBottom: '6px' }}>
+                    <div style={{ fontSize: `${fontSize}pt`, color: '#666666', marginBottom: '6pt' }}>
                         {personal.title}
                     </div>
                 )}
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12pt', marginBottom: '4pt' }}>
                     {personal.phone && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '3pt', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="#555555"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                             {personal.phone}
                         </span>
                     )}
                     {personal.email && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '3pt', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="#555555"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                             {personal.email}
                         </span>
                     )}
                     {personal.location && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '3pt', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="#555555"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                             {personal.location}
                         </span>
                     )}
                     {personal.website && (
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '3pt', fontSize: `${fontSize - 1}pt`, color: '#555555' }}>
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="#555555"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                             {personal.website}
                         </span>
                     )}
                 </div>
                 {personal.summary && (
-                    <div style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.5, textAlign: 'justify', marginTop: '8px' }}>
+                    <div style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.5, textAlign: 'justify', marginTop: '8pt' }}>
                         {personal.summary}
                     </div>
                 )}
@@ -534,22 +539,22 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ resumeData, themeColor, f
 
             {/* 教育经历 */}
             {education.length > 0 && (
-                <div style={{ marginBottom: '10px' }}>
+                <div style={{ marginBottom: '10pt' }}>
                     <div style={sectionTitleStyle}>教育经历</div>
                     {education.map((edu) => (
-                        <div key={edu.id} style={{ marginBottom: '8px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1px' }}>
+                        <div key={edu.id} style={{ marginBottom: '8pt' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1pt' }}>
                                 <span style={{ fontSize: `${fontSize - 1}pt`, fontWeight: 600, color: '#1a1a1a' }}>{edu.school}</span>
                                 <span style={{ fontSize: `${fontSize - 2}pt`, color: '#888888' }}>{edu.startDate} - {edu.endDate}</span>
                             </div>
-                            <div style={{ fontSize: `${fontSize - 2}pt`, color: '#666666', marginBottom: '3px' }}>
+                            <div style={{ fontSize: `${fontSize - 2}pt`, color: '#666666', marginBottom: '3pt' }}>
                                 {[edu.degree, edu.major, edu.gpa].filter(Boolean).join(' | ')}
                             </div>
                             {edu.descriptions.filter(d => d.trim()).length > 0 && (
-                                <div style={{ paddingLeft: '12px' }}>
+                                <div style={{ paddingLeft: '12pt' }}>
                                     {edu.descriptions.filter(d => d.trim()).map((desc, i) => (
-                                        <div key={i} style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.4, marginBottom: '1px', display: 'flex' }}>
-                                            <span style={{ width: '8px', color: '#666666' }}>•</span>
+                                        <div key={i} style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.4, marginBottom: '1pt', display: 'flex' }}>
+                                            <span style={{ width: '8pt', color: '#666666' }}>•</span>
                                             <span style={{ flex: 1 }}>{desc}</span>
                                         </div>
                                     ))}
@@ -562,22 +567,22 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ resumeData, themeColor, f
 
             {/* 工作经验 */}
             {experience.length > 0 && (
-                <div style={{ marginBottom: '10px' }}>
+                <div style={{ marginBottom: '10pt' }}>
                     <div style={sectionTitleStyle}>工作经验</div>
                     {experience.map((exp) => (
-                        <div key={exp.id} style={{ marginBottom: '8px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1px' }}>
+                        <div key={exp.id} style={{ marginBottom: '8pt' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1pt' }}>
                                 <span style={{ fontSize: `${fontSize - 1}pt`, fontWeight: 600, color: '#1a1a1a' }}>{exp.company}</span>
                                 <span style={{ fontSize: `${fontSize - 2}pt`, color: '#888888' }}>{exp.startDate} - {exp.endDate}</span>
                             </div>
-                            <div style={{ fontSize: `${fontSize - 2}pt`, color: '#666666', marginBottom: '3px' }}>
+                            <div style={{ fontSize: `${fontSize - 2}pt`, color: '#666666', marginBottom: '3pt' }}>
                                 {[exp.position, exp.location].filter(Boolean).join(' | ')}
                             </div>
                             {exp.descriptions.filter(d => d.trim()).length > 0 && (
-                                <div style={{ paddingLeft: '12px' }}>
+                                <div style={{ paddingLeft: '12pt' }}>
                                     {exp.descriptions.filter(d => d.trim()).map((desc, i) => (
-                                        <div key={i} style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.4, marginBottom: '1px', display: 'flex' }}>
-                                            <span style={{ width: '8px', color: '#666666' }}>•</span>
+                                        <div key={i} style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.4, marginBottom: '1pt', display: 'flex' }}>
+                                            <span style={{ width: '8pt', color: '#666666' }}>•</span>
                                             <span style={{ flex: 1 }}>{desc}</span>
                                         </div>
                                     ))}
@@ -590,19 +595,19 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ resumeData, themeColor, f
 
             {/* 项目经历 */}
             {projects.length > 0 && (
-                <div style={{ marginBottom: '10px' }}>
+                <div style={{ marginBottom: '10pt' }}>
                     <div style={sectionTitleStyle}>项目经历</div>
                     {projects.map((proj) => (
-                        <div key={proj.id} style={{ marginBottom: '8px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1px' }}>
+                        <div key={proj.id} style={{ marginBottom: '8pt' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1pt' }}>
                                 <span style={{ fontSize: `${fontSize - 1}pt`, fontWeight: 600, color: '#1a1a1a' }}>{proj.name}</span>
                                 <span style={{ fontSize: `${fontSize - 2}pt`, color: '#888888' }}>{proj.date}</span>
                             </div>
                             {proj.descriptions.filter(d => d.trim()).length > 0 && (
-                                <div style={{ paddingLeft: '12px' }}>
+                                <div style={{ paddingLeft: '12pt' }}>
                                     {proj.descriptions.filter(d => d.trim()).map((desc, i) => (
-                                        <div key={i} style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.4, marginBottom: '1px', display: 'flex' }}>
-                                            <span style={{ width: '8px', color: '#666666' }}>•</span>
+                                        <div key={i} style={{ fontSize: `${fontSize - 1}pt`, color: '#444444', lineHeight: 1.4, marginBottom: '1pt', display: 'flex' }}>
+                                            <span style={{ width: '8pt', color: '#666666' }}>•</span>
                                             <span style={{ flex: 1 }}>{desc}</span>
                                         </div>
                                     ))}
@@ -615,10 +620,10 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ resumeData, themeColor, f
 
             {/* 专业技能 */}
             {skills.length > 0 && (
-                <div style={{ marginBottom: '10px' }}>
+                <div style={{ marginBottom: '10pt' }}>
                     <div style={sectionTitleStyle}>专业技能</div>
                     {skills.map((skill, idx) => (
-                        <div key={idx} style={{ display: 'flex', marginBottom: '4px', fontSize: `${fontSize - 1}pt` }}>
+                        <div key={idx} style={{ display: 'flex', marginBottom: '4pt', fontSize: `${fontSize - 1}pt` }}>
                             <span style={{ fontWeight: 600, color: '#1a1a1a' }}>{skill.category}：</span>
                             <span style={{ color: '#444444', flex: 1 }}>{skill.items}</span>
                         </div>
@@ -1068,30 +1073,22 @@ const ResumeGeneratorTool: React.FC = () => {
                 <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 overflow-hidden">
                     <div className="bg-white dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">实时预览</span>
-                        <span className="text-xs text-gray-500">A4</span>
+                        <span className="text-xs text-gray-500">A4 (595×842pt)</span>
                     </div>
-                    <div className="p-4 flex justify-center">
+                    <div className="p-4 flex justify-center overflow-auto">
                         <div
-                            className="bg-white shadow-xl overflow-hidden"
+                            className="bg-white shadow-xl flex-shrink-0"
                             style={{
-                                width: '100%',
-                                maxWidth: '595px',
-                                aspectRatio: `${A4_WIDTH_PT} / ${A4_HEIGHT_PT}`,
+                                width: `${A4_WIDTH_PT}pt`,
+                                height: `${A4_HEIGHT_PT}pt`,
+                                overflow: 'hidden',
                             }}
                         >
-                            <div
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    overflow: 'auto',
-                                }}
-                            >
-                                <ResumePreview
-                                    resumeData={resumeData}
-                                    themeColor={themeColor}
-                                    fontSize={bodyFontSize}
-                                />
-                            </div>
+                            <ResumePreview
+                                resumeData={resumeData}
+                                themeColor={themeColor}
+                                fontSize={bodyFontSize}
+                            />
                         </div>
                     </div>
                 </div>
