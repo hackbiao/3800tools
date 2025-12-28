@@ -1,0 +1,28 @@
+{
+  // ESA 项目基本信息
+  "name": "freetool",
+  "type": "static",
+
+  // 构建配置
+  "build": {
+    // 静态资源输出目录（Vite 默认）
+    "assets": "dist",
+
+    // 构建命令（与你当前 CI 日志一致）
+    "command": "npm run build"
+  },
+
+  // 部署配置
+  "deploy": {
+    // 是否启用 gzip / br（你已经在 build 阶段生成了，也可以交给 ESA）
+    "compression": true,
+
+    // SPA 路由支持（React + Vite 必开）
+    "spa": true
+  },
+
+  // 运行时配置（静态站点无需函数）
+  "runtime": {
+    "nodejs": "22"
+  }
+}
