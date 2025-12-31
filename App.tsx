@@ -582,6 +582,27 @@ const App: React.FC = () => {
                                 </div>
                             </div>
                             <p><strong>理念：</strong>致力于构建免费好用的产品</p>
+
+                            {/* 分隔线 */}
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-3">隐私政策</h3>
+                                <div className="text-sm space-y-2 text-gray-600 dark:text-gray-400">
+                                    <p>FreeTool 尊重并保护您的隐私：</p>
+                                    <ul className="list-disc list-inside space-y-1 ml-2">
+                                        <li>所有工具均在浏览器本地运行，您的数据不会上传到任何服务器</li>
+                                        <li>图片、文档等文件仅在您的设备上处理，处理完成后即被释放</li>
+                                        <li>我们不收集、存储或分享您的任何个人数据或文件内容</li>
+                                        <li>AI 模型文件会缓存到浏览器本地，以加快后续使用速度</li>
+                                        <li>本站使用 Google Analytics 收集匿名访问统计，不涉及个人隐私</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* 版权信息 */}
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                                <p>© {new Date().getFullYear()} FreeTool. All rights reserved.</p>
+                                <p className="mt-1">本项目开源于 <a href="https://github.com/zstar1003/FreeTool" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">GitHub</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
