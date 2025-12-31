@@ -22,6 +22,7 @@ const ResumeGeneratorTool = lazy(() => import('./components/ResumeGeneratorTool'
 const PromptGeneratorTool = lazy(() => import('./components/PromptGeneratorTool'));
 const MBTITestTool = lazy(() => import('./components/MBTITestTool'));
 const ImageToPromptTool = lazy(() => import('./components/ImageToPromptTool'));
+const ImageWatermarkRemoverTool = lazy(() => import('./components/ImageWatermarkRemoverTool'));
 
 // 获取资源路径的辅助函数
 const getAssetUrl = (path: string) => {
@@ -53,7 +54,8 @@ type ToolType =
     | 'resume-generator'
     | 'prompt-generator'
     | 'mbti-test'
-    | 'image-to-prompt';
+    | 'image-to-prompt'
+    | 'image-watermark-remover';
 
 type CategoryType = 'text' | 'image' | 'data' | 'media' | 'ai';
 
@@ -103,6 +105,7 @@ const TOOL_CATEGORIES: ToolCategory[] = [
             { id: 'image-comparison', name: '多图自由拼接', icon: 'layers', component: ImageComparisonTool },
             { id: 'image-round-corner', name: '图片圆角处理', icon: 'rounded_corner', component: ImageRoundCornerTool },
             { id: 'photo-collage', name: '模板快速拼接', icon: 'grid_view', component: PhotoCollageTool },
+            { id: 'image-watermark-remover', name: '图片去水印', icon: 'healing', component: ImageWatermarkRemoverTool },
         ],
     },
     {
