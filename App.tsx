@@ -25,6 +25,7 @@ const ImageToPromptTool = lazy(() => import('./components/ImageToPromptTool'));
 const ImageWatermarkRemoverTool = lazy(() => import('./components/ImageWatermarkRemoverTool'));
 const MindMapTool = lazy(() => import('./components/MindMapTool'));
 const DrawingTool = lazy(() => import('./components/DrawingTool'));
+const VRAMCalculatorTool = lazy(() => import('./components/VRAMCalculatorTool'));
 
 // 获取资源路径的辅助函数
 const getAssetUrl = (path: string) => {
@@ -59,7 +60,8 @@ type ToolType =
     | 'image-to-prompt'
     | 'image-watermark-remover'
     | 'mind-map'
-    | 'drawing';
+    | 'drawing'
+    | 'vram-calculator';
 
 type CategoryType = 'text' | 'image' | 'data' | 'media' | 'ai';
 
@@ -138,6 +140,7 @@ const TOOL_CATEGORIES: ToolCategory[] = [
         name: '其它工具',
         icon: 'smart_toy',
         tools: [
+            { id: 'vram-calculator', name: '显存计算器', icon: 'memory', component: VRAMCalculatorTool },
             { id: 'image-to-prompt', name: '图片转提示词', icon: 'image_search', component: ImageToPromptTool },
             { id: 'resume-generator', name: '简历生成器', icon: 'description', component: ResumeGeneratorTool },
             { id: 'prompt-generator', name: '提示词生成器', icon: 'psychology', component: PromptGeneratorTool },
