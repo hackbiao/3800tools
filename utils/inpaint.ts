@@ -4,14 +4,44 @@
  * 纯 Canvas API 实现，无需 OpenCV.js
  */
 
+// ONNX Runtime Web 类型声明（通过 CDN 加载）
+interface OrtTensor {
+    data: Uint8Array | Float32Array | Int32Array;
+    dims: number[];
+    type: string;
+}
+
+interface OrtSession {
+    inputNames: string[];
+    outputNames: string[];
+    run: (feeds: Record<string, OrtTensor>) => Promise<Record<string, OrtTensor>>;
+}
+
+interface OrtInferenceSession {
+    create: (model: ArrayBuffer, options: Record<string, unknown>) => Promise<OrtSession>;
+}
+
+interface OrtTensorConstructor {
+    new (type: string, data: Uint8Array | Float32Array | Int32Array, dims: number[]): OrtTensor;
+    Tensor: OrtTensorConstructor;
+}
+
+interface OrtNamespace {
+    InferenceSession: OrtInferenceSession;
+    Tensor: OrtTensorConstructor;
+}
+
 declare global {
     interface Window {
-        ort: typeof import('onnxruntime-web');
+        ort: OrtNamespace;
     }
 }
 
 // 模型 URL - 使用 pipeline v2 版本，支持两个独立输入 (image + mask)
+// 优先使用国内镜像，避免连接超时
 const MODEL_URLS = [
+    'https://hf-mirror.com/andraniksargsyan/migan/resolve/main/migan_pipeline_v2.onnx',
+    'https://hf-mirror.com/lxfater/inpaint-web/resolve/main/migan.onnx',
     'https://huggingface.co/andraniksargsyan/migan/resolve/main/migan_pipeline_v2.onnx',
     'https://huggingface.co/lxfater/inpaint-web/resolve/main/migan.onnx',
 ];

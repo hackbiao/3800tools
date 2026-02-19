@@ -1,12 +1,14 @@
 {
-  "name": "freetool---ai-代码高亮",
+  "name": "freetool",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:cf": "BASE_URL=/ npm run build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@google/genai": "^1.29.1",
@@ -19,6 +21,7 @@
     "pptxgenjs": "^4.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {

@@ -42,6 +42,7 @@ export const loadHighlightJs = async (): Promise<void> => {
 declare global {
   interface Window {
     hljs?: {
+      highlight: (code: string, options: { language: string; ignoreIllegals?: boolean }) => { value: string };
       highlightElement: (element: HTMLElement) => void;
       highlightAll: () => void;
     };

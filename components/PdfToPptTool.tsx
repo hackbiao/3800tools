@@ -77,6 +77,7 @@ const PdfToPptTool: React.FC = () => {
 
                 // 渲染PDF页面到canvas
                 await page.render({
+                    canvas,
                     canvasContext: context,
                     viewport: viewport,
                 }).promise;

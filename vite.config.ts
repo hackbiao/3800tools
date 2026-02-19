@@ -5,54 +5,54 @@ import viteCompression from 'vite-plugin-compression';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    const isProduction = mode === 'production';
+    
+    const base = isProduction 
+        ? (process.env.BASE_URL || '/FreeTool/')
+        : '/';
+
     return {
-      base: mode === 'production' ? '/FreeTool/' : '/',
-      server: {
-        port: 3000,
-        host: '0.0.0.0',
-      },
-      plugins: [
-        react(),
-        // Gzip 压缩
-        viteCompression({
-          algorithm: 'gzip',
-          ext: '.gz',
-          threshold: 10240, // 仅压缩大于 10KB 的文件
-          deleteOriginFile: false,
-        }),
-        // Brotli 压缩（更高压缩率）
-        viteCompression({
-          algorithm: 'brotliCompress',
-          ext: '.br',
-          threshold: 10240,
-          deleteOriginFile: false,
-        }),
-      ],
-      define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-      },
-      resolve: {
-        alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
-      },
-      build: {
-        // 代码分割优化
-        rollupOptions: {
-          output: {
-            manualChunks: {
-              'react-vendor': ['react', 'react-dom'],
-              'pdf-vendor': ['pdfjs-dist', 'pptxgenjs'],
-            },
-          },
+        base,
+        server: {
+            port: 3000,
+            host: '0.0.0.0',
         },
-        // 启用 CSS 代码分割
-        cssCodeSplit: true,
-        // 生成 sourcemap 仅在开发环境
-        sourcemap: mode !== 'production',
-        // 优化分块大小警告阈值
-        chunkSizeWarningLimit: 1000,
-      },
+        plugins: [
+            react(),
+            viteCompression({
+                algorithm: 'gzip',
+                ext: '.gz',
+                threshold: 10240,
+                deleteOriginFile: false,
+            }),
+            viteCompression({
+                algorithm: 'brotliCompress',
+                ext: '.br',
+                threshold: 10240,
+                deleteOriginFile: false,
+            }),
+        ],
+        define: {
+            'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+            'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        },
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, '.'),
+            }
+        },
+        build: {
+            rollupOptions: {
+                output: {
+                    manualChunks: {
+                        'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+                        'pdf-vendor': ['pdfjs-dist', 'pptxgenjs'],
+                    },
+                },
+            },
+            cssCodeSplit: true,
+            sourcemap: mode !== 'production',
+            chunkSizeWarningLimit: 1000,
+        },
     };
 });
