@@ -7,9 +7,10 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     const isProduction = mode === 'production';
     
-    const base = isProduction 
-        ? (process.env.BASE_URL || '/FreeTool/')
-        : '/';
+    // 优先使用环境变量，否则根据部署平台设置默认值
+    const base = process.env.BASE_URL || env.BASE_URL || (isProduction ? '/FreeTool/' : '/');
+
+    console.log('Build config - base:', base);
 
     return {
         base,

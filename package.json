@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:cf": "BASE_URL=/ npm run build",
+    "build:cf": "BASE_URL=/ vite build",
+    "build:edgeone": "BASE_URL=/ vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
