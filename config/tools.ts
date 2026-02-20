@@ -25,8 +25,341 @@ const ImageWatermarkRemoverTool = lazy(() => import('../components/ImageWatermar
 const MindMapTool = lazy(() => import('../components/MindMapTool'));
 const DrawingTool = lazy(() => import('../components/DrawingTool'));
 const VRAMCalculatorTool = lazy(() => import('../components/VRAMCalculatorTool'));
+const MortgageCalculator = lazy(() => import('../components/MortgageCalculator'));
+const PensionCalculator = lazy(() => import('../components/PensionCalculator'));
+const TaxCalculator = lazy(() => import('../components/TaxCalculator'));
+const QRCodeGenerator = lazy(() => import('../components/QRCodeGenerator'));
+const ChineseConverter = lazy(() => import('../components/ChineseConverter'));
+const TimestampConverter = lazy(() => import('../components/TimestampConverter'));
+const Base64Tool = lazy(() => import('../components/Base64Tool'));
+const PasswordGenerator = lazy(() => import('../components/PasswordGenerator'));
+const UuidGenerator = lazy(() => import('../components/UuidGenerator'));
+const ColorPicker = lazy(() => import('../components/ColorPicker'));
+const IdCardParser = lazy(() => import('../components/IdCardParser'));
+const UnitConverter = lazy(() => import('../components/UnitConverter'));
+const HashCalculator = lazy(() => import('../components/HashCalculator'));
+const RegexTester = lazy(() => import('../components/RegexTester'));
+const NumberBaseConverter = lazy(() => import('../components/NumberBaseConverter'));
+const CryptoTool = lazy(() => import('../components/CryptoTool'));
+const CronParser = lazy(() => import('../components/CronParser'));
+const BMICalculator = lazy(() => import('../components/BMICalculator'));
+const DateCalculator = lazy(() => import('../components/DateCalculator'));
+const Stopwatch = lazy(() => import('../components/Stopwatch'));
+const CountdownTimer = lazy(() => import('../components/CountdownTimer'));
+const TextStatistics = lazy(() => import('../components/TextStatistics'));
+const TextTransform = lazy(() => import('../components/TextTransform'));
+const LoanCalculator = lazy(() => import('../components/LoanCalculator'));
+const WorldClock = lazy(() => import('../components/WorldClock'));
+const PercentageCalculator = lazy(() => import('../components/PercentageCalculator'));
+const ScientificCalculator = lazy(() => import('../components/ScientificCalculator'));
+const IPConverter = lazy(() => import('../components/IPConverter'));
+const IPSubnetCalculator = lazy(() => import('../components/IPSubnetCalculator'));
+const ImageCompressor = lazy(() => import('../components/ImageCompressor'));
+const AgeCalculator = lazy(() => import('../components/AgeCalculator'));
+const EncodingConverter = lazy(() => import('../components/EncodingConverter'));
+const NumberGenerator = lazy(() => import('../components/NumberGenerator'));
+const StatusCodeLookup = lazy(() => import('../components/StatusCodeLookup'));
+const PortLookup = lazy(() => import('../components/PortLookup'));
+const URLParser = lazy(() => import('../components/URLParser'));
+const BrowserFingerprint = lazy(() => import('../components/BrowserFingerprint'));
+const CurlGenerator = lazy(() => import('../components/CurlGenerator'));
 
 export const TOOL_CATEGORIES: ToolCategory[] = [
+    {
+        id: 'calculator',
+        name: '计算工具',
+        icon: 'calculate',
+        description: '房贷、个税、养老金等实用计算器',
+        tools: [
+            {
+                id: 'mortgage-calculator',
+                name: '房贷计算器',
+                icon: 'home',
+                path: '/mortgage-calculator',
+                description: '免费在线房贷计算器，支持等额本息、等额本金两种还款方式，精确计算月供、利息总额，买房必备工具。',
+                keywords: ['房贷计算器', '房贷计算', '等额本息', '等额本金', '月供计算', '房贷利率', '贷款计算器', '买房贷款'],
+                component: MortgageCalculator,
+            },
+            {
+                id: 'pension-calculator',
+                name: '养老金计算器',
+                icon: 'elderly',
+                path: '/pension-calculator',
+                description: '免费在线养老金计算器，估算退休后可领取的养老金金额，支持自定义缴费基数、缴费年限等参数。',
+                keywords: ['养老金计算器', '退休金计算', '养老金估算', '社保计算', '退休规划', '养老保险', '养老金预测'],
+                component: PensionCalculator,
+            },
+            {
+                id: 'tax-calculator',
+                name: '个税计算器',
+                icon: 'payments',
+                path: '/tax-calculator',
+                description: '免费在线个税计算器，计算个人所得税，支持五险一金、专项附加扣除，最新个税税率表。',
+                keywords: ['个税计算器', '个人所得税', '个税计算', '工资计算', '税后工资', '个税税率', '专项扣除', '五险一金'],
+                component: TaxCalculator,
+            },
+            {
+                id: 'vram-calculator',
+                name: '显存计算器',
+                icon: 'memory',
+                path: '/vram-calculator',
+                description: '免费在线AI模型显存计算器，计算训练模型所需显存，优化训练参数，深度学习必备工具。',
+                keywords: ['显存计算', 'GPU计算', 'AI训练', '深度学习', '显卡计算', '模型训练', 'CUDA计算'],
+                component: VRAMCalculatorTool,
+            },
+            {
+                id: 'bmi-calculator',
+                name: 'BMI计算器',
+                icon: 'monitor_weight',
+                path: '/bmi-calculator',
+                description: '免费在线BMI体重指数计算器，计算身体质量指数，评估体重是否健康，提供理想体重建议。',
+                keywords: ['BMI计算器', '体重指数', 'BMI', '体重计算', '健康体重', '理想体重'],
+                component: BMICalculator,
+            },
+            {
+                id: 'date-calculator',
+                name: '日期计算器',
+                icon: 'event',
+                path: '/date-calculator',
+                description: '免费在线日期计算器，计算日期间隔、推算日期，支持加减天数、月份、年份。',
+                keywords: ['日期计算', '日期间隔', '日期推算', '天数计算', '日期差', '日期工具'],
+                component: DateCalculator,
+            },
+            {
+                id: 'percentage-calculator',
+                name: '百分比计算',
+                icon: 'percent',
+                path: '/percentage-calculator',
+                description: '免费在线百分比计算器，计算百分比、增长率、占比等常见百分比问题。',
+                keywords: ['百分比计算', '百分比', '增长率', '占比计算', '百分比工具'],
+                component: PercentageCalculator,
+            },
+            {
+                id: 'scientific-calculator',
+                name: '科学计算器',
+                icon: 'calculate',
+                path: '/scientific-calculator',
+                description: '免费在线科学计算器，支持三角函数、对数、幂运算等科学计算功能。',
+                keywords: ['科学计算器', '计算器', '三角函数', '对数', '数学计算'],
+                component: ScientificCalculator,
+            },
+            {
+                id: 'loan-calculator',
+                name: '贷款计算器',
+                icon: 'account_balance',
+                path: '/loan-calculator',
+                description: '免费在线贷款计算器，计算各类贷款的月供、总利息，适用于车贷、消费贷等。',
+                keywords: ['贷款计算器', '贷款计算', '月供计算', '利息计算', '车贷计算', '消费贷'],
+                component: LoanCalculator,
+            },
+            {
+                id: 'age-calculator',
+                name: '年龄计算器',
+                icon: 'cake',
+                path: '/age-calculator',
+                description: '免费在线年龄计算器，计算精确年龄、星座、生肖，距离下次生日还有多少天。',
+                keywords: ['年龄计算', '年龄', '生日计算', '星座查询', '生肖查询', '周岁'],
+                component: AgeCalculator,
+            },
+        ],
+    },
+    {
+        id: 'utility',
+        name: '便民工具',
+        icon: 'widgets',
+        description: '二维码生成、单位换算等便民小工具',
+        tools: [
+            {
+                id: 'qrcode-generator',
+                name: '二维码生成器',
+                icon: 'qr_code_2',
+                path: '/qrcode-generator',
+                description: '免费在线二维码生成器，支持自定义颜色、尺寸、容错级别，一键下载PNG图片，支持网址、文本等内容。',
+                keywords: ['二维码生成', '二维码制作', 'QR码生成', '在线二维码', '二维码工具', '网址二维码', '文本二维码'],
+                component: QRCodeGenerator,
+            },
+            {
+                id: 'chinese-converter',
+                name: '简繁体转换',
+                icon: 'translate',
+                path: '/chinese-converter',
+                description: '免费在线简繁体转换工具，支持简体中文与繁体中文互相转换，适合阅读繁体文章、文档转换。',
+                keywords: ['简繁体转换', '简体转繁体', '繁体转简体', '中文转换', '简体字', '繁体字', '字体转换'],
+                component: ChineseConverter,
+            },
+            {
+                id: 'timestamp-converter',
+                name: '时间戳转换',
+                icon: 'schedule',
+                path: '/timestamp-converter',
+                description: '免费在线Unix时间戳转换工具，时间戳与日期时间互转，支持秒级和毫秒级时间戳。',
+                keywords: ['时间戳转换', 'Unix时间戳', '时间戳', '日期转换', '时间转换', '时间戳工具', '在线转换'],
+                component: TimestampConverter,
+            },
+            {
+                id: 'base64-tool',
+                name: 'Base64编解码',
+                icon: 'code',
+                path: '/base64-tool',
+                description: '免费在线Base64编码解码工具，支持文本和图片的Base64编解码，支持中文字符。',
+                keywords: ['Base64', 'Base64编码', 'Base64解码', '编码工具', '图片Base64', 'Base64转换'],
+                component: Base64Tool,
+            },
+            {
+                id: 'password-generator',
+                name: '密码生成器',
+                icon: 'password',
+                path: '/password-generator',
+                description: '免费在线随机密码生成器，生成高强度随机密码，支持自定义长度和字符类型，安全可靠。',
+                keywords: ['密码生成', '随机密码', '密码工具', '强密码', '密码生成器', '安全密码'],
+                component: PasswordGenerator,
+            },
+            {
+                id: 'uuid-generator',
+                name: 'UUID生成器',
+                icon: 'fingerprint',
+                path: '/uuid-generator',
+                description: '免费在线UUID/GUID生成器，批量生成UUID，支持UUID v1和v4版本，一键复制。',
+                keywords: ['UUID生成', 'GUID', 'UUID', '唯一标识符', 'UUID工具', '批量生成'],
+                component: UuidGenerator,
+            },
+            {
+                id: 'color-picker',
+                name: '颜色转换器',
+                icon: 'palette',
+                path: '/color-picker',
+                description: '免费在线颜色转换工具，RGB、HEX、HSL颜色格式互转，支持颜色选择器和预设颜色。',
+                keywords: ['颜色转换', 'RGB转换', 'HEX转换', 'HSL转换', '取色器', '颜色选择', '颜色工具'],
+                component: ColorPicker,
+            },
+            {
+                id: 'id-card-parser',
+                name: '身份证解析',
+                icon: 'badge',
+                path: '/id-card-parser',
+                description: '免费在线身份证号码解析工具，解析身份证获取出生日期、性别、籍贯等信息。',
+                keywords: ['身份证解析', '身份证查询', '身份证信息', '身份证校验', '身份证工具'],
+                component: IdCardParser,
+            },
+            {
+                id: 'unit-converter',
+                name: '单位换算',
+                icon: 'straighten',
+                path: '/unit-converter',
+                description: '免费在线单位换算工具，支持长度、重量、面积、体积、温度、数据存储等单位互转。',
+                keywords: ['单位换算', '单位转换', '长度换算', '重量换算', '面积换算', '温度转换'],
+                component: UnitConverter,
+            },
+            {
+                id: 'hash-calculator',
+                name: 'Hash计算器',
+                icon: 'fingerprint',
+                path: '/hash-calculator',
+                description: '免费在线Hash计算工具，计算MD5、SHA-1、SHA-256等哈希值，支持文本和文件。',
+                keywords: ['Hash计算', 'MD5', 'SHA256', '哈希值', '文件校验', '哈希工具'],
+                component: HashCalculator,
+            },
+            {
+                id: 'regex-tester',
+                name: '正则测试',
+                icon: 'rule',
+                path: '/regex-tester',
+                description: '免费在线正则表达式测试工具，实时测试正则匹配，高亮显示匹配结果。',
+                keywords: ['正则表达式', '正则测试', 'Regex', '正则工具', '匹配测试'],
+                component: RegexTester,
+            },
+            {
+                id: 'number-base-converter',
+                name: '进制转换',
+                icon: 'functions',
+                path: '/number-base-converter',
+                description: '免费在线进制转换工具，支持二进制、八进制、十进制、十六进制互转。',
+                keywords: ['进制转换', '二进制', '八进制', '十进制', '十六进制', '数制转换'],
+                component: NumberBaseConverter,
+            },
+            {
+                id: 'crypto-tool',
+                name: 'AES加密解密',
+                icon: 'lock',
+                path: '/crypto-tool',
+                description: '免费在线AES加密解密工具，支持AES-GCM和AES-CBC算法，数据本地处理更安全。',
+                keywords: ['AES加密', 'AES解密', '加密工具', '数据加密', '对称加密'],
+                component: CryptoTool,
+            },
+            {
+                id: 'cron-parser',
+                name: 'Cron表达式',
+                icon: 'schedule',
+                path: '/cron-parser',
+                description: '免费在线Cron表达式解析工具，解析定时任务表达式，显示下次执行时间。',
+                keywords: ['Cron表达式', '定时任务', 'Cron解析', '定时器', '任务调度'],
+                component: CronParser,
+            },
+            {
+                id: 'stopwatch',
+                name: '秒表计时',
+                icon: 'timer',
+                path: '/stopwatch',
+                description: '免费在线秒表计时器，精确到毫秒，支持计次功能，适用于运动、实验等计时场景。',
+                keywords: ['秒表', '计时器', '在线秒表', '计次', '运动计时', '精确计时'],
+                component: Stopwatch,
+            },
+            {
+                id: 'countdown-timer',
+                name: '倒计时器',
+                icon: 'hourglass_empty',
+                path: '/countdown-timer',
+                description: '免费在线倒计时器，支持自定义时间，番茄工作法、休息提醒等场景。',
+                keywords: ['倒计时', '计时器', '番茄钟', '定时提醒', '倒计时工具', '专注计时'],
+                component: CountdownTimer,
+            },
+            {
+                id: 'world-clock',
+                name: '世界时钟',
+                icon: 'public',
+                path: '/world-clock',
+                description: '免费在线世界时钟，查看全球各时区当前时间，支持添加多个城市。',
+                keywords: ['世界时钟', '世界时间', '时区查询', '各国时间', '时区转换', '全球时间'],
+                component: WorldClock,
+            },
+            {
+                id: 'ip-converter',
+                name: 'IP地址转换',
+                icon: 'lan',
+                path: '/ip-converter',
+                description: '免费在线IP地址转换工具，IP地址与十进制、二进制、十六进制互转。',
+                keywords: ['IP转换', 'IP地址', '十进制IP', '二进制IP', 'IP工具'],
+                component: IPConverter,
+            },
+            {
+                id: 'ip-subnet-calculator',
+                name: 'IP子网计算',
+                icon: 'hub',
+                path: '/ip-subnet-calculator',
+                description: '免费在线IP子网计算器，计算子网掩码、网络地址、可用主机数等信息。',
+                keywords: ['子网计算', '子网掩码', 'CIDR', '网络地址', '子网划分'],
+                component: IPSubnetCalculator,
+            },
+            {
+                id: 'number-generator',
+                name: '随机数生成',
+                icon: 'casino',
+                path: '/number-generator',
+                description: '免费在线随机数生成工具，生成指定范围内的随机数字，支持不重复抽取。',
+                keywords: ['随机数', '随机数生成', '抽奖', '随机选择', '掷骰子'],
+                component: NumberGenerator,
+            },
+            {
+                id: 'encoding-converter',
+                name: '编码转换',
+                icon: 'code_blocks',
+                path: '/encoding-converter',
+                description: '免费在线文本编码转换工具，支持UTF-8、GBK、Big5等多种编码格式。',
+                keywords: ['编码转换', '字符编码', 'UTF-8', 'GBK', 'Big5', '编码工具'],
+                component: EncodingConverter,
+            },
+        ],
+    },
     {
         id: 'text',
         name: '文本工具',
@@ -86,6 +419,24 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 description: '免费在线文本差异对比工具，对比两段文本的差异，高亮显示不同之处，支持代码对比。',
                 keywords: ['文本对比', '差异对比', '文本比较', '代码对比', '在线对比工具', '文本差异'],
                 component: TextDiffTool,
+            },
+            {
+                id: 'text-statistics',
+                name: '文字统计',
+                icon: 'query_stats',
+                path: '/text-statistics',
+                description: '免费在线文字统计工具，统计字符数、词数、行数、段落数，估算阅读时间。',
+                keywords: ['文字统计', '字数统计', '字符统计', '词数统计', '字数计算', '文章统计'],
+                component: TextStatistics,
+            },
+            {
+                id: 'text-transform',
+                name: '文本转换',
+                icon: 'text_fields',
+                path: '/text-transform',
+                description: '免费在线文本转换工具，大小写转换、命名风格转换，支持驼峰、下划线、短横线等格式。',
+                keywords: ['文本转换', '大小写转换', '命名转换', '驼峰命名', '下划线命名', '格式转换'],
+                component: TextTransform,
             },
         ],
     },
@@ -148,6 +499,15 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 description: '免费在线AI图片水印去除工具，智能识别并去除图片水印，还原图片原貌，效果自然。',
                 keywords: ['去水印', '水印去除', '图片修复', 'AI去水印', '在线去水印', '图片处理', '水印清除'],
                 component: ImageWatermarkRemoverTool,
+            },
+            {
+                id: 'image-compressor',
+                name: '图片压缩',
+                icon: 'compress',
+                path: '/image-compressor',
+                description: '免费在线图片压缩工具，支持JPG、PNG格式，可调节压缩质量，批量压缩下载。',
+                keywords: ['图片压缩', '图片缩小', '压缩图片', '在线压缩', '批量压缩', '图片优化'],
+                component: ImageCompressor,
             },
         ],
     },
@@ -237,15 +597,6 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
         description: 'AI智能工具，提升工作效率',
         tools: [
             {
-                id: 'vram-calculator',
-                name: '显存计算器',
-                icon: 'memory',
-                path: '/vram-calculator',
-                description: '免费在线AI模型显存计算器，计算训练模型所需显存，优化训练参数，深度学习必备工具。',
-                keywords: ['显存计算', 'GPU计算', 'AI训练', '深度学习', '显卡计算', '模型训练', 'CUDA计算'],
-                component: VRAMCalculatorTool,
-            },
-            {
                 id: 'image-to-prompt',
                 name: '图片转提示词',
                 icon: 'image_search',
@@ -280,6 +631,77 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 description: '免费在线MBTI人格测试，专业的性格测试问卷，了解自己的性格类型，职业规划参考。',
                 keywords: ['MBTI', '人格测试', '性格测试', '心理测试', '职业测试', '人格类型', '16型人格'],
                 component: MBTITestTool,
+            },
+        ],
+    },
+    {
+        id: 'network',
+        name: '网络工具',
+        icon: 'cloud',
+        description: 'IP地址、端口、HTTP状态码等网络相关工具',
+        tools: [
+            {
+                id: 'ip-converter',
+                name: 'IP地址转换',
+                icon: 'lan',
+                path: '/ip-converter',
+                description: '免费在线IP地址转换工具，IP地址与十进制、二进制、十六进制互转，验证IP地址有效性。',
+                keywords: ['IP转换', 'IP地址', '十进制IP', '二进制IP', 'IP工具', 'IP地址验证'],
+                component: IPConverter,
+            },
+            {
+                id: 'ip-subnet-calculator',
+                name: 'IP子网计算',
+                icon: 'hub',
+                path: '/ip-subnet-calculator',
+                description: '免费在线IP子网计算器，计算子网掩码、网络地址、可用主机数等子网信息。',
+                keywords: ['子网计算', '子网掩码', 'CIDR', '网络地址', '子网划分', 'IP子网'],
+                component: IPSubnetCalculator,
+            },
+            {
+                id: 'status-code-lookup',
+                name: 'HTTP状态码',
+                icon: 'http',
+                path: '/status-code-lookup',
+                description: '免费在线HTTP状态码查询工具，查询HTTP状态码含义，了解常见响应码。',
+                keywords: ['HTTP状态码', '状态码查询', 'HTTP响应', 'HTTP错误', '状态码含义'],
+                component: StatusCodeLookup,
+            },
+            {
+                id: 'port-lookup',
+                name: '端口查询',
+                icon: 'settings_ethernet',
+                path: '/port-lookup',
+                description: '免费在线端口查询工具，查询常用网络端口及其用途，了解端口范围分类。',
+                keywords: ['端口查询', '网络端口', '端口号', '常用端口', '端口列表'],
+                component: PortLookup,
+            },
+            {
+                id: 'url-parser',
+                name: 'URL解析器',
+                icon: 'link',
+                path: '/url-parser',
+                description: '免费在线URL解析工具，解析URL结构，提取协议、域名、路径、参数等信息。',
+                keywords: ['URL解析', 'URL编码', 'URL解码', '网址解析', 'URL工具'],
+                component: URLParser,
+            },
+            {
+                id: 'browser-fingerprint',
+                name: '浏览器指纹',
+                icon: 'fingerprint',
+                path: '/browser-fingerprint',
+                description: '免费在线浏览器指纹查看工具，查看当前浏览器的详细信息、硬件配置和网络状态。',
+                keywords: ['浏览器指纹', '浏览器信息', '设备信息', 'UserAgent', '屏幕信息'],
+                component: BrowserFingerprint,
+            },
+            {
+                id: 'curl-generator',
+                name: 'Curl生成器',
+                icon: 'terminal',
+                path: '/curl-generator',
+                description: '免费在线Curl命令生成器，生成HTTP请求的curl命令，支持自定义请求头和请求体。',
+                keywords: ['Curl生成', 'Curl命令', 'HTTP请求', 'API测试', '命令行工具'],
+                component: CurlGenerator,
             },
         ],
     },

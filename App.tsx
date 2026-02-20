@@ -28,6 +28,13 @@ const ToolRoute: React.FC<ToolRouteProps> = ({ component: Component }) => (
     </ToolLayout>
 );
 
+const HomeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <>
+        <TopNavBar />
+        {children}
+    </>
+);
+
 const CategoryLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <>
         <TopNavBar />
@@ -39,7 +46,11 @@ const App: React.FC = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={
+                    <HomeLayout>
+                        <HomePage />
+                    </HomeLayout>
+                } />
                 <Route path="/category/:categoryId" element={
                     <CategoryLayout>
                         <CategoryPage />

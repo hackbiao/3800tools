@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ALL_TOOLS, TOOL_CATEGORIES } from '../config/tools';
-import type { Tool } from '../types/tools';
+import type { Tool, ToolCategory } from '../types/tools';
 
 const getAssetUrl = (path: string) => {
     const base = import.meta.env.BASE_URL || '/';
@@ -13,8 +13,11 @@ const TopNavBar: React.FC = () => {
     const [searchResults, setSearchResults] = useState<Tool[]>([]);
     const [showSearch, setShowSearch] = useState(false);
     const [isDark, setIsDark] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
     const searchInputRef = useRef<HTMLInputElement>(null);
     const searchRef = useRef<HTMLDivElement>(null);
+    const categoryRefs = useRef<Record<string, HTMLAnchorElement>>({});
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -46,6 +49,21 @@ const TopNavBar: React.FC = () => {
             setSearchResults([]);
         }
     }, [searchQuery]);
+
+    const handleCategoryHover = (categoryId: string, element: HTMLAnchorElement | null) => {
+        if (element) {
+            const rect = element.getBoundingClientRect();
+            setDropdownPosition({
+                top: rect.bottom + 4,
+                left: rect.left,
+            });
+            setActiveDropdown(categoryId);
+        }
+    };
+
+    const handleCategoryLeave = () => {
+        setActiveDropdown(null);
+    };
 
     const handleSearch = useCallback((e: React.FormEvent) => {
         e.preventDefault();
@@ -197,37 +215,48 @@ const TopNavBar: React.FC = () => {
                             </>
                         )}
                         {TOOL_CATEGORIES.map((category) => (
-                            <div 
-                                key={category.id} 
-                                className="relative flex-shrink-0 group"
+                            <Link
+                                key={category.id}
+                                ref={(el) => { if (el) categoryRefs.current[category.id] = el; }}
+                                to={`/category/${category.id}`}
+                                onMouseEnter={(e) => handleCategoryHover(category.id, e.currentTarget)}
+                                onMouseLeave={handleCategoryLeave}
+                                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap flex-shrink-0"
                             >
-                                <Link
-                                    to={`/category/${category.id}`}
-                                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors whitespace-nowrap"
-                                >
-                                    <span className="material-symbols-outlined text-sm">{category.icon}</span>
-                                    {category.name}
-                                </Link>
-                                {/* 下拉菜单 - 使用 CSS group-hover */}
-                                <div className="absolute top-full left-0 mt-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-[99999]">
-                                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 w-52 py-1">
-                                        {category.tools.map((tool) => (
-                                            <Link
-                                                key={tool.id}
-                                                to={tool.path}
-                                                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                                            >
-                                                <span className="material-symbols-outlined text-sm text-primary">{tool.icon}</span>
-                                                {tool.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
+                                <span className="material-symbols-outlined text-sm">{category.icon}</span>
+                                {category.name}
+                            </Link>
                         ))}
                     </nav>
                 </div>
             </div>
+
+            {/* 下拉菜单 - fixed定位避免被裁剪 */}
+            {activeDropdown && (
+                <div 
+                    className="fixed z-[100000] pointer-events-auto"
+                    style={{ 
+                        top: dropdownPosition.top, 
+                        left: dropdownPosition.left 
+                    }}
+                    onMouseEnter={() => setActiveDropdown(activeDropdown)}
+                    onMouseLeave={handleCategoryLeave}
+                >
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 w-56 py-2 max-h-80 overflow-y-auto">
+                        {TOOL_CATEGORIES.find(c => c.id === activeDropdown)?.tools.map((tool) => (
+                            <Link
+                                key={tool.id}
+                                to={tool.path}
+                                onClick={() => setActiveDropdown(null)}
+                                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                            >
+                                <span className="material-symbols-outlined text-sm text-primary">{tool.icon}</span>
+                                {tool.name}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
         </header>
     );
 };
