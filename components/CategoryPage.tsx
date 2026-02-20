@@ -5,11 +5,15 @@ import MetaTags from './MetaTags';
 import type { ToolCategory, Tool } from '../types/tools';
 
 const gradientColors: Record<string, string> = {
-    text: 'from-blue-500 to-cyan-400',
-    image: 'from-purple-500 to-pink-400',
-    data: 'from-green-500 to-emerald-400',
-    media: 'from-orange-500 to-amber-400',
-    ai: 'from-rose-500 to-red-400',
+    calculator: 'from-blue-500 to-cyan-400',
+    utility: 'from-purple-500 to-pink-400',
+    text: 'from-green-500 to-emerald-400',
+    image: 'from-orange-500 to-amber-400',
+    data: 'from-teal-500 to-cyan-400',
+    media: 'from-pink-500 to-rose-400',
+    ai: 'from-violet-500 to-purple-400',
+    network: 'from-indigo-500 to-blue-400',
+    dev: 'from-rose-500 to-red-400',
 };
 
 const CategoryPage: React.FC = () => {

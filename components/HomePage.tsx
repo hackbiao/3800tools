@@ -12,13 +12,17 @@ const getAssetUrl = (path: string) => {
 const HomePage: React.FC = () => {
     const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
-    const gradientColors = [
-        'from-blue-500 to-cyan-400',
-        'from-purple-500 to-pink-400',
-        'from-green-500 to-emerald-400',
-        'from-orange-500 to-amber-400',
-        'from-rose-500 to-red-400',
-    ];
+const gradientColors: Record<string, string> = {
+    calculator: 'from-blue-500 to-cyan-400',
+    utility: 'from-purple-500 to-pink-400',
+    text: 'from-green-500 to-emerald-400',
+    image: 'from-orange-500 to-amber-400',
+    data: 'from-teal-500 to-cyan-400',
+    media: 'from-pink-500 to-rose-400',
+    ai: 'from-violet-500 to-purple-400',
+    network: 'from-indigo-500 to-blue-400',
+    dev: 'from-rose-500 to-red-400',
+};
 
     const categoryBgColors = [
         'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30',
@@ -121,7 +125,7 @@ const HomePage: React.FC = () => {
 interface CategorySectionProps {
     category: ToolCategory;
     categoryIndex: number;
-    gradientColors: string[];
+    gradientColors: Record<string, string>;
     categoryBgColors: string[];
     hoveredTool: string | null;
     setHoveredTool: (id: string | null) => void;
@@ -135,11 +139,12 @@ const CategorySection: React.FC<CategorySectionProps> = ({
     hoveredTool,
     setHoveredTool,
 }) => {
+    const categoryGradient = gradientColors[category.id] || 'from-blue-500 to-cyan-400';
     return (
         <div className="mb-10">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradientColors[categoryIndex % gradientColors.length]} flex items-center justify-center shadow-lg`}>
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryGradient} flex items-center justify-center shadow-lg`}>
                         <span className="material-symbols-outlined text-white text-xl">
                             {category.icon}
                         </span>
@@ -170,7 +175,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
                             tool={tool}
                             isHovered={hoveredTool === tool.id}
                             onHover={setHoveredTool}
-                            gradientColor={gradientColors[categoryIndex % gradientColors.length]}
+                            gradientColor={categoryGradient}
                         />
                     ))}
                 </div>
