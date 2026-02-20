@@ -21,10 +21,10 @@ const ChineseToPinyin: React.FC = () => {
         try {
             if (mode === 'initials') {
                 const result = pinyin(inputText, { pattern: 'first', toneType: 'none' });
-                setOutputText(result.join(''));
+                setOutputText(typeof result === 'string' ? result : (result as string[]).join(''));
             } else {
                 const result = pinyin(inputText, options);
-                setOutputText(result);
+                setOutputText(result as string);
             }
         } catch (err) {
             console.error('转换失败:', err);

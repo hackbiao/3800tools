@@ -63,6 +63,24 @@ const PortLookup = lazy(() => import('../components/PortLookup'));
 const URLParser = lazy(() => import('../components/URLParser'));
 const BrowserFingerprint = lazy(() => import('../components/BrowserFingerprint'));
 const CurlGenerator = lazy(() => import('../components/CurlGenerator'));
+const ImageWatermark = lazy(() => import('../components/ImageWatermark'));
+const ImageBgRemover = lazy(() => import('../components/ImageBgRemover'));
+const ImageToICO = lazy(() => import('../components/ImageToICO'));
+const GifMaker = lazy(() => import('../components/GifMaker'));
+const GifSplitter = lazy(() => import('../components/GifSplitter'));
+const GifCompressor = lazy(() => import('../components/GifCompressor'));
+const WordCloudGenerator = lazy(() => import('../components/WordCloudGenerator'));
+const GridImageCutter = lazy(() => import('../components/GridImageCutter'));
+const PhotoBgChanger = lazy(() => import('../components/PhotoBgChanger'));
+const MarkdownEditor = lazy(() => import('../components/MarkdownEditor'));
+const CodeFormatter = lazy(() => import('../components/CodeFormatter'));
+const JsonEscapeTool = lazy(() => import('../components/JsonEscapeTool'));
+const RandomDataGenerator = lazy(() => import('../components/RandomDataGenerator'));
+const MockDataGenerator = lazy(() => import('../components/MockDataGenerator'));
+const LinuxCommandDict = lazy(() => import('../components/LinuxCommandDict'));
+const ChineseToPinyin = lazy(() => import('../components/ChineseToPinyin'));
+const RelationshipCalculator = lazy(() => import('../components/RelationshipCalculator'));
+const ASCIIArtGenerator = lazy(() => import('../components/ASCIIArtGenerator'));
 
 export const TOOL_CATEGORIES: ToolCategory[] = [
     {
@@ -358,6 +376,24 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 keywords: ['编码转换', '字符编码', 'UTF-8', 'GBK', 'Big5', '编码工具'],
                 component: EncodingConverter,
             },
+            {
+                id: 'chinese-to-pinyin',
+                name: '中文转拼音',
+                icon: 'spellcheck',
+                path: '/chinese-to-pinyin',
+                description: '免费在线中文转拼音工具，将中文汉字转换为拼音，支持声调显示。',
+                keywords: ['中文转拼音', '拼音转换', '汉字拼音', '拼音工具'],
+                component: ChineseToPinyin,
+            },
+            {
+                id: 'relationship-calculator',
+                name: '亲戚关系计算',
+                icon: 'family_restroom',
+                path: '/relationship-calculator',
+                description: '免费在线亲戚关系计算器，计算中国亲戚关系的称呼，走亲访友必备。',
+                keywords: ['亲戚关系', '亲戚称呼', '关系计算', '家庭关系'],
+                component: RelationshipCalculator,
+            },
         ],
     },
     {
@@ -438,6 +474,15 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 keywords: ['文本转换', '大小写转换', '命名转换', '驼峰命名', '下划线命名', '格式转换'],
                 component: TextTransform,
             },
+            {
+                id: 'ascii-art',
+                name: 'ASCII艺术字',
+                icon: 'text_fields',
+                path: '/ascii-art',
+                description: '免费在线ASCII艺术字生成器，将文字转换为ASCII艺术字符画。',
+                keywords: ['ASCII艺术', '字符画', '艺术字', 'ASCII生成'],
+                component: ASCIIArtGenerator,
+            },
         ],
     },
     {
@@ -508,6 +553,87 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 description: '免费在线图片压缩工具，支持JPG、PNG格式，可调节压缩质量，批量压缩下载。',
                 keywords: ['图片压缩', '图片缩小', '压缩图片', '在线压缩', '批量压缩', '图片优化'],
                 component: ImageCompressor,
+            },
+            {
+                id: 'image-watermark',
+                name: '图片加水印',
+                icon: 'water_drop',
+                path: '/image-watermark',
+                description: '免费在线图片加水印工具，支持文字水印、平铺水印，可自定义字体、颜色、透明度。',
+                keywords: ['图片水印', '加水印', '水印工具', '图片保护', '在线水印'],
+                component: ImageWatermark,
+            },
+            {
+                id: 'image-bg-remover',
+                name: '图片去底色',
+                icon: 'layers_clear',
+                path: '/image-bg-remover',
+                description: '免费在线图片去底色工具，去除图片背景色，生成透明背景图片。',
+                keywords: ['去底色', '透明背景', '背景去除', '图片处理'],
+                component: ImageBgRemover,
+            },
+            {
+                id: 'image-to-ico',
+                name: '图片转ICO',
+                icon: 'favicon',
+                path: '/image-to-ico',
+                description: '免费在线图片转ICO图标工具，生成网站favicon图标，支持多种尺寸。',
+                keywords: ['ICO转换', 'favicon', '网站图标', '图标生成'],
+                component: ImageToICO,
+            },
+            {
+                id: 'gif-maker',
+                name: 'GIF制作',
+                icon: 'gif',
+                path: '/gif-maker',
+                description: '免费在线GIF制作工具，将多张静态图片合成GIF动图，可调节帧延迟。',
+                keywords: ['GIF制作', '动图生成', '图片合成', 'GIF工具'],
+                component: GifMaker,
+            },
+            {
+                id: 'gif-splitter',
+                name: 'GIF分解',
+                icon: 'view_module',
+                path: '/gif-splitter',
+                description: '免费在线GIF分解工具，将GIF动图拆分为单独的帧图片，可单独下载。',
+                keywords: ['GIF分解', '动图拆分', '帧提取', 'GIF工具'],
+                component: GifSplitter,
+            },
+            {
+                id: 'gif-compressor',
+                name: 'GIF压缩',
+                icon: 'compress',
+                path: '/gif-compressor',
+                description: '免费在线GIF压缩工具，压缩GIF动图减小文件大小，可调节压缩质量。',
+                keywords: ['GIF压缩', '动图压缩', 'GIF优化', '文件压缩'],
+                component: GifCompressor,
+            },
+            {
+                id: 'word-cloud',
+                name: '词云图生成',
+                icon: 'cloud',
+                path: '/word-cloud',
+                description: '免费在线词云图生成工具，输入关键词一键生成精美词云图。',
+                keywords: ['词云', '词云图', '文字云', '可视化'],
+                component: WordCloudGenerator,
+            },
+            {
+                id: 'grid-image-cutter',
+                name: '九宫格切图',
+                icon: 'grid_on',
+                path: '/grid-image-cutter',
+                description: '免费在线九宫格切图工具，将图片切割成九宫格，适合社交平台分享。',
+                keywords: ['九宫格', '切图', '图片切割', '社交分享'],
+                component: GridImageCutter,
+            },
+            {
+                id: 'photo-bg-changer',
+                name: '证件照换底色',
+                icon: 'badge',
+                path: '/photo-bg-changer',
+                description: '免费在线证件照换底色工具，支持红底、蓝底、白底，一键更换证件照背景。',
+                keywords: ['证件照', '换底色', '背景更换', '证件照处理'],
+                component: PhotoBgChanger,
             },
         ],
     },
@@ -702,6 +828,68 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
                 description: '免费在线Curl命令生成器，生成HTTP请求的curl命令，支持自定义请求头和请求体。',
                 keywords: ['Curl生成', 'Curl命令', 'HTTP请求', 'API测试', '命令行工具'],
                 component: CurlGenerator,
+            },
+        ],
+    },
+    {
+        id: 'dev',
+        name: '开发工具',
+        icon: 'code',
+        description: '代码编辑、格式化、数据生成等开发工具',
+        tools: [
+            {
+                id: 'markdown-editor',
+                name: 'Markdown编辑器',
+                icon: 'edit_note',
+                path: '/markdown-editor',
+                description: '免费在线Markdown编辑器，实时预览效果，支持导出HTML文件。',
+                keywords: ['Markdown', '编辑器', 'MD编辑', '文档编辑', '实时预览'],
+                component: MarkdownEditor,
+            },
+            {
+                id: 'code-formatter',
+                name: '代码格式化',
+                icon: 'format_align_left',
+                path: '/code-formatter',
+                description: '免费在线代码格式化工具，支持JS/HTML/CSS代码格式化和压缩。',
+                keywords: ['代码格式化', '代码压缩', 'JS格式化', 'HTML格式化', 'CSS格式化'],
+                component: CodeFormatter,
+            },
+            {
+                id: 'json-escape',
+                name: 'JSON转义工具',
+                icon: 'data_object',
+                path: '/json-escape',
+                description: '免费在线JSON转义工具，JSON字符串添加或去除反斜杠转义。',
+                keywords: ['JSON转义', 'JSON去反斜杠', '字符串转义', 'JSON处理'],
+                component: JsonEscapeTool,
+            },
+            {
+                id: 'random-data',
+                name: '随机数据生成',
+                icon: 'shuffle',
+                path: '/random-data',
+                description: '免费在线随机数据生成器，生成姓名、手机号、邮箱、地址等测试数据。',
+                keywords: ['随机数据', '测试数据', '数据生成', '模拟数据'],
+                component: RandomDataGenerator,
+            },
+            {
+                id: 'mock-data',
+                name: 'Mock数据生成',
+                icon: 'database',
+                path: '/mock-data',
+                description: '免费在线Mock数据生成器，生成SQL、JSON、CSV格式的模拟测试数据。',
+                keywords: ['Mock数据', '数据生成', 'SQL生成', '测试数据'],
+                component: MockDataGenerator,
+            },
+            {
+                id: 'linux-command',
+                name: 'Linux命令字典',
+                icon: 'terminal',
+                path: '/linux-command',
+                description: '免费在线Linux命令速查手册，常用Linux命令用法和示例。',
+                keywords: ['Linux命令', '命令大全', 'Linux教程', '命令速查'],
+                component: LinuxCommandDict,
             },
         ],
     },

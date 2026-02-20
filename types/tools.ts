@@ -62,9 +62,27 @@ export type ToolType =
     | 'port-lookup'
     | 'url-parser'
     | 'browser-fingerprint'
-    | 'curl-generator';
+    | 'curl-generator'
+    | 'image-watermark'
+    | 'image-bg-remover'
+    | 'image-to-ico'
+    | 'gif-maker'
+    | 'gif-splitter'
+    | 'gif-compressor'
+    | 'word-cloud'
+    | 'grid-image-cutter'
+    | 'photo-bg-changer'
+    | 'markdown-editor'
+    | 'code-formatter'
+    | 'json-escape'
+    | 'random-data'
+    | 'mock-data'
+    | 'linux-command'
+    | 'chinese-to-pinyin'
+    | 'relationship-calculator'
+    | 'ascii-art';
 
-export type CategoryType = 'text' | 'image' | 'data' | 'media' | 'ai' | 'calculator' | 'utility' | 'network';
+export type CategoryType = 'text' | 'image' | 'data' | 'media' | 'ai' | 'calculator' | 'utility' | 'network' | 'dev';
 
 export interface Tool {
     id: ToolType;
