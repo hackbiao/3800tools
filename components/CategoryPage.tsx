@@ -24,8 +24,8 @@ const CategoryPage: React.FC = () => {
         return (
             <>
                 <MetaTags
-                    title="全部分类 - 叁八零零在线工具箱"
-                    description="浏览叁八零零在线工具箱的所有工具分类，包括文本工具、图片工具、数据工具、媒体工具、AI工具等24+种实用工具。"
+                    title="全部分类 - 三八零零在线工具箱"
+                    description="浏览三八零零在线工具箱的所有工具分类，包括文本工具、图片工具、数据工具、媒体工具、AI工具等24+种实用工具。"
                     keywords="在线工具分类,免费工具,文本工具,图片工具,数据工具,媒体工具,AI工具"
                 />
                 <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24">
@@ -75,7 +75,7 @@ const CategoryPage: React.FC = () => {
     return (
         <>
             <MetaTags
-                title={`${category.name} - 叁八零零在线工具箱`}
+                title={`${category.name} - 三八零零在线工具箱`}
                 description={`${category.description}，包括${category.tools.map(t => t.name).join('、')}等多种实用工具。`}
                 keywords={`${category.name},${category.tools.map(t => t.name).join(',')},在线工具,免费工具`}
             />

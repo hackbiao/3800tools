@@ -6,8 +6,8 @@ const NotFoundPage: React.FC = () => {
     return (
         <>
             <MetaTags
-                title="页面未找到 - 叁八零零在线工具"
-                description="抱歉，您访问的页面不存在。返回叁八零零首页使用各种免费在线工具。"
+                title="页面未找到 - 三八零零在线工具"
+                description="抱歉，您访问的页面不存在。返回三八零零首页使用各种免费在线工具。"
                 keywords="404,页面未找到,在线工具,免费工具"
             />
 

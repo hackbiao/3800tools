@@ -9,47 +9,47 @@ const distDir = path.resolve(__dirname, 'dist');
 
 const routes = {
     '/': {
-        title: '叁八零零 - 在线免费工具箱 | 文本翻译、图片处理、代码高亮、PDF转换',
-        description: '叁八零零是一个免费的在线工具箱，提供在线翻译、图片格式转换、JSON格式化、代码高亮、思维导图、PDF转换等50+种实用工具，所有工具在浏览器本地运行，数据安全有保障。',
+        title: '三八零零 - 在线免费工具箱 | 文本翻译、图片处理、代码高亮、PDF转换',
+        description: '三八零零是一个免费的在线工具箱，提供在线翻译、图片格式转换、JSON格式化、代码高亮、思维导图、PDF转换等50+种实用工具，所有工具在浏览器本地运行，数据安全有保障。',
         keywords: '在线工具,免费工具,翻译工具,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,文本工具,图片编辑',
     },
     '/category/calculator': {
-        title: '计算工具 - 叁八零零在线工具箱',
+        title: '计算工具 - 三八零零在线工具箱',
         description: '房贷计算器、个税计算器、BMI计算器、日期计算器、科学计算器等实用计算工具。',
         keywords: '计算器,房贷计算,个税计算,BMI计算,日期计算',
     },
     '/category/utility': {
-        title: '便民工具 - 叁八零零在线工具箱',
+        title: '便民工具 - 三八零零在线工具箱',
         description: '时间戳转换、Base64编解码、密码生成器、二维码生成器、单位换算等便民工具。',
         keywords: '便民工具,时间戳转换,Base64,密码生成,二维码',
     },
     '/category/text': {
-        title: '文本工具 - 叁八零零在线工具箱',
+        title: '文本工具 - 三八零零在线工具箱',
         description: '在线翻译、代码高亮、JSON格式化、文本差异对比、文字统计等文本处理工具。',
         keywords: '文本工具,在线翻译,代码高亮,JSON格式化,文本对比',
     },
     '/category/image': {
-        title: '图片工具 - 叁八零零在线工具箱',
+        title: '图片工具 - 三八零零在线工具箱',
         description: '图片格式转换、图片编辑、图片拼接、图片压缩、水印去除等图片处理工具。',
         keywords: '图片工具,图片转换,图片编辑,图片压缩,去水印',
     },
     '/category/data': {
-        title: '数据工具 - 叁八零零在线工具箱',
+        title: '数据工具 - 三八零零在线工具箱',
         description: '表格格式转换、数学公式编辑、思维导图、绘图画布等数据处理工具。',
         keywords: '数据工具,表格转换,数学公式,思维导图',
     },
     '/category/media': {
-        title: '媒体工具 - 叁八零零在线工具箱',
+        title: '媒体工具 - 三八零零在线工具箱',
         description: '视频比例转换、PDF转PPT、PDF转长图等媒体处理工具。',
         keywords: '媒体工具,视频转换,PDF转换,PDF转PPT',
     },
     '/category/ai': {
-        title: 'AI工具 - 叁八零零在线工具箱',
+        title: 'AI工具 - 三八零零在线工具箱',
         description: '图片转提示词、简历生成器、提示词生成器、MBTI人格测试等AI智能工具。',
         keywords: 'AI工具,简历生成,提示词生成,MBTI测试',
     },
     '/category/network': {
-        title: '网络工具 - 叁八零零在线工具箱',
+        title: '网络工具 - 三八零零在线工具箱',
         description: 'IP地址转换、子网计算、HTTP状态码查询、端口查询、URL解析等网络工具。',
         keywords: '网络工具,IP转换,子网计算,HTTP状态码,端口查询',
     },
@@ -138,7 +138,7 @@ function generateStaticPages() {
     const allRoutes = { ...routes };
     tools.forEach(tool => {
         allRoutes[tool.path] = {
-            title: `${tool.name} - 叁八零零在线工具`,
+            title: `${tool.name} - 三八零零在线工具`,
             description: tool.description,
             keywords: `${tool.name},在线工具,免费工具`,
         };

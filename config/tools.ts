@@ -909,13 +909,13 @@ export const getToolSEO = (toolId: ToolType): ToolSEO => {
     const tool = getToolById(toolId);
     if (!tool) {
         return {
-            title: '叁八零零 - 在线免费工具箱',
-            description: '叁八零零提供在线翻译、图片处理、代码高亮等多种免费在线工具，无需注册，数据安全。',
+            title: '三八零零 - 在线免费工具箱',
+            description: '三八零零提供在线翻译、图片处理、代码高亮等多种免费在线工具，无需注册，数据安全。',
             keywords: '在线工具,免费工具,工具箱,翻译,图片处理',
         };
     }
     return {
-        title: `${tool.name} - 叁八零零在线工具`,
+        title: `${tool.name} - 三八零零在线工具`,
         description: tool.description,
         keywords: tool.keywords.join(','),
     };

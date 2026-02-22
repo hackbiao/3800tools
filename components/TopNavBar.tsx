@@ -104,13 +104,13 @@ const TopNavBar: React.FC = () => {
                             <source srcSet={getAssetUrl('assets/logo.webp')} type="image/webp" />
                             <img
                                 src={getAssetUrl('logo.png')}
-                                alt="叁八零零 Logo"
+                                alt="三八零零 Logo"
                                 className="w-8 h-8 rounded-lg object-cover transition-transform group-hover:scale-110"
                                 loading="eager"
                             />
                         </picture>
                         <div className="hidden sm:flex flex-col">
-                            <span className="text-gray-900 dark:text-white text-sm font-semibold leading-tight">叁八零零</span>
+                            <span className="text-gray-900 dark:text-white text-sm font-semibold leading-tight">三八零零</span>
                             <span className="text-gray-500 dark:text-gray-400 text-xs leading-tight">在线免费工具箱</span>
                         </div>
                     </Link>

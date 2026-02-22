@@ -11,7 +11,7 @@ interface WordItem {
 }
 
 const WordCloudGenerator: React.FC = () => {
-    const [text, setText] = useState('在线工具 叁八零零 免费 实用 文本处理 图片工具 开发工具 便民工具 效率 数据处理 前端 后端 JavaScript React TypeScript Python Java');
+    const [text, setText] = useState('在线工具 三八零零 免费 实用 文本处理 图片工具 开发工具 便民工具 效率 数据处理 前端 后端 JavaScript React TypeScript Python Java');
     const [width, setWidth] = useState(800);
     const [height, setHeight] = useState(400);
     const [minFontSize, setMinFontSize] = useState(14);

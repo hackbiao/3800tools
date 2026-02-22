@@ -3,7 +3,9 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://xdxsb.top/FreeTool/sitemap.xml
+Sitemap: https://tools.3800ai.com/sitemap.xml
 
 # Crawl delay (optional, in seconds)
 Crawl-delay: 1
+
+# Disallow admin or sensitive paths (none for this public tool site)

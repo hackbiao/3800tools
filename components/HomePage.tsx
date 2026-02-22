@@ -35,8 +35,8 @@ const gradientColors: Record<string, string> = {
     return (
         <>
             <MetaTags
-                title="叁八零零 - 在线免费工具箱 | 文本翻译、图片处理、代码高亮、PDF转换"
-                description="叁八零零是一个免费的在线工具箱，提供在线翻译、图片格式转换、JSON格式化、代码高亮、思维导图、PDF转换等24+种实用工具，所有工具在浏览器本地运行，数据安全有保障，无需注册即可使用。"
+                title="三八零零 - 在线免费工具箱 | 文本翻译、图片处理、代码高亮、PDF转换"
+                description="三八零零是一个免费的在线工具箱，提供在线翻译、图片格式转换、JSON格式化、代码高亮、思维导图、PDF转换等24+种实用工具，所有工具在浏览器本地运行，数据安全有保障，无需注册即可使用。"
                 keywords="在线工具,免费工具,翻译工具,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,文本工具,图片编辑,表格转换,简历生成"
             />
 
@@ -53,7 +53,7 @@ const gradientColors: Record<string, string> = {
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 leading-tight">
                                 <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                                    叁八零零
+                                    三八零零
                                 </span>
                                 <span className="hidden sm:inline"> · </span>
                                 <span className="sm:block">在线免费工具箱</span>
@@ -104,11 +104,11 @@ const gradientColors: Record<string, string> = {
                             <div className="flex items-center gap-2">
                                 <img
                                     src={getAssetUrl('logo.png')}
-                                    alt="叁八零零"
+                                    alt="三八零零"
                                     className="w-6 h-6 rounded-lg"
                                 />
                                 <span className="text-gray-600 dark:text-gray-400 text-sm">
-                                    © {new Date().getFullYear()} 叁八零零 - 在线免费工具箱
+                                    © {new Date().getFullYear()} 三八零零 - 在线免费工具箱
                                 </span>
                             </div>
                             <p className="text-xs text-gray-400 dark:text-gray-500">

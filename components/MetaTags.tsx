@@ -5,9 +5,18 @@ interface MetaTagsProps {
     description: string;
     keywords: string;
     canonicalUrl?: string;
+    ogImage?: string;
 }
 
-const MetaTags: React.FC<MetaTagsProps> = ({ title, description, keywords, canonicalUrl }) => {
+const BASE_URL = 'https://tools.3800ai.com';
+
+const MetaTags: React.FC<MetaTagsProps> = ({ 
+    title, 
+    description, 
+    keywords, 
+    canonicalUrl,
+    ogImage = '/assets/og-image.png'
+}) => {
     useEffect(() => {
         document.title = title;
 
@@ -28,24 +37,29 @@ const MetaTags: React.FC<MetaTagsProps> = ({ title, description, keywords, canon
 
         updateMeta('description', description);
         updateMeta('keywords', keywords);
+        
         updateMeta('og:title', title, true);
         updateMeta('og:description', description, true);
+        updateMeta('og:image', `${BASE_URL}${ogImage}`, true);
+        
+        const currentUrl = canonicalUrl || `${BASE_URL}${window.location.pathname}`;
+        updateMeta('og:url', currentUrl, true);
+        
         updateMeta('twitter:title', title);
         updateMeta('twitter:description', description);
+        updateMeta('twitter:image', `${BASE_URL}${ogImage}`);
 
-        if (canonicalUrl) {
-            let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-            if (!link) {
-                link = document.createElement('link');
-                link.setAttribute('rel', 'canonical');
-                document.head.appendChild(link);
-            }
-            link.setAttribute('href', canonicalUrl);
+        let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+        if (!canonicalLink) {
+            canonicalLink = document.createElement('link');
+            canonicalLink.setAttribute('rel', 'canonical');
+            document.head.appendChild(canonicalLink);
         }
+        canonicalLink.setAttribute('href', canonicalUrl || currentUrl);
 
         return () => {
         };
-    }, [title, description, keywords, canonicalUrl]);
+    }, [title, description, keywords, canonicalUrl, ogImage]);
 
     return null;
 };
