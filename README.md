@@ -7,7 +7,7 @@
 
   在线访问：https://tools.3800ai.com
 
-  备用站点：https://xdxsb.top/FreeTool
+  三八零零：https://www.3800ai.com
 </div>
 
 ## 包含功能
