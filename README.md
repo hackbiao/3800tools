@@ -1,13 +1,13 @@
 <div align="center">
   <img src="public/assets/logo_with_text.png" alt="FreeTool Logo" width="500"/>
 
-  一个纯前端的多功能在线工具站，提供实用的日常工具。
+  一个纯前端的多功能在线工具站，提供实用的日常工具工具(除翻译外)均在本地。
 
-  所有工具(除翻译外)均在本地运行，数据不会上传到服务器。
+  所有运行，数据不会上传到服务器。
 
-  在线访问：https://xdxsb.top/FreeTool
+  在线访问：https://tools.3800ai.com
 
-  国内站点：https://tool.zstar.website
+  备用站点：https://xdxsb.top/FreeTool
 </div>
 
 ## 包含功能
