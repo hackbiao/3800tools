@@ -42,12 +42,16 @@ const MetaTags: React.FC<MetaTagsProps> = ({
         updateMeta('og:description', description, true);
         updateMeta('og:image', `${BASE_URL}${ogImage}`, true);
         
-        const currentUrl = canonicalUrl || `${BASE_URL}${window.location.pathname}`;
+        let path = window.location.pathname;
+        if (!path.endsWith('/')) path += '/';
+        const currentUrl = canonicalUrl || `${BASE_URL}${path}`;
+        
         updateMeta('og:url', currentUrl, true);
         
         updateMeta('twitter:title', title);
         updateMeta('twitter:description', description);
         updateMeta('twitter:image', `${BASE_URL}${ogImage}`);
+        updateMeta('twitter:url', currentUrl);
 
         let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
         if (!canonicalLink) {

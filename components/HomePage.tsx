@@ -35,9 +35,9 @@ const gradientColors: Record<string, string> = {
     return (
         <>
             <MetaTags
-                title="三八零零 - 在线免费工具箱 | 文本翻译、图片处理、代码高亮、PDF转换"
-                description="三八零零是一个免费的在线工具箱，提供在线翻译、图片格式转换、JSON格式化、代码高亮、思维导图、PDF转换等24+种实用工具，所有工具在浏览器本地运行，数据安全有保障，无需注册即可使用。"
-                keywords="在线工具,免费工具,翻译工具,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,文本工具,图片编辑,表格转换,简历生成"
+                title="在线工具箱 - 免费工具大全 | 三八零零工具网 (文本, 图片, PDF, AI)"
+                description="三八零零是一个功能齐全的免费在线工具箱，提供在线翻译、图片处理、JSON格式化、代码高亮、思维导图、PDF转换、AI助手等120+种实用工具。所有工具本地运行，安全便捷，无需注册即可使用。"
+                keywords="在线工具箱,免费工具大全,在线翻译,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,AI工具,文本处理,图片转换"
             />
 
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24">

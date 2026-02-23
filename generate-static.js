@@ -9,49 +9,59 @@ const distDir = path.resolve(__dirname, 'dist');
 
 const routes = {
     '/': {
-        title: '三八零零 - 在线免费工具箱 | 文本翻译、图片处理、代码高亮、PDF转换',
-        description: '三八零零是一个免费的在线工具箱，提供在线翻译、图片格式转换、JSON格式化、代码高亮、思维导图、PDF转换等50+种实用工具，所有工具在浏览器本地运行，数据安全有保障。',
-        keywords: '在线工具,免费工具,翻译工具,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,文本工具,图片编辑',
+        title: '在线工具箱 - 免费工具大全 | 三八零零工具网 (文本, 图片, PDF, AI)',
+        description: '三八零零是一个功能齐全的免费在线工具箱，提供在线翻译、图片处理、JSON格式化、代码高亮、思维导图、PDF转换、AI助手等120+种实用工具。所有工具本地运行，安全便捷。',
+        keywords: '在线工具箱,免费工具大全,在线翻译,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,AI工具,文本处理',
+    },
+    '/category/all': {
+        title: '全部分类 - 免费工具大全 | 三八零零',
+        description: '浏览三八零零在线工具箱的所有工具分类，包括文本工具、图片工具、数据工具、媒体工具、AI工具、网络工具、开发工具等120+种实用在线免费工具。',
+        keywords: '在线工具分类,免费工具,全部分类,文本工具,图片工具,数据工具,媒体工具,AI工具,网络工具,开发工具',
     },
     '/category/calculator': {
-        title: '计算工具 - 三八零零在线工具箱',
-        description: '房贷计算器、个税计算器、BMI计算器、日期计算器、科学计算器等实用计算工具。',
-        keywords: '计算器,房贷计算,个税计算,BMI计算,日期计算',
+        title: '在线计算器 - 房贷, 个税, BMI, 科学计算 | 三八零零',
+        description: '提供房贷计算器、个税计算器、BMI计算器、日期计算器、科学计算器等多种专业在线计算工具。',
+        keywords: '在线计算器,房贷计算,个税计算,BMI计算,日期计算,科学计算',
     },
     '/category/utility': {
-        title: '便民工具 - 三八零零在线工具箱',
-        description: '时间戳转换、Base64编解码、密码生成器、二维码生成器、单位换算等便民工具。',
-        keywords: '便民工具,时间戳转换,Base64,密码生成,二维码',
+        title: '便民实用工具 - 时间戳, 二维码, 密码生成 | 三八零零',
+        description: '时间戳转换、Base64编解码、密码生成器、二维码生成器、单位换算、世界时钟等日常便民工具。',
+        keywords: '便民工具,时间戳转换,Base64,密码生成,二维码,单位换算',
     },
     '/category/text': {
-        title: '文本工具 - 三八零零在线工具箱',
-        description: '在线翻译、代码高亮、JSON格式化、文本差异对比、文字统计等文本处理工具。',
-        keywords: '文本工具,在线翻译,代码高亮,JSON格式化,文本对比',
+        title: '文本处理工具 - 在线翻译, 格式化, 对比, 统计 | 三八零零',
+        description: '在线翻译、代码高亮、JSON格式化、文本差异对比、文字统计、简繁转换等文本处理工具。',
+        keywords: '文本工具,在线翻译,代码高亮,JSON格式化,文本对比,文字统计',
     },
     '/category/image': {
-        title: '图片工具 - 三八零零在线工具箱',
-        description: '图片格式转换、图片编辑、图片拼接、图片压缩、水印去除等图片处理工具。',
-        keywords: '图片工具,图片转换,图片编辑,图片压缩,去水印',
+        title: '图片处理工具 - 格式转换, 编辑, 压缩, 去水印 | 三八零零',
+        description: '图片格式转换、图片编辑、图片拼接、图片压缩、水印去除、图片圆角等在线图片处理工具。',
+        keywords: '图片工具,图片转换,图片编辑,图片压缩,去水印,图片拼接',
     },
     '/category/data': {
-        title: '数据工具 - 三八零零在线工具箱',
-        description: '表格格式转换、数学公式编辑、思维导图、绘图画布等数据处理工具。',
-        keywords: '数据工具,表格转换,数学公式,思维导图',
+        title: '数据与图形工具 - 表格转换, 公式, 思维导图, 绘图 | 三八零零',
+        description: '表格格式转换、数学公式编辑、思维导图、绘图画布、随机数据生成等数据处理工具。',
+        keywords: '数据工具,表格转换,数学公式,思维导图,在线绘图,随机数据',
     },
     '/category/media': {
-        title: '媒体工具 - 三八零零在线工具箱',
-        description: '视频比例转换、PDF转PPT、PDF转长图等媒体处理工具。',
-        keywords: '媒体工具,视频转换,PDF转换,PDF转PPT',
+        title: '媒体转换工具 - 视频比例, PDF转PPT, PDF转图 | 三八零零',
+        description: '视频比例转换、PDF转PPT、PDF转长图等媒体格式转换处理工具。',
+        keywords: '媒体工具,视频转换,PDF转换,PDF转PPT,PDF转图',
     },
     '/category/ai': {
-        title: 'AI工具 - 三八零零在线工具箱',
-        description: '图片转提示词、简历生成器、提示词生成器、MBTI人格测试等AI智能工具。',
-        keywords: 'AI工具,简历生成,提示词生成,MBTI测试',
+        title: 'AI 智能工具 - 简历生成, 提示词, 人格测试 | 三八零零',
+        description: '图片转提示词、简历生成器、提示词生成器、MBTI人格测试、AI助手等智能效率工具。',
+        keywords: 'AI工具,简历生成,提示词生成,MBTI测试,AI分析',
     },
     '/category/network': {
-        title: '网络工具 - 三八零零在线工具箱',
-        description: 'IP地址转换、子网计算、HTTP状态码查询、端口查询、URL解析等网络工具。',
-        keywords: '网络工具,IP转换,子网计算,HTTP状态码,端口查询',
+        title: '网络与开发工具 - IP计算, 状态码, URL解析, Curl | 三八零零',
+        description: 'IP地址转换、子网计算、HTTP状态码查询、端口查询、URL解析、Curl生成器等开发网络工具。',
+        keywords: '网络工具,开发工具,IP转换,子网计算,HTTP状态码,URL解析',
+    },
+    '/category/dev': {
+        title: '开发编程工具 - 代码格式化, 正则测试, JSON处理 | 三八零零',
+        description: '代码格式化、正则测试、JSON处理、Hash计算、加密解密等开发者常用编程工具。',
+        keywords: '开发工具,编程工具,代码格式化,正则测试,JSON处理,加密解密',
     },
 };
 
@@ -118,6 +128,24 @@ const tools = [
     { path: '/url-parser', name: 'URL解析器', description: '免费在线URL解析工具，解析URL结构，提取协议、域名、路径、参数等信息。' },
     { path: '/browser-fingerprint', name: '浏览器指纹', description: '免费在线浏览器指纹查看工具，查看当前浏览器的详细信息。' },
     { path: '/curl-generator', name: 'Curl生成器', description: '免费在线Curl命令生成器，生成HTTP请求的curl命令。' },
+    { path: '/image-watermark', name: '图片水印添加', description: '免费在线图片水印添加工具，支持自定义文字或图片水印。' },
+    { path: '/image-bg-remover', name: 'AI抠图', description: '免费在线AI智能抠图工具，自动识别并移除图片背景。' },
+    { path: '/image-to-ico', name: '图片转ICO', description: '免费在线图片转ICO格式工具，支持PNG、JPG转ICO图标。' },
+    { path: '/gif-maker', name: 'GIF制作', description: '免费在线GIF动图制作工具，支持多图合成GIF动画。' },
+    { path: '/gif-splitter', name: 'GIF拆分', description: '免费在线GIF动图拆分工具，将GIF拆分为帧序列图片。' },
+    { path: '/gif-compressor', name: 'GIF压缩', description: '免费在线GIF动图压缩工具，减小GIF文件大小。' },
+    { path: '/word-cloud', name: '词云生成', description: '免费在线词云生成工具，根据文本内容生成漂亮的词云图。' },
+    { path: '/grid-image-cutter', name: '网格切图', description: '免费在线网格切图工具，将图片均匀切割成多份。' },
+    { path: '/photo-bg-changer', name: 'AI换背景', description: '免费在线AI智能换背景工具，更换图片背景为其他场景。' },
+    { path: '/markdown-editor', name: 'Markdown编辑器', description: '免费在线Markdown编辑器，实时预览，支持导出HTML和PDF。' },
+    { path: '/code-formatter', name: '代码格式化', description: '免费在线代码格式化工具，支持多种编程语言代码美化。' },
+    { path: '/json-escape', name: 'JSON转义', description: '免费在线JSON转义工具，对JSON字符串进行转义或反转义。' },
+    { path: '/random-data', name: '随机数据生成', description: '免费在线随机数据生成工具，生成各种格式的测试数据。' },
+    { path: '/mock-data', name: 'Mock数据生成', description: '免费在线Mock数据生成工具，生成指定格式的模拟数据。' },
+    { path: '/linux-command', name: 'Linux命令查询', description: '免费在线Linux命令字典，查询命令用法和参数说明。' },
+    { path: '/chinese-to-pinyin', name: '中文转拼音', description: '免费在线中文转拼音工具，提取汉字拼音首字母或全拼。' },
+    { path: '/relationship-calculator', name: '亲属关系计算', description: '免费在线亲属关系计算器，计算亲戚称呼。' },
+    { path: '/ascii-art', name: 'ASCII艺术字', description: '免费在线ASCII艺术字生成工具，将文字转换为ASCII字符画。' },
 ];
 
 const base = process.env.BASE_URL || '/FreeTool/';
@@ -138,16 +166,21 @@ function generateStaticPages() {
     const allRoutes = { ...routes };
     tools.forEach(tool => {
         allRoutes[tool.path] = {
-            title: `${tool.name} - 三八零零在线工具`,
+            title: `${tool.name} - 在线免费工具 | 三八零零`,
             description: tool.description,
-            keywords: `${tool.name},在线工具,免费工具`,
+            keywords: `${tool.name},在线工具,免费工具,${tool.name}在线`,
+            isTool: true,
+            name: tool.name
         };
     });
 
     console.log(`Generating ${Object.keys(allRoutes).length} static pages...\n`);
 
+    const productionBaseUrl = 'https://tools.3800ai.com';
+
     Object.entries(allRoutes).forEach(([routePath, meta]) => {
         let html = indexHtml;
+        const currentFullUrl = `${productionBaseUrl}${routePath === '/' ? '' : routePath}`;
 
         html = html.replace(
             /<title>.*?<\/title>/i,
@@ -169,6 +202,13 @@ function generateStaticPages() {
             `<meta name="keywords" content="${meta.keywords}">`
         );
 
+        // Canonical URL
+        html = html.replace(
+            /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+            `<link rel="canonical" href="${currentFullUrl}/">`
+        );
+
+        // Open Graph / Facebook
         html = html.replace(
             /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i,
             `<meta property="og:title" content="${meta.title}">`
@@ -180,6 +220,12 @@ function generateStaticPages() {
         );
 
         html = html.replace(
+            /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
+            `<meta property="og:url" content="${currentFullUrl}/">`
+        );
+
+        // Twitter
+        html = html.replace(
             /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i,
             `<meta name="twitter:title" content="${meta.title}">`
         );
@@ -190,14 +236,48 @@ function generateStaticPages() {
         );
 
         html = html.replace(
-            /<meta\s+property="twitter:title"\s+content="[^"]*"\s*\/?>/i,
-            `<meta property="twitter:title" content="${meta.title}">`
+            /<meta\s+name="twitter:url"\s+content="[^"]*"\s*\/?>/i,
+            `<meta name="twitter:url" content="${currentFullUrl}/">`
+        );
+        
+        html = html.replace(
+            /<meta\s+property="twitter:url"\s+content="[^"]*"\s*\/?>/i,
+            `<meta property="twitter:url" content="${currentFullUrl}/">`
         );
 
-        html = html.replace(
-            /<meta\s+property="twitter:description"\s+content="[^"]*"\s*\/?>/i,
-            `<meta property="twitter:description" content="${meta.description}">`
-        );
+        // JSON-LD Structured Data
+        let jsonLd;
+        if (meta.isTool) {
+            jsonLd = {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": meta.name,
+                "url": currentFullUrl + '/',
+                "description": meta.description,
+                "applicationCategory": "MultimediaApplication",
+                "operatingSystem": "Windows, macOS, Android, iOS",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            };
+        } else if (routePath.startsWith('/category/')) {
+            jsonLd = {
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                "name": meta.title,
+                "url": currentFullUrl + '/',
+                "description": meta.description
+            };
+        }
+
+        if (jsonLd) {
+            html = html.replace(
+                /<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
+                `<script type="application/ld+json">\n    ${JSON.stringify(jsonLd, null, 4)}\n    </script>`
+            );
+        }
 
         let outputPath;
         if (routePath === '/') {

@@ -24,9 +24,9 @@ const CategoryPage: React.FC = () => {
         return (
             <>
                 <MetaTags
-                    title="全部分类 - 三八零零在线工具箱"
-                    description="浏览三八零零在线工具箱的所有工具分类，包括文本工具、图片工具、数据工具、媒体工具、AI工具等24+种实用工具。"
-                    keywords="在线工具分类,免费工具,文本工具,图片工具,数据工具,媒体工具,AI工具"
+                    title="在线工具箱 - 全部分类 | 三八零零免费工具大全"
+                    description="浏览三八零零在线工具箱的所有工具分类，包括文本工具、图片工具、数据工具、媒体工具、AI工具、网络工具等120+种实用在线免费工具。"
+                    keywords="在线工具分类,免费工具,文本工具,图片工具,数据工具,媒体工具,AI工具,网络工具,开发工具"
                 />
                 <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -75,9 +75,9 @@ const CategoryPage: React.FC = () => {
     return (
         <>
             <MetaTags
-                title={`${category.name} - 三八零零在线工具箱`}
-                description={`${category.description}，包括${category.tools.map(t => t.name).join('、')}等多种实用工具。`}
-                keywords={`${category.name},${category.tools.map(t => t.name).join(',')},在线工具,免费工具`}
+                title={`${category.name}工具 - 在线免费使用 | 三八零零`}
+                description={`${category.description}，包括${category.tools.map(t => t.name).join('、')}等多种实用在线工具。完全免费，无需注册。`}
+                keywords={`${category.name}工具,${category.tools.map(t => t.name).join(',')},在线工具,免费工具`}
             />
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
