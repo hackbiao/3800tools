@@ -416,11 +416,14 @@ button, a {
     ring: 0;
 }
 
-/* SEO Section Styles */
+/* SEO Section Styles - Visually hidden but available for search engines */
 .seo-section {
-    padding: 3rem 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
 }
 
 .seo-section h1 {
