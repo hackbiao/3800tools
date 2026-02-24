@@ -415,3 +415,147 @@ button, a {
     outline: none;
     ring: 0;
 }
+
+/* SEO Section Styles */
+.seo-section {
+    padding: 3rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.seo-section h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.dark .seo-section h1 {
+    color: #f9fafb;
+}
+
+.seo-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.dark .seo-section h2 {
+    color: #f9fafb;
+}
+
+.seo-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.dark .seo-section h3 {
+    color: #f3f4f6;
+}
+
+.seo-section p {
+    color: #4b5563;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+}
+
+.dark .seo-section p {
+    color: #d1d5db;
+}
+
+.seo-section ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    color: #4b5563;
+}
+
+.dark .seo-section ul {
+    color: #d1d5db;
+}
+
+.seo-section li {
+    margin-bottom: 0.5rem;
+}
+
+/* Homepage SEO sections */
+.homepage-intro,
+.homepage-scenarios,
+.homepage-guide {
+    background: #f9fafb;
+    border-radius: 1rem;
+    margin: 2rem auto;
+}
+
+.dark .homepage-intro,
+.dark .homepage-scenarios,
+.dark .homepage-guide {
+    background: #1f2937;
+}
+
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.scenario {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .scenario {
+    background: #374151;
+}
+
+.guide-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.guide-column {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+}
+
+.dark .guide-column {
+    background: #374151;
+}
+
+/* Tool SEO sections */
+.tool-experience,
+.tool-pros-cons,
+.tool-recommendation {
+    background: #f9fafb;
+    margin-top: 2rem;
+    border-radius: 1rem;
+}
+
+.dark .tool-experience,
+.dark .tool-pros-cons,
+.dark .tool-recommendation {
+    background: #1f2937;
+}
+
+.pros-cons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.pros h3 {
+    color: #059669;
+}
+
+.cons h3 {
+    color: #dc2626;
+}

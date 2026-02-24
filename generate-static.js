@@ -294,19 +294,17 @@ function generateStaticPages() {
 
         // 为首页注入静态HTML内容
         if (routePath === '/') {
-            // 在body标签后插入静态内容
-            const bodyIndex = html.indexOf('<body');
-            if (bodyIndex !== -1) {
-                const bodyEndIndex = html.indexOf('</body>', bodyIndex);
-                if (bodyEndIndex !== -1) {
-                    html = html.slice(0, bodyEndIndex) + staticHomepageHTML + html.slice(bodyEndIndex);
+            const rootIndex = html.indexOf('<div id="root">');
+            if (rootIndex !== -1) {
+                const rootEndIndex = html.indexOf('</div>', rootIndex);
+                if (rootEndIndex !== -1) {
+                    html = html.slice(0, rootEndIndex + 6) + staticHomepageHTML + html.slice(rootEndIndex + 6);
                 }
             }
         }
         
         // 为工具页面注入增强内容
         if (meta.isTool) {
-            // 从名称中提取工具ID，例如 "translate" -> "translate"
             const nameWithoutSuffix = meta.name.replace(/\s*-\s*三八零零.*$/, '').trim();
             const toolId = Object.keys(staticToolContent).find(key => 
                 nameWithoutSuffix.toLowerCase().includes(key.toLowerCase()) || 
@@ -316,12 +314,12 @@ function generateStaticPages() {
             console.log(`Adding enhanced content for tool: ${meta.name} -> ${toolId}`);
             
             if (toolId && staticToolContent[toolId]) {
-                // 在</body>标签之前注入增强SEO内容
-                const bodyEndIndex = html.indexOf('</body>');
-                if (bodyEndIndex !== -1) {
-                    html = html.slice(0, bodyEndIndex) + 
-                            staticToolContent[toolId] + 
-                            html.slice(bodyEndIndex);
+                const rootIndex = html.indexOf('<div id="root">');
+                if (rootIndex !== -1) {
+                    const rootEndIndex = html.indexOf('</div>', rootIndex);
+                    if (rootEndIndex !== -1) {
+                        html = html.slice(0, rootEndIndex + 6) + staticToolContent[toolId] + html.slice(rootEndIndex + 6);
+                    }
                 }
             }
         }
