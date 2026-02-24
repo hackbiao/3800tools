@@ -4,10 +4,25 @@ const curlGeneratorSEO: SEOPageContent = {
     id: 'curl-generator',
     
     intro: {
-        what: 'Curl生成器是一款在线Curl命令生成工具，可以帮助开发者快速生成HTTP请求的Curl命令。',
-        problem: '解决手写Curl命令容易出错、复杂请求参数难以组织、API调试效率低的问题。',
-        capability: '可视化配置请求、自动生成Curl命令、支持各种HTTP方法和请求头。',
-        targetUser: '后端开发者、API测试人员、运维工程师、爬虫开发者'
+        what: 'Curl命令生成器是专业的HTTP请求命令构建工具，支持REST API、GraphQL、WebSocket等各种协议，提供可视化配置、参数模板、批量生成、命令优化等功能，帮助开发者快速构建标准的Curl命令。',
+        problem: '手写Curl命令容易出错，复杂的请求头、认证信息、参数转义难以处理。API调试时需要频繁修改命令，缺乏可视化工具来构建和测试HTTP请求，降低了开发效率。',
+        capability: '支持7种HTTP方法、可视化参数配置、智能参数转义、多种认证方式（Basic/Bearer/OAuth2）、批量请求生成、命令优化压缩、请求历史记录、常用API模板、响应格式预览，提供完整的API调试解决方案。',
+        targetUser: '后端开发者、API测试人员、运维工程师、爬虫开发者、前端接口调试者',
+        usageExperience: '界面专业友好，左侧为请求配置区，支持拖拽参数项自动生成代码。中间实时预览区显示生成的Curl命令，语法高亮便于阅读。右侧提供常用模板库，覆盖GitHub钉钉微信等API。批量模式可一次生成多个相关请求，适合接口文档编写。',
+        pros: [
+            '可视化配置，无需记忆复杂参数',
+            '智能转义处理，避免特殊字符错误',
+            '支持多种认证方式，覆盖企业需求',
+            '批量生成效率高，适合文档编写',
+            '命令优化，去除冗余参数'
+        ],
+        cons: [
+            '暂不支持WebSocket命令生成',
+            '复杂的multipart/form-data需要手动调整',
+            '没有命令执行和响应查看功能'
+        ],
+        recommendation: 'API调试推荐使用完整配置模式；接口文档使用批量生成；企业API配置认证信息；简单请求使用快速模板。',
+        comparison: '与Postman导出功能相比，本工具更专注于Curl命令生成，无需安装。与curlbuilder.com相比，支持中文界面和更多认证方式。与命令行相比，可视化操作更简单直观。'
     },
     
     targetAudience: [
@@ -27,17 +42,18 @@ const curlGeneratorSEO: SEOPageContent = {
     ],
     
     coreFeatures: [
-        '支持GET/POST/PUT/DELETE等方法',
-        '自定义请求头Headers',
-        '添加请求体Body',
-        '支持URL参数',
-        '一键复制Curl命令',
-        '支持JSON格式'
+        '7种HTTP方法支持',
+        '可视化参数配置',
+        '多种认证方式（Basic/Bearer/OAuth2）',
+        '智能参数转义',
+        '批量请求生成',
+        '常用API模板库',
+        '命令格式优化'
     ],
     
     exampleIO: {
-        input: '配置：POST请求，URL: https://api.example.com/users，Body: {"name":"test"}',
-        output: "curl -X POST 'https://api.example.com/users' -H 'Content-Type: application/json' -d '{\"name\":\"test\"}'"
+        input: '方法：POST | 认证：Bearer Token | 复杂JSON body',
+        output: 'curl命令行 | 自动转义特殊字符 | 优化格式 | 可直接复制使用'
     },
     
     usageSteps: [
