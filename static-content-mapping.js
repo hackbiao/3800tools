@@ -33,7 +33,7 @@ const generateProsCons = (toolName, category) => {
     
     const cons = {
         'translate': '<li>在处理非常专业的术语时偶尔需要人工校正</li><li>对设备性能有一定要求</li><li>离线语言包需要预先下载</li><li>翻译结果有时会偏向字面直译</li><li>对于罕见语言支持有限</li><li>没有语音输入输出功能</li>',
-        'image': '<li功能有限</li><li>某些特殊格式支持>高级图像编辑深度有限</li><li>对设备内存有一定要求</li><li>批量处理时可能导致浏览器卡顿</li><li>不支持矢量图格式>复杂</li><liGIF处理能力有限</li>',
+        'image': '<li>高级图像编辑功能有限</li><li>某些特殊格式支持深度有限</li><li>对设备内存有一定要求</li><li>批量处理时可能导致浏览器卡顿</li><li>不支持矢量图格式转换</li><li>复杂GIF处理能力有限</li>',
         'json': '<li>仅支持JSON格式</li><li>对低配设备有压力</li><li>编辑功能有限</li><li>没有JSON Schema验证</li><li>对于极度不规范的JSON修复能力有限</li><li>不支持与其他格式转换</li>',
         'code': '<li>高级功能相对有限</li><li>部分特殊格式可能不支持</li><li>需要网络连接</li><li>大文件处理可能较慢</li><li>无历史记录功能</li><li>无法与其他工具联动</li>',
         'calculator': '<li>高级计算功能有限</li><li>无法保存计算历史</li><li>部分专业领域不支持</li><li>无法导出计算结果</li><li>离线功能有限</li><li>无团队协作功能</li>',
