@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TOOL_CATEGORIES } from '../config/tools';
 import MetaTags from './MetaTags';
+import LazyImage from './LazyImage';
 import type { ToolCategory, Tool } from '../types/tools';
 
 const getAssetUrl = (path: string) => {
@@ -53,7 +54,7 @@ const HomePage: React.FC = () => {
         <>
             <MetaTags
                 title="在线工具箱 - 免费工具大全 | 三八零零工具网 (文本, 图片, PDF, AI)"
-                description="三八零零是一个功能齐全的免费在线工具箱，提供在线翻译、图片处理、JSON格式化、代码高亮、思维导图、PDF转换、AI助手等120+种实用工具。所有工具本地运行，安全便捷，无需注册即可使用。"
+                description="三八零零免费在线工具箱，提供翻译、图片处理、JSON格式化、代码高亮等120+实用工具。本地运行，安全无需注册。"
                 keywords="在线工具箱,免费工具大全,在线翻译,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,AI工具,文本处理,图片转换"
             />
 

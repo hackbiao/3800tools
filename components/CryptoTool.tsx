@@ -18,8 +18,23 @@ const CryptoTool: React.FC = () => {
     };
 
     const encrypt = useCallback(async () => {
-        if (!inputText || !key) {
-            setError('请输入文本和密钥');
+        // 清除之前的错误
+        setError('');
+        
+        // 输入验证
+        const errors = [];
+        if (!inputText.trim()) {
+            errors.push('请输入要加密的文本');
+        }
+        if (!key.trim()) {
+            errors.push('请输入加密密钥');
+        }
+        if (key.length < 8) {
+            errors.push('密钥长度至少需要8个字符');
+        }
+        
+        if (errors.length > 0) {
+            setError(errors.join('；'));
             return;
         }
 

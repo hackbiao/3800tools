@@ -8,6 +8,7 @@ import RankingPage from './components/RankingPage';
 import SpecialTopicPage from './components/SpecialTopicPage';
 import NotFoundPage from './components/NotFoundPage';
 import TopNavBar from './components/TopNavBar';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const LoadingFallback = () => (
     <div className="flex w-full h-96 items-center justify-center">
@@ -23,11 +24,13 @@ interface ToolRouteProps {
 }
 
 const ToolRoute: React.FC<ToolRouteProps> = ({ component: Component }) => (
-    <ToolLayout>
-        <Suspense fallback={<LoadingFallback />}>
-            <Component />
-        </Suspense>
-    </ToolLayout>
+    <ErrorBoundary>
+        <ToolLayout>
+            <Suspense fallback={<LoadingFallback />}>
+                <Component />
+            </Suspense>
+        </ToolLayout>
+    </ErrorBoundary>
 );
 
 const HomeLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -52,9 +55,10 @@ const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 const App: React.FC = () => {
-    return (
-        <BrowserRouter basename={import.meta.env.BASE_URL || '/'}>
-            <Routes>
+return (
+        <ErrorBoundary>
+            <BrowserRouter>
+                <Routes>
                 <Route path="/" element={
                     <HomeLayout>
                         <HomePage />
@@ -87,7 +91,8 @@ const App: React.FC = () => {
                 })}
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
-        </BrowserRouter>
+            </BrowserRouter>
+        </ErrorBoundary>
     );
 };
 

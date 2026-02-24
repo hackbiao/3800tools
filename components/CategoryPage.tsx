@@ -78,7 +78,7 @@ const CategoryPage: React.FC = () => {
             <>
                 <MetaTags
                     title="在线工具箱 - 全部分类 | 三八零零免费工具大全"
-                    description="浏览三八零零在线工具箱的所有工具分类，包括文本工具、图片工具、数据工具、媒体工具、AI工具、网络工具等120+种实用在线免费工具。"
+                    description="三八零零工具分类大全，包括文本、图片、数据、媒体、AI、网络等120+种实用在线工具，全部免费使用。"
                     keywords="在线工具分类,免费工具,文本工具,图片工具,数据工具,媒体工具,AI工具,网络工具,开发工具"
                 />
                 <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24">

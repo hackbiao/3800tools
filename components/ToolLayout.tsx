@@ -37,7 +37,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
 
             {tool && (
                 <MetaTags
-                    title={`${tool.name} - 在线免费工具 | 三八零零`}
+                    title={`${tool.name} - 三八零零在线工具箱`}
                     description={tool.description}
                     keywords={tool.keywords.join(',')}
                 />

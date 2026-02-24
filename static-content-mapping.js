@@ -897,7 +897,7 @@ const generateToolContent = (toolName, toolId, category) => {
                       category === 'ai' ? 'ai' :
                       category === 'network' ? 'network' : 'default';
     
-    let categoryKey = category;
+    let catKey = category;
     if (category === 'translate') categoryKey = 'translate';
     if (category === 'image') categoryKey = 'image';
     if (category === 'json') categoryKey = 'json';
@@ -1010,7 +1010,7 @@ const staticHomepageHTML = `
 `;
 
 // 工具页面增强内容 - 为所有工具生成SEO内容
-const staticToolContent = Object.keys(toolSEOConfig).reduce((acc, toolId) => {
+const staticToolContent1 = Object.keys(toolSEOConfig).reduce((acc, toolId) => {
     const tool = toolSEOConfig[toolId];
     acc[toolId] = createToolContent(tool.title, toolId, 'special');
     return acc;
