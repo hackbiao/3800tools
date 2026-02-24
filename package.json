@@ -8,6 +8,7 @@
     "build": "vite build && node generate-static.js",
     "build:cf": "BASE_URL=/ vite build && BASE_URL=/ node generate-static.js",
     "build:edgeone": "BASE_URL=/ vite build && BASE_URL=/ node generate-static.js",
+    "build:pages": "BASE_URL=/ vite build && node generate-static.js",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
