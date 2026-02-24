@@ -7,6 +7,9 @@ const __dirname = path.dirname(__filename);
 
 const distDir = path.resolve(__dirname, 'dist');
 
+// 引入静态内容映射
+import { staticHomepageHTML, staticToolContent } from './static-content-mapping.js';
+
 const routes = {
     '/': {
         title: '在线工具箱 - 免费工具大全 | 三八零零工具网 (文本, 图片, PDF, AI)',
@@ -287,6 +290,43 @@ function generateStaticPages() {
                 /<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
                 `<script type="application/ld+json">\n    ${JSON.stringify(jsonLd, null, 4)}\n    </script>`
             );
+        }
+
+        // 为首页注入静态HTML内容
+        if (routePath === '/') {
+            // 在body标签后插入静态内容
+            const bodyIndex = html.indexOf('<body');
+            if (bodyIndex !== -1) {
+                const bodyEndIndex = html.indexOf('</body>', bodyIndex);
+                if (bodyEndIndex !== -1) {
+                    html = html.slice(0, bodyEndIndex) + staticHomepageHTML + html.slice(bodyEndIndex);
+                }
+            }
+        }
+        
+        // 为工具页面注入增强内容
+        if (meta.isTool) {
+            // 从名称中提取工具ID，例如 "translate" -> "translate"
+            const nameWithoutSuffix = meta.name.replace(/\s*-\s*三八零零.*$/, '').trim();
+            const toolId = Object.keys(staticToolContent).find(key => 
+                nameWithoutSuffix.toLowerCase().includes(key.toLowerCase()) || 
+                routePath.includes(key)
+            );
+            
+            console.log(`Adding enhanced content for tool: ${meta.name} -> ${toolId}`);
+            
+            if (toolId) {
+                // 在主要内容后面注入增强SEO内容
+                const mainIndex = html.indexOf('<main');
+                if (mainIndex !== -1) {
+                    const mainEndIndex = html.indexOf('</main>', mainIndex);
+                    if (mainEndIndex !== -1) {
+                        html = html.slice(0, mainEndIndex) + 
+                                staticToolContent[toolId] + 
+                                html.slice(mainEndIndex);
+                    }
+                }
+            }
         }
 
         let outputPath;
