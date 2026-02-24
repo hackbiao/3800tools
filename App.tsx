@@ -4,6 +4,8 @@ import { ALL_TOOLS } from './config/tools';
 import HomePage from './components/HomePage';
 import ToolLayout from './components/ToolLayout';
 import CategoryPage from './components/CategoryPage';
+import RankingPage from './components/RankingPage';
+import SpecialTopicPage from './components/SpecialTopicPage';
 import NotFoundPage from './components/NotFoundPage';
 import TopNavBar from './components/TopNavBar';
 
@@ -42,9 +44,16 @@ const CategoryLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =
     </>
 );
 
+const PageLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <>
+        <TopNavBar />
+        {children}
+    </>
+);
+
 const App: React.FC = () => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL || '/'}>
             <Routes>
                 <Route path="/" element={
                     <HomeLayout>
@@ -55,6 +64,16 @@ const App: React.FC = () => {
                     <CategoryLayout>
                         <CategoryPage />
                     </CategoryLayout>
+                } />
+                <Route path="/ranking" element={
+                    <PageLayout>
+                        <RankingPage />
+                    </PageLayout>
+                } />
+                <Route path="/topics" element={
+                    <PageLayout>
+                        <SpecialTopicPage />
+                    </PageLayout>
                 } />
                 {ALL_TOOLS.map((tool) => {
                     const Component = tool.component;

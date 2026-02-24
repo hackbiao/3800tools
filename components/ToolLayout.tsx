@@ -12,6 +12,7 @@ import CoreFeatures from './seo/CoreFeatures';
 import ExampleIO from './seo/ExampleIO';
 import UsageSteps from './seo/UsageSteps';
 import FAQSection from './seo/FAQSection';
+import SEOEnhancement from './seo/SEOEnhancement';
 
 interface ToolLayoutProps {
     children: React.ReactNode;
@@ -155,14 +156,16 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
                 )}
             </main>
 
-            <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex flex-col items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                        <p>© {new Date().getFullYear()} 三八零零 - 在线免费工具箱</p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500">数据安全，本地处理</p>
+<SEOEnhancement />
+                
+                <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                        <div className="flex flex-col items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                            <p>© {new Date().getFullYear()} 三八零零 - 在线免费工具箱</p>
+                            <p className="text-xs text-gray-400 dark:text-gray-500">数据安全，本地处理</p>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
         </div>
     );
 };
