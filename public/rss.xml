@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>三八零零 - 在线免费工具箱</title>
+    <link>https://tools.3800ai.com</link>
+    <description>免费在线工具箱，提供翻译、图片处理、JSON格式化、代码高亮、PDF转换、AI助手等80+种实用工具</description>
+    <language>zh-CN</language>
+    <lastBuildDate>{new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="https://tools.3800ai.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>首页 - 三八零零在线工具箱</title>
+      <link>https://tools.3800ai.com/</link>
+      <description>免费在线工具箱，提供24+种实用工具</description>
+      <pubDate>2026-02-25</pubDate>
+    </item>
+    <item>
+      <title>AI工具排行榜</title>
+      <link>https://tools.3800ai.com/ranking/</link>
+      <description>精选优质AI工具推荐</description>
+      <pubDate>2026-02-25</pubDate>
+    </item>
+    <item>
+      <title>AI工具专题</title>
+      <link>https://tools.3800ai.com/topics/</link>
+      <description>AI工具专题推荐指南</description>
+      <pubDate>2026-02-25</pubDate>
+    </item>
+    <item>
+      <title>全部分类</title>
+      <link>https://tools.3800ai.com/category/all/</link>
+      <description>浏览所有工具分类</description>
+      <pubDate>2026-02-25</pubDate>
+    </item>
+  </channel>
+</rss>

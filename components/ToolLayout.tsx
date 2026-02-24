@@ -255,7 +255,11 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex flex-col items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                         <p>© {new Date().getFullYear()} 三八零零 - 在线免费工具箱</p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500">数据安全，本地处理</p>
+                        <div className="flex items-center gap-4">
+                            <a href="/sitemap.xml" className="text-xs hover:text-blue-600 dark:hover:text-blue-400">网站地图</a>
+                            <a href="/rss.xml" className="text-xs hover:text-blue-600 dark:hover:text-blue-400">RSS订阅</a>
+                            <span className="text-xs text-gray-400 dark:text-gray-500">数据安全，本地处理</span>
+                        </div>
                     </div>
                 </div>
             </footer>

@@ -385,6 +385,8 @@ const HomePage: React.FC = () => {
                                     <li><Link to="/ranking" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">工具排行</Link></li>
                                     <li><Link to="/topics" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">专题推荐</Link></li>
                                     <li><Link to="/category/ai" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">AI工具</Link></li>
+                                    <li><a href="/sitemap.xml" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">网站地图</a></li>
+                                    <li><a href="/rss.xml" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">RSS订阅</a></li>
                                 </ul>
                             </div>
                             
