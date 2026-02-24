@@ -36,10 +36,9 @@ jobs:
       run: npm ci
     
     - name: Build project with SEO enhancements
-      run: npm run build
+      run: npm run build:cf
       env:
         NODE_ENV: production
-        BASE_URL: /
         
       # 验证构建结果
     - name: Verify build output
