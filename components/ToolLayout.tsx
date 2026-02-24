@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getToolByPath, TOOL_CATEGORIES, getToolById } from '../config/tools';
-import { getSEOConfig } from '../config/seo';
+import { getToolByPath, TOOL_CATEGORIES, getToolById, getExtendedToolSEO, getToolMetaTags } from '../config/tools';
+import { getSEOConfig } from '../config/seoAdapter';
 import MetaTags from './MetaTags';
 import TopNavBar from './TopNavBar';
 import JsonLdSchema from './seo/JsonLdSchema';
@@ -21,15 +21,15 @@ interface ToolLayoutProps {
 const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
     const { toolPath } = useParams<{ toolPath: string }>();
     const tool = getToolByPath(`/${toolPath}`);
+    const extendedSeo = tool ? getExtendedToolSEO(tool.id) : null;
     const seoContent = tool ? getSEOConfig(tool.id) : null;
+    
+    // 获取Meta标签信息
+    const metaTags = tool ? getToolMetaTags(tool.id) : null;
 
     const currentCategory = tool
         ? TOOL_CATEGORIES.find((cat) => cat.tools.some((t) => t.id === tool.id))
         : null;
-    
-    const relatedToolObjects = seoContent?.relatedTools
-        .map(id => getToolById(id as any))
-        .filter(Boolean) || [];
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
@@ -185,36 +185,40 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
                             // 标准内容使用现有组件
                             <div className="space-y-10">
                                 <ToolIntro intro={seoContent.intro} />
-                                <TargetAudience audience={seoContent.targetAudience} />
-                                <UseCases useCases={seoContent.useCases} />
-                                <CoreFeatures features={seoContent.coreFeatures} />
-                                <ExampleIO exampleIO={seoContent.exampleIO} />
-                                <UsageSteps steps={seoContent.usageSteps} />
+                                <TargetAudience audience={seoContent.targetAudience.primary} />
+                                <UseCases useCases={seoContent.useCases.scenarios} />
+                                <CoreFeatures features={seoContent.features.core} />
+                                <ExampleIO exampleIO={seoContent.examples[0]} />
+                                <UsageSteps steps={seoContent.steps.map(step => step.title + ': ' + step.description + (step.tips ? ' (' + step.tips + ')' : ''))} />
                             </div>
                         )}
                         
-                        <FAQSection faq={seoContent.faq} />
+                        <FAQSection faq={seoContent.faqs.map(f => ({ question: f.q, answer: f.a }))} />
                         
-                        {relatedToolObjects.length > 0 && (
+                        {seoContent.relatedTools.length > 0 && (
                             <div className="space-y-4">
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                                     相关工具推荐
                                 </h2>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                                    {relatedToolObjects.map((relatedTool) => (
-                                        <Link
-                                            key={relatedTool!.id}
-                                            to={relatedTool!.path}
-                                            className="group flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all"
-                                        >
-                                            <span className="material-symbols-outlined text-primary text-lg">
-                                                {relatedTool!.icon}
-                                            </span>
-                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate group-hover:text-primary transition-colors">
-                                                {relatedTool!.name}
-                                            </span>
-                                        </Link>
-                                    ))}
+                                    {seoContent.relatedTools.map((toolId) => {
+                                        const relatedTool = getToolById(toolId as any);
+                                        if (!relatedTool) return null;
+                                        return (
+                                            <Link
+                                                key={relatedTool.id}
+                                                to={relatedTool.path}
+                                                className="group flex items-center gap-2 p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-primary/30 hover:shadow-md transition-all"
+                                            >
+                                                <span className="material-symbols-outlined text-primary text-lg">
+                                                    {relatedTool.icon}
+                                                </span>
+                                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate group-hover:text-primary transition-colors">
+                                                    {relatedTool.name}
+                                                </span>
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}

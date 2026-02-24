@@ -920,3 +920,6 @@ export const getToolSEO = (toolId: ToolType): ToolSEO => {
         keywords: tool.keywords.join(','),
     };
 };
+
+// 导出扩展SEO工具函数
+export { getExtendedToolSEO, getToolMetaTags, getToolStructuredData } from './seoUtils';

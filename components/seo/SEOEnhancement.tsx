@@ -59,7 +59,7 @@ const SEOEnhancement: React.FC<SEOEnhancementProps> = ({ toolCategory }) => {
                 
                 <div className="text-center">
                     <p className="text-xs text-gray-400 dark:text-gray-500">
-                        叁八零零 - 在线免费工具箱 | 持续更新，为您提供最优质的AI工具体验
+                        三八零零 - 在线免费工具箱 | 持续更新，为您提供最优质的AI工具体验
                     </p>
                 </div>
             </div>
