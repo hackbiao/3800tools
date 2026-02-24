@@ -1,3 +1,121 @@
+// 辅助函数：生成工具使用心得
+const generateExperience = (toolName, category) => {
+    const experiences = {
+        'translate': '这款在线翻译工具表现出色，特别是在处理技术文档和商务邮件时，能够准确传达专业术语和语境。界面简洁直观，复制翻译结果一键完成。最令人印象深刻的是它的上下文理解能力，在翻译长句或复杂语法结构时，能够保持原文的逻辑连贯性。',
+        'image': '在实际使用中，这款图片处理工具表现出色的专业性和可靠性。特别是在处理大批量图片时，能够保持稳定的性能，不会因为文件数量增加而降低处理速度。最令人满意的是它的质量控制功能，用户可以根据需要调整参数。',
+        'json': 'JSON格式化工具已经成为日常必备的专业工具。特别在调试API响应时，经常遇到压缩在一行的JSON数据，这个工具能够瞬间将其转化为易读的层级结构，大幅提高调试效率。最值得称赞的是它的错误检测功能，能够精确指出语法错误位置。',
+        'code': '开发者必备的代码工具，处理各种代码格式化、转换需求效率很高。界面直观，操作便捷，即使是不熟悉技术的用户也能快速上手。支持多种编程语言，输出结果准确可靠。',
+        'calculator': '计算结果精确可靠，界面设计简洁明了。无论是日常生活中的简单计算，还是专业领域的复杂运算，都能快速准确地完成。',
+        'pdf': 'PDF处理工具在文档转换方面表现出色，能够保持原始文档的格式和布局。对于经常需要处理PDF文件的用户来说，是一款非常实用的工具。',
+        'default': `在实际使用中，这款${toolName}工具表现出色，能够满足日常使用需求。界面设计简洁直观，功能实用便捷，是工作和生活中的得力助手。`
+    };
+    
+    if (category === 'translate') return experiences['translate'];
+    if (category === 'image') return experiences['image'];
+    if (category === 'json' || category === 'data' || category === 'dev') return experiences['code'];
+    if (category === 'calculator') return experiences['calculator'];
+    if (category === 'media') return experiences['pdf'];
+    
+    return experiences['default'].replace('这款', '这个');
+};
+
+// 辅助函数：生成优缺点分析
+const generateProsCons = (toolName, category) => {
+    const pros = {
+        'translate': '<li>支持10+主流语言互译，覆盖全球主要语种</li><li>AI驱动翻译，准确率显著提升</li><li>界面简洁直观，操作便捷</li><li>本地处理，数据安全</li><li>支持长文本翻译</li><li>自动语言检测功能</li>',
+        'image': '<li>支持20+主流图像格式</li><li>批量处理功能强大</li><li>保持原始分辨率和质量</li><li>本地处理，图片不上传</li><li>支持自定义参数调整</li><li>处理速度快</li>',
+        'json': '<li>强大的语法检测功能</li><li>支持超大JSON文件处理</li><li>多级缩进和语法高亮</li><li>实时验证反馈</li><li>本地处理，数据不上传</li><li>支持折叠和展开</li>',
+        'code': '<li>支持多种编程语言</li><li>处理速度快，结果准确</li><li>界面简洁易用</li><li>无需安装，浏览器直接使用</li><li>支持批量处理</li><li>兼容性好</li>',
+        'calculator': '<li>计算结果精确可靠</li><li>界面简洁直观</li><li>支持多种计算类型</li><li>无需注册，完全免费</li><li>本地计算，数据安全</li><li>适合日常和专业使用</li>',
+        'pdf': '<li>支持多种PDF操作</li><li>转换质量高，保持原格式</li><li>处理速度快</li><li>界面友好易用</li><li>无需安装在线使用</li><li>支持批量处理</li>',
+        'default': '<li>功能实用，满足日常需求</li><li>操作简便易上手</li><li>处理速度快</li><li>完全免费，无需注册</li><li>数据本地处理，安全可靠</li><li>界面设计美观</li>'
+    };
+    
+    const cons = {
+        'translate': '<li>在处理非常专业的术语时偶尔需要人工校正</li><li>对设备性能有一定要求</li><li>离线语言包需要预先下载</li><li>翻译结果有时会偏向字面直译</li><li>对于罕见语言支持有限</li><li>没有语音输入输出功能</li>',
+        'image': '<li功能有限</li><li>某些特殊格式支持>高级图像编辑深度有限</li><li>对设备内存有一定要求</li><li>批量处理时可能导致浏览器卡顿</li><li>不支持矢量图格式>复杂</li><liGIF处理能力有限</li>',
+        'json': '<li>仅支持JSON格式</li><li>对低配设备有压力</li><li>编辑功能有限</li><li>没有JSON Schema验证</li><li>对于极度不规范的JSON修复能力有限</li><li>不支持与其他格式转换</li>',
+        'code': '<li>高级功能相对有限</li><li>部分特殊格式可能不支持</li><li>需要网络连接</li><li>大文件处理可能较慢</li><li>无历史记录功能</li><li>无法与其他工具联动</li>',
+        'calculator': '<li>高级计算功能有限</li><li>无法保存计算历史</li><li>部分专业领域不支持</li><li>无法导出计算结果</li><li>离线功能有限</li><li>无团队协作功能</li>',
+        'pdf': '<li>对加密PDF支持有限</li><li>大型文件处理可能较慢</li><li>部分格式转换质量有限</li><li>需要网络连接</li><li>批量处理功能有限</li><li>无法编辑PDF内容</li>',
+        'default': '<li>高级功能相对基础</li><li>部分场景可能不适用</li><li>功能还有提升空间</li><li>可考虑增加更多选项</li><li>后续可增加更多工具类型</li><li>期待更多功能更新</li>'
+    };
+    
+    let categoryKey = category;
+    if (category === 'text') categoryKey = 'code';
+    if (category === 'network' || category === 'utility') categoryKey = 'code';
+    if (category === 'ai') categoryKey = 'code';
+    
+    const prosList = pros[categoryKey] || pros['default'];
+    const consList = cons[categoryKey] || cons['default'];
+    
+    return { pros: prosList, cons: consList };
+};
+
+// 辅助函数：生成推荐理由
+const generateRecommendation = (toolName, category) => {
+    const recommendations = {
+        'translate': '特别适合需要频繁处理多语言内容的专业人士，如外贸人员、翻译工作者和留学生。它的高准确度和安全特性使其成为商务沟通和学术研究的理想选择。',
+        'image': '特别适合需要频繁处理不同格式图片的设计师和内容创作者。它的批量处理功能和质量控制能力使其成为专业工作的理想选择。',
+        'json': '特别适合前端和后端开发者，尤其是在API开发、数据分析和系统集成工作中。它的强大错误检测能力和大数据处理性能使其成为专业开发的理想选择。',
+        'code': '适合各类开发者和需要处理代码相关任务的用户。它的多功能性和便捷性使其成为日常开发和学习的理想工具。',
+        'calculator': '适合需要进行各类计算的用户，无论是日常生活计算还是专业领域计算，都能提供准确可靠的结果。',
+        'pdf': '特别适合需要频繁处理PDF文件的办公人员和学生。它的转换功能和便捷性使其成为文档处理的理想选择。',
+        'default': `特别适合需要使用${toolName}功能的用户。它的实用性和便捷性使其成为工作和生活中的得力助手。`
+    };
+    
+    if (category === 'translate') return recommendations['translate'];
+    if (category === 'image') return recommendations['image'];
+    if (category === 'json' || category === 'data' || category === 'dev') return recommendations['code'];
+    if (category === 'calculator') return recommendations['calculator'];
+    if (category === 'media') return recommendations['pdf'];
+    if (category === 'network' || category === 'utility') return recommendations['code'];
+    if (category === 'ai') return recommendations['code'];
+    
+    return recommendations['default'].replace('需要使用', '需要').replace('功能的', '的');
+};
+
+// 辅助函数：生成工具页面内容
+const generateToolContent = (toolName, toolId, category) => {
+    const experience = generateExperience(toolName, category);
+    const { pros, cons } = generateProsCons(toolName, category);
+    const recommendation = generateRecommendation(toolName, category);
+    
+    return `
+<section class="seo-section tool-experience">
+  <div class="container">
+    <h2>${toolName}使用心得</h2>
+    <p>${experience}</p>
+  </div>
+</section>
+<section class="seo-section tool-pros-cons">
+  <div class="container">
+    <h2>工具优缺点分析</h2>
+    <div class="pros-cons-grid">
+      <div class="pros">
+        <h3>优点</h3>
+        <ul>
+          ${pros}
+        </ul>
+      </div>
+      <div class="cons">
+        <h3>局限性</h3>
+        <ul>
+          ${cons}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="seo-section tool-recommendation">
+  <div class="container">
+    <h2>推荐理由</h2>
+    <p>${recommendation}</p>
+  </div>
+</section>
+`;
+};
+
 // 首页静态HTML内容（确保EdgeOne爬虫能够获取）
 const staticHomepageHTML = `
 <section class="seo-section homepage-intro">
@@ -60,143 +178,88 @@ const staticHomepageHTML = `
 </section>
 `;
 
-// 工具页面增强内容
+// 工具页面增强内容 - 为所有工具生成SEO内容
 const staticToolContent = {
-    'translate': `
-<section class="seo-section tool-experience">
-  <div class="container">
-    <h2>在线翻译工具使用心得</h2>
-    <p>在实际使用中，这款在线翻译工具表现出色，特别是在处理技术文档和商务邮件时，能够准确传达专业术语和语境。相比传统的在线翻译服务，它在处理长文本时更加稳定，不会出现段落错乱或格式丢失的问题。界面简洁直观，复制翻译结果一键完成，大大提高了工作效率。最令人印象深刻的是它的上下文理解能力，在翻译长句或复杂语法结构时，能够保持原文的逻辑连贯性，避免了机器翻译中常见的生硬感和重复问题。对于需要频繁处理多语言内容的用户来说，这个工具无疑是一个可靠的选择。</p>
-  </div>
-</section>
-<section class="seo-section tool-pros-cons">
-  <div class="container">
-    <h2>工具优缺点分析</h2>
-    <div class="pros-cons-grid">
-      <div class="pros">
-        <h3>优点</h3>
-        <ul>
-          <li>支持10+主流语言互译，覆盖全球主要语种</li>
-          <li>AI驱动翻译，准确率显著提升，上下文理解能力强</li>
-          <li>界面简洁直观，操作便捷，用户体验优秀</li>
-          <li>本地处理，数据安全，翻译结果不会上传到服务器</li>
-          <li>支持长文本翻译，适合处理文档和长篇文章</li>
-          <li>自动语言检测功能，无需手动选择源语言</li>
-        </ul>
-      </div>
-      <div class="cons">
-        <h3>局限性</h3>
-        <ul>
-          <li>在处理非常专业的术语时偶尔需要人工校正</li>
-          <li>完全依赖本地处理，对设备性能有一定要求</li>
-          <li>离线语言包需要预先下载</li>
-          <li>翻译结果有时会偏向字面直译，文学性表达不足</li>
-          <li>对于罕见语言或方言支持有限</li>
-          <li>没有语音输入输出功能，仅支持文本翻译</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="seo-section tool-recommendation">
-  <div class="container">
-    <h2>推荐理由</h2>
-    <p>这款翻译工具特别适合需要频繁处理多语言内容的专业人士，如外贸人员、翻译工作者和留学生。它的高准确度和安全特性使其成为商务沟通和学术研究的理想选择。对于偶尔需要翻译的用户，其简洁的界面和一键操作也能提供便捷的体验。</p>
-    <h2>与同类工具对比</h2>
-    <p>与谷歌翻译相比，这款工具在数据安全性方面具有明显优势，所有处理都在本地完成，不会记录敏感信息。与DeepL相比，虽然文学翻译能力稍逊，但在专业术语翻译和稳定性方面表现更佳。与百度翻译相比，英文翻译准确度更高，中文表达更自然。总体而言，它在安全、准确和易用性之间找到了良好平衡，适合各类专业场景使用。</p>
-  </div>
-</section>
-`,
-    'image-converter': `
-<section class="seo-section tool-experience">
-  <div class="container">
-    <h2>图片格式转换工具使用心得</h2>
-    <p>在实际使用中，这款图片转换工具表现出色的专业性和可靠性。特别是在处理大批量图片时，能够保持稳定的性能，不会因为文件数量增加而降低处理速度。与Photoshop等专业软件相比，虽然功能相对简单，但在格式转换方面毫不逊色，甚至在某些方面更为便捷。最令人满意的是它的质量控制功能，用户可以根据需要调整压缩程度，在文件大小和图像质量之间找到最佳平衡。对于需要频繁处理不同格式图片的用户来说，这个工具提供了专业级的转换效果，同时保持了简单易用的特点。</p>
-  </div>
-</section>
-<section class="seo-section tool-pros-cons">
-  <div class="container">
-    <h2>工具优缺点分析</h2>
-    <div class="pros-cons-grid">
-      <div class="pros">
-        <h3>优点</h3>
-        <ul>
-          <li>支持20+主流图像格式，覆盖几乎所有常用格式</li>
-          <li>批量处理功能强大，可同时转换多张图片</li>
-          <li>保持原始分辨率和质量，转换效果专业</li>
-          <li>本地处理，图片不上传，保护隐私安全</li>
-          <li>支持自定义压缩比，平衡质量与文件大小</li>
-          <li>处理速度快，即使是高清大图也能快速转换</li>
-        </ul>
-      </div>
-      <div class="cons">
-        <h3>局限性</h3>
-        <ul>
-          <li>高级图像编辑功能有限，专业调整仍需专业软件</li>
-          <li>某些特殊格式如RAW支持的深度有限</li>
-          <li>完全依赖本地处理，对设备内存有一定要求</li>
-          <li>批量处理时大量图片可能导致浏览器卡顿</li>
-          <li>不支持矢量图格式转换，如SVG或AI文件</li>
-          <li>对于复杂嵌套的GIF动图处理能力有限</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="seo-section tool-recommendation">
-  <div class="container">
-    <h2>推荐理由</h2>
-    <p>这款图片转换工具特别适合需要频繁处理不同格式图片的设计师和内容创作者。它的批量处理功能和质量控制能力使其成为专业工作的理想选择。对于普通用户，其简洁的界面和高效处理也能满足日常图片格式转换需求。</p>
-    <h2>与同类工具对比</h2>
-    <p>与在线转换网站相比，这款工具在数据安全性方面优势明显，不会上传用户图片。与系统内置的预览工具相比，支持更多格式且批量处理能力更强。与专业图像处理软件相比，虽然功能单一但更加专注，转换效率和用户体验更好。总体而言，它在便捷性、安全性和专业性之间达到了良好平衡，适合各类用户使用。</p>
-  </div>
-</section>
-`,
-    'json-formatter': `
-<section class="seo-section tool-experience">
-  <div class="container">
-    <h2>JSON格式化工具使用心得</h2>
-    <p>在实际开发工作中，JSON格式化工具已经成为日常必备的专业工具。特别在调试API响应时，经常遇到压缩在一行的JSON数据，这个工具能够瞬间将其转化为易读的层级结构，大幅提高调试效率。与其他在线格式化工具相比，它在大数据处理方面表现更为出色，即使处理几MB的JSON文件也能保持流畅，不会出现浏览器卡顿。最值得称赞的是它的错误检测功能，能够精确指出语法错误位置，并提供修复建议，对于新手和经验丰富的开发者都极有帮助。在团队协作中，使用这个工具统一JSON格式，也大大提高了代码审查和数据交流的效率。</p>
-  </div>
-</section>
-<section class="seo-section tool-pros-cons">
-  <div class="container">
-    <h2>工具优缺点分析</h2>
-    <div class="pros-cons-grid">
-      <div class="pros">
-        <h3>优点</h3>
-        <ul>
-          <li>强大的语法检测功能，精确识别JSON格式错误</li>
-          <li>支持超大JSON文件处理，几MB数据也能流畅运行</li>
-          <li>多级缩进和语法高亮，数据结构一目了然</li>
-          <li>实时验证反馈，输入即检测，错误即提示</li>
-          <li>本地处理，数据不上传，保护敏感信息安全</li>
-          <li>支持折叠和展开大型嵌套结构，便于查看复杂数据</li>
-        </ul>
-      </div>
-      <div class="cons">
-        <h3>局限性</h3>
-        <ul>
-          <li>仅支持JSON格式，不兼容其他数据交换格式如XML</li>
-          <li>完全依赖本地处理，复杂JSON对低配设备有压力</li>
-          <li>编辑功能有限，主要用于格式化而非编辑</li>
-          <li>没有JSON Schema验证，无法验证数据结构规范</li>
-          <li>对于格式极度不规范的JSON修复能力有限</li>
-          <li>不支持JSON与其他格式（如XML、CSV）的相互转换</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="seo-section tool-recommendation">
-  <div class="container">
-    <h2>推荐理由</h2>
-    <p>这款JSON格式化工具特别适合前端和后端开发者，尤其是在API开发、数据分析和系统集成工作中。它的强大错误检测能力和大数据处理性能使其成为专业开发的理想选择。对于初学者学习格式和数据结构，也是一个极佳的教学工具。</p>
-    <h2>与同类工具对比</h2>
-    <p>与浏览器控制台的格式化相比提供了更多专业功能，如错误检测和折叠显示。与VS Code等编辑器的内置工具相比，专注于JSON格式优化，功能更全面。相比其他在线格式化工具，在数据处理能力和安全性方面有明显优势，特别是在处理敏感数据时，本地处理的特点让人更加放心。</p>
-  </div>
-</section>
-`
+    'translate': generateToolContent('在线翻译', 'translate', 'translate'),
+    'image-converter': generateToolContent('图片格式转换', 'image-converter', 'image'),
+    'json-formatter': generateToolContent('JSON格式化', 'json-formatter', 'json'),
+    'mortgage-calculator': generateToolContent('房贷计算器', 'mortgage-calculator', 'calculator'),
+    'pension-calculator': generateToolContent('养老金计算器', 'pension-calculator', 'calculator'),
+    'tax-calculator': generateToolContent('个税计算器', 'tax-calculator', 'calculator'),
+    'vram-calculator': generateToolContent('显存计算器', 'vram-calculator', 'calculator'),
+    'bmi-calculator': generateToolContent('BMI计算器', 'bmi-calculator', 'calculator'),
+    'date-calculator': generateToolContent('日期计算器', 'date-calculator', 'calculator'),
+    'percentage-calculator': generateToolContent('百分比计算', 'percentage-calculator', 'calculator'),
+    'scientific-calculator': generateToolContent('科学计算器', 'scientific-calculator', 'calculator'),
+    'loan-calculator': generateToolContent('贷款计算器', 'loan-calculator', 'calculator'),
+    'age-calculator': generateToolContent('年龄计算器', 'age-calculator', 'calculator'),
+    'qrcode-generator': generateToolContent('二维码生成器', 'qrcode-generator', 'utility'),
+    'chinese-converter': generateToolContent('简繁体转换', 'chinese-converter', 'utility'),
+    'timestamp-converter': generateToolContent('时间戳转换', 'timestamp-converter', 'utility'),
+    'base64-tool': generateToolContent('Base64编解码', 'base64-tool', 'utility'),
+    'password-generator': generateToolContent('密码生成器', 'password-generator', 'utility'),
+    'uuid-generator': generateToolContent('UUID生成器', 'uuid-generator', 'utility'),
+    'color-picker': generateToolContent('颜色转换器', 'color-picker', 'utility'),
+    'id-card-parser': generateToolContent('身份证解析', 'id-card-parser', 'utility'),
+    'unit-converter': generateToolContent('单位换算', 'unit-converter', 'utility'),
+    'hash-calculator': generateToolContent('Hash计算器', 'hash-calculator', 'utility'),
+    'regex-tester': generateToolContent('正则测试', 'regex-tester', 'utility'),
+    'number-base-converter': generateToolContent('进制转换', 'number-base-converter', 'utility'),
+    'crypto-tool': generateToolContent('AES加密解密', 'crypto-tool', 'utility'),
+    'cron-parser': generateToolContent('Cron表达式', 'cron-parser', 'utility'),
+    'stopwatch': generateToolContent('秒表计时', 'stopwatch', 'utility'),
+    'countdown-timer': generateToolContent('倒计时器', 'countdown-timer', 'utility'),
+    'world-clock': generateToolContent('世界时钟', 'world-clock', 'utility'),
+    'ip-converter': generateToolContent('IP地址转换', 'ip-converter', 'network'),
+    'ip-subnet-calculator': generateToolContent('IP子网计算', 'ip-subnet-calculator', 'network'),
+    'number-generator': generateToolContent('随机数生成', 'number-generator', 'utility'),
+    'encoding-converter': generateToolContent('编码转换', 'encoding-converter', 'utility'),
+    'chinese-to-pinyin': generateToolContent('中文转拼音', 'chinese-to-pinyin', 'text'),
+    'relationship-calculator': generateToolContent('亲戚关系计算', 'relationship-calculator', 'calculator'),
+    'code-highlight': generateToolContent('代码高亮', 'code-highlight', 'text'),
+    'text-formatter': generateToolContent('文本格式化', 'text-formatter', 'text'),
+    'xml-formatter': generateToolContent('XML格式化', 'xml-formatter', 'data'),
+    'text-diff': generateToolContent('文本差异对比', 'text-diff', 'text'),
+    'text-statistics': generateToolContent('文字统计', 'text-statistics', 'text'),
+    'text-transform': generateToolContent('文本转换', 'text-transform', 'text'),
+    'ascii-art': generateToolContent('ASCII艺术字', 'ascii-art', 'text'),
+    'image-editor': generateToolContent('图片快速编辑', 'image-editor', 'image'),
+    'image-comparison': generateToolContent('多图自由拼接', 'image-comparison', 'image'),
+    'image-round-corner': generateToolContent('图片圆角处理', 'image-round-corner', 'image'),
+    'photo-collage': generateToolContent('模板快速拼接', 'photo-collage', 'image'),
+    'image-watermark-remover': generateToolContent('图片水印去除', 'image-watermark-remover', 'image'),
+    'image-compressor': generateToolContent('图片压缩', 'image-compressor', 'image'),
+    'image-watermark': generateToolContent('图片加水印', 'image-watermark', 'image'),
+    'image-bg-remover': generateToolContent('图片去底色', 'image-bg-remover', 'image'),
+    'image-to-ico': generateToolContent('图片转ICO', 'image-to-ico', 'image'),
+    'gif-maker': generateToolContent('GIF制作', 'gif-maker', 'image'),
+    'gif-splitter': generateToolContent('GIF拆分', 'gif-splitter', 'image'),
+    'gif-compressor': generateToolContent('GIF压缩', 'gif-compressor', 'image'),
+    'word-cloud': generateToolContent('词云图生成', 'word-cloud', 'data'),
+    'grid-image-cutter': generateToolContent('九宫格切图', 'grid-image-cutter', 'image'),
+    'photo-bg-changer': generateToolContent('证件照换底色', 'photo-bg-changer', 'image'),
+    'table-converter': generateToolContent('表格格式转换', 'table-converter', 'data'),
+    'math-formula': generateToolContent('数学公式编辑', 'math-formula', 'data'),
+    'mind-map': generateToolContent('思维导图', 'mind-map', 'data'),
+    'drawing': generateToolContent('绘图画布', 'drawing', 'data'),
+    'video-aspect-converter': generateToolContent('视频比例转换', 'video-aspect-converter', 'media'),
+    'pdf-to-ppt': generateToolContent('PDF转PPT', 'pdf-to-ppt', 'media'),
+    'pdf-to-image': generateToolContent('PDF转长图', 'pdf-to-image', 'media'),
+    'image-to-prompt': generateToolContent('图片转提示词', 'image-to-prompt', 'ai'),
+    'resume-generator': generateToolContent('简历生成器', 'resume-generator', 'ai'),
+    'prompt-generator': generateToolContent('提示词生成器', 'prompt-generator', 'ai'),
+    'mbti-test': generateToolContent('MBTI人格测试', 'mbti-test', 'ai'),
+    'status-code-lookup': generateToolContent('HTTP状态码', 'status-code-lookup', 'network'),
+    'port-lookup': generateToolContent('端口查询', 'port-lookup', 'network'),
+    'url-parser': generateToolContent('URL解析器', 'url-parser', 'network'),
+    'browser-fingerprint': generateToolContent('浏览器指纹', 'browser-fingerprint', 'network'),
+    'curl-generator': generateToolContent('Curl生成器', 'curl-generator', 'network'),
+    'markdown-editor': generateToolContent('Markdown编辑器', 'markdown-editor', 'dev'),
+    'code-formatter': generateToolContent('代码格式化', 'code-formatter', 'dev'),
+    'json-escape': generateToolContent('JSON转义', 'json-escape', 'dev'),
+    'random-data': generateToolContent('随机数据生成', 'random-data', 'dev'),
+    'mock-data': generateToolContent('Mock数据生成', 'mock-data', 'dev'),
+    'linux-command': generateToolContent('Linux命令字典', 'linux-command', 'dev'),
 };
 
 export { staticHomepageHTML, staticToolContent };

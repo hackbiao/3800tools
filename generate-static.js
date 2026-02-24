@@ -315,16 +315,13 @@ function generateStaticPages() {
             
             console.log(`Adding enhanced content for tool: ${meta.name} -> ${toolId}`);
             
-            if (toolId) {
-                // 在主要内容后面注入增强SEO内容
-                const mainIndex = html.indexOf('<main');
-                if (mainIndex !== -1) {
-                    const mainEndIndex = html.indexOf('</main>', mainIndex);
-                    if (mainEndIndex !== -1) {
-                        html = html.slice(0, mainEndIndex) + 
-                                staticToolContent[toolId] + 
-                                html.slice(mainEndIndex);
-                    }
+            if (toolId && staticToolContent[toolId]) {
+                // 在</body>标签之前注入增强SEO内容
+                const bodyEndIndex = html.indexOf('</body>');
+                if (bodyEndIndex !== -1) {
+                    html = html.slice(0, bodyEndIndex) + 
+                            staticToolContent[toolId] + 
+                            html.slice(bodyEndIndex);
                 }
             }
         }

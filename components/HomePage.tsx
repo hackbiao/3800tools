@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TOOL_CATEGORIES } from '../config/tools';
 import MetaTags from './MetaTags';
@@ -11,25 +11,42 @@ const getAssetUrl = (path: string) => {
 
 const HomePage: React.FC = () => {
     const [hoveredTool, setHoveredTool] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>('all');
+    const [visibleItems, setVisibleItems] = useState(10);
+    const [isLoading, setIsLoading] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
 
-const gradientColors: Record<string, string> = {
-    calculator: 'from-blue-500 to-cyan-400',
-    utility: 'from-purple-500 to-pink-400',
-    text: 'from-green-500 to-emerald-400',
-    image: 'from-orange-500 to-amber-400',
-    data: 'from-teal-500 to-cyan-400',
-    media: 'from-pink-500 to-rose-400',
-    ai: 'from-violet-500 to-purple-400',
-    network: 'from-indigo-500 to-blue-400',
-    dev: 'from-rose-500 to-red-400',
-};
+    useEffect(() => {
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-    const categoryBgColors = [
-        'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30',
-        'bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30',
-        'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30',
-        'bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30',
-        'bg-gradient-to-br from-rose-50 to-red-50 dark:from-rose-950/30 dark:to-red-950/30',
+    const gradientColors: Record<string, string> = {
+        calculator: 'from-blue-600 to-cyan-500',
+        utility: 'from-purple-600 to-pink-500',
+        text: 'from-green-600 to-emerald-500',
+        image: 'from-orange-600 to-amber-500',
+        data: 'from-teal-600 to-cyan-500',
+        media: 'from-pink-600 to-rose-500',
+        ai: 'from-violet-600 to-purple-500',
+        network: 'from-indigo-600 to-blue-500',
+        dev: 'from-rose-600 to-red-500',
+    };
+
+    const featuredTools = [
+        { id: 'translate', name: '在线翻译', icon: 'translate', color: 'from-blue-600 to-cyan-500', desc: '支持多语言互译' },
+        { id: 'image-converter', name: '图片工具', icon: 'image', color: 'from-purple-600 to-pink-500', desc: '格式转换与编辑' },
+        { id: 'json-formatter', name: 'JSON工具', icon: 'code', color: 'from-green-600 to-emerald-500', desc: '格式化与验证' },
+        { id: 'pdf-tools', name: 'PDF工具', icon: 'picture_as_pdf', color: 'from-orange-600 to-amber-500', desc: 'PDF处理与转换' },
+    ];
+
+    const stats = [
+        { number: '24+', label: '实用工具', icon: 'build' },
+        { number: '100K+', label: '用户使用', icon: 'people' },
+        { number: '0', label: '广告干扰', icon: 'block' },
+        { number: '100%', label: '本地处理', icon: 'security' },
     ];
 
     return (
@@ -40,46 +57,119 @@ const gradientColors: Record<string, string> = {
                 keywords="在线工具箱,免费工具大全,在线翻译,图片处理,JSON格式化,代码高亮,思维导图,PDF转换,AI工具,文本处理,图片转换"
             />
 
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-24">
-                <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-transparent pb-6">
-                    <div className="absolute top-0 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-y-1/2"></div>
-                    <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl translate-y-1/2"></div>
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/20 pt-24">
+                {/* Animated Background */}
+                <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
+                    <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                    <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+                </div>
 
-                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="text-center">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                                <span className="material-symbols-outlined text-base">auto_awesome</span>
-                                免费在线工具，无需注册
+                {/* Hero Section */}
+                <section className="relative overflow-hidden">
+                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+                        <div className="text-center lg:text-left lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
+                            <div className="space-y-8">
+                                <div className="space-y-4">
+                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium mb-4 shadow-lg">
+                                        <span className="material-symbols-outlined text-base animate-pulse">auto_awesome</span>
+                                        免费在线工具，无需注册
+                                    </div>
+                                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
+                                        <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient">
+                                            三八零零
+                                        </span>
+                                        <br />
+                                        <span className="text-gray-900 dark:text-white text-3xl sm:text-4xl lg:text-5xl">
+                                            在线工具箱
+                                        </span>
+                                    </h1>
+                                    <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
+                                        一站式在线工具平台，提供
+                                        <span className="text-blue-600 dark:text-blue-400 font-bold"> 24+</span> 种实用工具
+                                        <br />
+                                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                                            完全免费 · 无需注册 · 本地处理 · 数据安全
+                                        </span>
+                                    </p>
+                                </div>
+
+                                {/* Search Bar */}
+                                <div className="relative max-w-md mx-auto lg:mx-0">
+                                    <div className="relative">
+                                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">
+                                            search
+                                        </span>
+                                        <input
+                                            type="text"
+                                            placeholder="搜索工具..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full pl-12 pr-4 py-3 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur border border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-lg"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Quick Actions */}
+                                <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                                    <Link
+                                        to="/translate"
+                                        className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+                                    >
+                                        <span className="material-symbols-outlined text-lg align-middle mr-2">translate</span>
+                                        开始翻译
+                                    </Link>
+                                    <Link
+                                        to="/image-converter"
+                                        className="px-6 py-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+                                    >
+                                        <span className="material-symbols-outlined text-lg align-middle mr-2">image</span>
+                                        图片工具
+                                    </Link>
+                                </div>
                             </div>
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 leading-tight">
-                                <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                                    三八零零
-                                </span>
-                                <span className="hidden sm:inline"> · </span>
-                                <span className="sm:block">在线免费工具箱</span>
-                            </h1>
-                            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-6">
-                                一站式在线工具平台，提供文本处理、图片编辑、数据转换等
-                                <span className="text-primary font-semibold"> 24+</span> 种实用工具
-                            </p>
-                            <div className="flex flex-wrap justify-center gap-3">
-                                <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                                    <span className="material-symbols-outlined text-green-500 text-base">check_circle</span>
-                                    完全免费
-                                </div>
-                                <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                                    <span className="material-symbols-outlined text-green-500 text-base">check_circle</span>
-                                    无需注册
-                                </div>
-                                <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                                    <span className="material-symbols-outlined text-green-500 text-base">check_circle</span>
-                                    本地处理
-                                </div>
-                                <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
-                                    <span className="material-symbols-outlined text-green-500 text-base">check_circle</span>
-                                    数据安全
+
+                            {/* Hero Visual */}
+                            <div className="relative mt-12 lg:mt-0">
+                                <div className="relative grid grid-cols-2 gap-4 lg:gap-6">
+                                    {featuredTools.map((tool, index) => (
+                                        <div
+                                            key={tool.id}
+                                            className="group relative p-6 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur border border-gray-200 dark:border-gray-700 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300"
+                                            style={{
+                                                animation: `slideUp 0.6s ease-out ${index * 0.1}s both`
+                                            }}
+                                        >
+                                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${tool.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                                                <span className="material-symbols-outlined text-white text-xl">
+                                                    {tool.icon}
+                                                </span>
+                                            </div>
+                                            <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{tool.name}</h3>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">{tool.desc}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
+                        </div>
+
+                        {/* Stats Bar */}
+                        <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6">
+                            {stats.map((stat, index) => (
+                                <div
+                                    key={index}
+                                    className="text-center p-6 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur border border-gray-200 dark:border-gray-700"
+                                    style={{
+                                        animation: `slideUp 0.6s ease-out ${index * 0.1 + 0.3}s both`
+                                    }}
+                                >
+                                    <span className="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400 mb-2">
+                                        {stat.icon}
+                                    </span>
+                                    <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.number}</div>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -206,73 +296,106 @@ const gradientColors: Record<string, string> = {
                     </div>
                 </section>
 
+                {/* Categories Section */}
                 <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-                    {TOOL_CATEGORIES.map((category, categoryIndex) => (
-                        <CategorySection
-                            key={category.id}
-                            category={category}
-                            categoryIndex={categoryIndex}
-                            gradientColors={gradientColors}
-                            categoryBgColors={categoryBgColors}
-                            hoveredTool={hoveredTool}
-                            setHoveredTool={setHoveredTool}
-                        />
-                    ))}
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                            工具分类
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                            按需选择，快速找到适合的工具
+                        </p>
+                    </div>
+
+                    <div className="grid gap-8 md:gap-12">
+                        {TOOL_CATEGORIES.map((category, categoryIndex) => (
+                            <CategorySection
+                                key={category.id}
+                                category={category}
+                                categoryIndex={categoryIndex}
+                                gradientColors={gradientColors}
+                                hoveredTool={hoveredTool}
+                                setHoveredTool={setHoveredTool}
+                            />
+                        ))}
+                    </div>
                 </section>
 
-                {/* SEO增强链接 - 简化版 */}
-                <section className="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-900/50 dark:to-blue-900/20 border-t border-gray-200 dark:border-gray-800">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="text-center mb-4">
-                            <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
-                                探索更多AI工具
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                发现适合您的AI工具解决方案，提升工作效率
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap justify-center gap-3">
-                            <Link
-                                to="/ranking"
-                                className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-primary/30 hover:shadow-md transition-all"
-                            >
-                                <span className="material-symbols-outlined text-sm align-middle mr-1">emoji_events</span>
-                                工具排行榜
-                            </Link>
-                            <Link
-                                to="/topics"
-                                className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-primary/30 hover:shadow-md transition-all"
-                            >
-                                <span className="material-symbols-outlined text-sm align-middle mr-1">topic</span>
-                                专题推荐
-                            </Link>
-                            <Link
-                                to="/category/ai"
-                                className="px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-primary/30 hover:shadow-md transition-all"
-                            >
-                                <span className="material-symbols-outlined text-sm align-middle mr-1">smart_toy</span>
-                                AI工具
-                            </Link>
+                {/* CTA Section */}
+                <section className="relative overflow-hidden">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                        <div className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 lg:p-12 text-center shadow-2xl">
+                            <div className="absolute inset-0 bg-black/10 rounded-3xl"></div>
+                            <div className="relative z-10 space-y-6">
+                                <h2 className="text-3xl lg:text-4xl font-bold text-white">
+                                    开始使用三八零零工具箱
+                                </h2>
+                                <p className="text-lg text-white/90 max-w-2xl mx-auto">
+                                    免费使用所有工具，无需注册，数据本地处理，安全可靠
+                                </p>
+                                <div className="flex flex-wrap justify-center gap-4 pt-4">
+                                    <Link
+                                        to="/translate"
+                                        className="px-8 py-3 rounded-xl bg-white text-blue-600 font-semibold hover:bg-gray-100 transition-colors shadow-lg"
+                                    >
+                                        立即开始
+                                    </Link>
+                                    <Link
+                                        to="/topics"
+                                        className="px-8 py-3 rounded-xl glassmorphism text-white font-semibold border border-white/30 hover:bg-white/10 transition-colors"
+                                    >
+                                        查看专题
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        <div className="flex flex-col items-center justify-center gap-3">
-                            <div className="flex items-center gap-2">
-                                <img
-                                    src={getAssetUrl('logo.png')}
-                                    alt="三八零零"
-                                    className="w-6 h-6 rounded-lg"
-                                />
-                                <span className="text-gray-600 dark:text-gray-400 text-sm">
-                                    © {new Date().getFullYear()} 三八零零 - 在线免费工具箱
-                                </span>
+                {/* Footer */}
+                <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-2">
+                                    <img
+                                        src={getAssetUrl('logo.png')}
+                                        alt="三八零零"
+                                        className="w-8 h-8 rounded-lg"
+                                    />
+                                    <span className="font-bold text-gray-900 dark:text-white">三八零零</span>
+                                </div>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    免费在线工具箱，提供24+种实用工具
+                                </p>
                             </div>
-                            <p className="text-xs text-gray-400 dark:text-gray-500">
-                                数据安全，本地处理 | 无需注册，完全免费
-                            </p>
+                            
+                            <div>
+                                <h4 className="font-semibold text-gray-900 dark:text-white mb-4">常用工具</h4>
+                                <ul className="space-y-2 text-sm">
+                                    <li><Link to="/translate" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">在线翻译</Link></li>
+                                    <li><Link to="/image-converter" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">图片工具</Link></li>
+                                    <li><Link to="/json-formatter" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">JSON工具</Link></li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 className="font-semibold text-gray-900 dark:text-white mb-4">资源</h4>
+                                <ul className="space-y-2 text-sm">
+                                    <li><Link to="/ranking" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">工具排行</Link></li>
+                                    <li><Link to="/topics" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">专题推荐</Link></li>
+                                    <li><Link to="/category/ai" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">AI工具</Link></li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 className="font-semibold text-gray-900 dark:text-white mb-4">关于</h4>
+                                <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>数据安全，本地处理</li>
+                                    <li>无需注册，完全免费</li>
+                                    <li>© {new Date().getFullYear()} 三八零零</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </footer>
@@ -285,7 +408,6 @@ interface CategorySectionProps {
     category: ToolCategory;
     categoryIndex: number;
     gradientColors: Record<string, string>;
-    categoryBgColors: string[];
     hoveredTool: string | null;
     setHoveredTool: (id: string | null) => void;
 }
@@ -294,40 +416,47 @@ const CategorySection: React.FC<CategorySectionProps> = ({
     category,
     categoryIndex,
     gradientColors,
-    categoryBgColors,
     hoveredTool,
     setHoveredTool,
 }) => {
-    const categoryGradient = gradientColors[category.id] || 'from-blue-500 to-cyan-400';
+    const categoryGradient = gradientColors[category.id] || 'from-blue-600 to-cyan-500';
+    const categoryBgColors = [
+        'bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30',
+        'bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30',
+        'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30',
+        'bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30',
+        'bg-gradient-to-br from-rose-50 to-red-50 dark:from-rose-950/30 dark:to-red-950/30',
+    ];
+    
     return (
-        <div className="mb-10">
-            <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryGradient} flex items-center justify-center shadow-lg`}>
-                        <span className="material-symbols-outlined text-white text-xl">
+        <div className="group">
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${categoryGradient} flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform`}>
+                        <span className="material-symbols-outlined text-white text-2xl">
                             {category.icon}
                         </span>
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                             {category.name}
                         </h2>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-gray-500 dark:text-gray-400">
                             {category.description}
                         </p>
                     </div>
                 </div>
                 <Link
                     to={`/category/${category.id}`}
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium text-primary hover:bg-primary/10 transition-colors"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:shadow-lg transition-all"
                 >
                     查看全部
                     <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </Link>
             </div>
 
-            <div className={`rounded-2xl p-4 ${categoryBgColors[categoryIndex % categoryBgColors.length]}`}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className={`rounded-3xl p-6 ${categoryBgColors[categoryIndex % categoryBgColors.length]} backdrop-blur`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {category.tools.slice(0, 6).map((tool) => (
                         <ToolCard
                             key={tool.id}
@@ -339,10 +468,10 @@ const CategorySection: React.FC<CategorySectionProps> = ({
                     ))}
                 </div>
                 {category.tools.length > 6 && (
-                    <div className="mt-3 text-center">
+                    <div className="mt-6 text-center">
                         <Link
                             to={`/category/${category.id}`}
-                            className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-primary transition-colors"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all"
                         >
                             还有 {category.tools.length - 6} 个工具
                             <span className="material-symbols-outlined text-base">expand_more</span>
@@ -368,37 +497,37 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool, isHovered, onHover, gradientC
             onMouseEnter={() => onHover(tool.id)}
             onMouseLeave={() => onHover(null)}
             className={`
-                group relative block p-4 rounded-xl
-                bg-white dark:bg-gray-800/50
+                group relative block p-5 rounded-2xl
+                bg-white/80 dark:bg-gray-800/80 backdrop-blur
                 border border-gray-200 dark:border-gray-700/50
-                shadow-sm hover:shadow-lg
-                transition-all duration-200 ease-out
-                ${isHovered ? 'scale-[1.01] border-primary/30' : 'scale-100'}
+                shadow-md hover:shadow-xl
+                transition-all duration-300 ease-out
+                ${isHovered ? 'scale-[1.02] border-blue-500/50 -translate-y-1' : 'scale-100'}
             `}
         >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
                 <div className={`
-                    w-10 h-10 rounded-lg flex items-center justify-center
+                    w-12 h-12 rounded-xl flex items-center justify-center
                     bg-gradient-to-br ${gradientColor}
-                    shadow group-hover:shadow-lg
-                    transition-all duration-200
-                    ${isHovered ? 'scale-110' : 'scale-100'}
+                    shadow-lg group-hover:shadow-xl
+                    transition-all duration-300
+                    ${isHovered ? 'scale-110 rotate-3' : 'scale-100'}
                 `}>
-                    <span className="material-symbols-outlined text-white text-xl">
+                    <span className="material-symbols-outlined text-white text-2xl">
                         {tool.icon}
                     </span>
                 </div>
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors truncate">
+                    <h3 className="base font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
                         {tool.name}
                     </h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                         {tool.description}
                     </p>
                 </div>
                 <span className={`
-                    material-symbols-outlined text-gray-300 dark:text-gray-600 text-lg
-                    transition-all duration-200
+                    material-symbols-outlined text-gray-300 dark:text-gray-600 text-xl
+                    transition-all duration-300
                     ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'}
                 `}>
                     arrow_forward
