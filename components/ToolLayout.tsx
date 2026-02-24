@@ -88,17 +88,110 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
 
                 {seoContent && (
                     <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
-                        <ToolIntro intro={seoContent.intro} />
-                        
-                        <TargetAudience audience={seoContent.targetAudience} />
-                        
-                        <UseCases useCases={seoContent.useCases} />
-                        
-                        <CoreFeatures features={seoContent.coreFeatures} />
-                        
-                        <ExampleIO exampleIO={seoContent.exampleIO} />
-                        
-                        <UsageSteps steps={seoContent.usageSteps} />
+                        {/* 根据是否有增强内容来渲染不同的工具介绍 */}
+                        {seoContent.intro.usageExperience ? (
+                            // 原创增强内容直接内联渲染，确保SEO可爬取
+                            <div className="space-y-6">
+                                <section>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                        {seoContent.intro.what.split('是')[0]}是什么？
+                                    </h2>
+                                    <div className="prose prose-gray dark:prose-invert max-w-none">
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            {seoContent.intro.what}
+                                        </p>
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            <strong className="text-gray-900 dark:text-white">解决问题：</strong>{seoContent.intro.problem}
+                                        </p>
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            <strong className="text-gray-900 dark:text-white">核心能力：</strong>{seoContent.intro.capability}
+                                        </p>
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            <strong className="text-gray-900 dark:text-white">适用人群：</strong>{seoContent.intro.targetUser}
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                        使用心得与评价
+                                    </h2>
+                                    <div className="prose prose-gray dark:prose-invert max-w-none">
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            {seoContent.intro.usageExperience}
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                        工具优缺点分析
+                                    </h2>
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-green-600 dark:text-green-400 mb-3 flex items-center gap-2">
+                                                <span className="material-symbols-outlined">thumb_up</span>
+                                                优点
+                                            </h3>
+                                            <ul className="space-y-2">
+                                                {seoContent.intro.pros?.map((pro, index) => (
+                                                    <li key={index} className="flex items-start gap-2">
+                                                        <span className="material-symbols-outlined text-green-500 text-sm mt-0.5">check_circle</span>
+                                                        <span className="text-gray-600 dark:text-gray-300">{pro}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-red-600 dark:text-red-400 mb-3 flex items-center gap-2">
+                                                <span className="material-symbols-outlined">thumb_down</span>
+                                                局限性
+                                            </h3>
+                                            <ul className="space-y-2">
+                                                {seoContent.intro.cons?.map((con, index) => (
+                                                    <li key={index} className="flex items-start gap-2">
+                                                        <span className="material-symbols-outlined text-red-500 text-sm mt-0.5">cancel</span>
+                                                        <span className="text-gray-600 dark:text-gray-300">{con}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                        推荐理由
+                                    </h2>
+                                    <div className="prose prose-gray dark:prose-invert max-w-none">
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            {seoContent.intro.recommendation}
+                                        </p>
+                                    </div>
+                                </section>
+
+                                <section>
+                                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                        与同类工具对比
+                                    </h2>
+                                    <div className="prose prose-gray dark:prose-invert max-w-none">
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            {seoContent.intro.comparison}
+                                        </p>
+                                    </div>
+                                </section>
+                            </div>
+                        ) : (
+                            // 标准内容使用现有组件
+                            <div className="space-y-10">
+                                <ToolIntro intro={seoContent.intro} />
+                                <TargetAudience audience={seoContent.targetAudience} />
+                                <UseCases useCases={seoContent.useCases} />
+                                <CoreFeatures features={seoContent.coreFeatures} />
+                                <ExampleIO exampleIO={seoContent.exampleIO} />
+                                <UsageSteps steps={seoContent.usageSteps} />
+                            </div>
+                        )}
                         
                         <FAQSection faq={seoContent.faq} />
                         
@@ -156,16 +249,16 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
                 )}
             </main>
 
-<SEOEnhancement />
+            <SEOEnhancement />
                 
-                <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                        <div className="flex flex-col items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                            <p>© {new Date().getFullYear()} 三八零零 - 在线免费工具箱</p>
-                            <p className="text-xs text-gray-400 dark:text-gray-500">数据安全，本地处理</p>
-                        </div>
+            <footer className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div className="flex flex-col items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                        <p>© {new Date().getFullYear()} 三八零零 - 在线免费工具箱</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500">数据安全，本地处理</p>
                     </div>
-                </footer>
+                </div>
+            </footer>
         </div>
     );
 };

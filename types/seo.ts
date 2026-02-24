@@ -6,6 +6,11 @@ export interface SEOPageContent {
         problem: string;
         capability: string;
         targetUser: string;
+        usageExperience?: string;
+        pros?: string[];
+        cons?: string[];
+        recommendation?: string;
+        comparison?: string;
     };
     
     targetAudience: string[];
