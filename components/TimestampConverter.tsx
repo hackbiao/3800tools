@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 const TimestampConverter: React.FC = () => {
     const [timestamp, setTimestamp] = useState<string>('');

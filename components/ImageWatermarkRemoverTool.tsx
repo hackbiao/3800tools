@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { downloadModel, getSession, inpaint, isModelCached } from '../utils/inpaint';
+import { errorHandler } from '../utils/errorHandler';
 
 type Status = 'idle' | 'loading-model' | 'ready' | 'processing';
 

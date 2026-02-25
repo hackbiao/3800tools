@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 declare global {
     interface Window {

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 interface MatchResult {
     matches: string[];

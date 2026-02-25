@@ -163,7 +163,10 @@ export const apiSecurity = {
         }
         
         // 验证响应的基本结构
-        return !('script' in response) && !('javascript:' in JSON.stringify(response));
+        const hasScript = 'script' in response;
+        const jsonStr = JSON.stringify(response);
+        const hasJavascript = jsonStr.includes('javascript:');
+        return !hasScript && !hasJavascript;
     },
 
     /**

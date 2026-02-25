@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 const UuidGenerator: React.FC = () => {
     const [uuids, setUuids] = useState<string[]>([]);
