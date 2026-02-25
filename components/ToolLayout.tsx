@@ -35,11 +35,11 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 overflow-x-hidden">
             <TopNavBar />
 
-            {tool && (
+            {tool && metaTags && (
                 <MetaTags
-                    title={`${tool.name} - 三八零零在线工具箱`}
-                    description={tool.description}
-                    keywords={tool.keywords.join(',')}
+                    title={metaTags.title}
+                    description={metaTags.description}
+                    keywords={metaTags.keywords}
                 />
             )}
             
