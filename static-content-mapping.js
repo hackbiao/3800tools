@@ -820,13 +820,13 @@ const generateToolContent = (toolName, toolId, category) => {
             <div class="pros">
                 <h3>优点</h3>
                 <ul>
-                    ${config.pros.split('|').map(item => `<li>${item}</li>`).join('')}
+                    ${(config.pos || config.pros || '').split('|').filter(i => i).map(item => `<li>${item}</li>`).join('')}
                 </ul>
             </div>
             <div class="cons">
                 <h3>局限性</h3>
                 <ul>
-                    ${config.cons.split('|').map(item => `<li>${item}</li>`).join('')}
+                    ${(config.cons || '').split('|').filter(i => i).map(item => `<li>${item}</li>`).join('')}
                 </ul>
             </div>
         </div>
@@ -896,16 +896,6 @@ const generateToolContent = (toolName, toolId, category) => {
                       category === 'media' ? 'pdf' :
                       category === 'ai' ? 'ai' :
                       category === 'network' ? 'network' : 'default';
-    
-    let catKey = category;
-    if (category === 'translate') categoryKey = 'translate';
-    if (category === 'image') categoryKey = 'image';
-    if (category === 'json') categoryKey = 'json';
-    if (category === 'data' || category === 'dev') categoryKey = 'code';
-    if (category === 'calculator') categoryKey = 'calculator';
-    if (category === 'media') categoryKey = 'pdf';
-    if (category === 'ai') categoryKey = 'ai';
-    if (category === 'network') categoryKey = 'network';
     
     const experience = experiences[categoryKey] || experiences['default'];
     const prosList = pros[categoryKey] || pros['default'];
@@ -1008,13 +998,6 @@ const staticHomepageHTML = `
   </div>
 </section>
 `;
-
-// 工具页面增强内容 - 为所有工具生成SEO内容
-const staticToolContent1 = Object.keys(toolSEOConfig).reduce((acc, toolId) => {
-    const tool = toolSEOConfig[toolId];
-    acc[toolId] = createToolContent(tool.title, toolId, 'special');
-    return acc;
-}, {});
 
 // 工具页面增强内容 - 确保所有工具都有SEO内容
 const staticToolContent = {

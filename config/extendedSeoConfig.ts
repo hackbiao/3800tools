@@ -1330,7 +1330,7 @@ export const EXTENDED_TOOL_SEO: Record<ToolType, ExtendedToolSEO> = {
         what: 'Curl命令生成器是一款专业的HTTP请求命令生成工具，能够可视化配置HTTP请求参数并生成对应的curl命令，是我们网络相关工具集合的重要组成部分。',
         problem: '开发者需要测试API接口，但手动编写curl命令复杂且容易出错，特别是处理复杂的请求头、请求体和认证参数，需要专业的命令生成工具。',
         capability: '该工具支持各种HTTP方法（GET、POST、PUT、DELETE、PATCH等），可视化配置请求参数、请求头、请求体、认证方式，一键生成标准curl命令。',
-        usageExperience: '使用该生成器非常直观高效。选择HTTP方法后，填写请求URL，系统会自动验证URL格式。参数配置区域分为几部分：查询参数（可视化添加键值对）、请求头（常见请求头预设，支持自定义）、请求体（支持JSON、XML、表单数据等多种格式）、认证设置（Basic Auth、Bearer Token等）。每个配置项都有清晰的说明和示例。实时代码预览区会即时显示生成的curl命令，语法高亮便于查看。一键复制功能可将命令直接复制到剪贴板。工具还支持反向操作，粘贴现有curl命令会解析显示各个配置项，便于学习和分析。所有生成和解析都在浏览器本地完成，保护API信息和敏感参数安全。
+        usageExperience: '使用该生成器非常直观高效。选择HTTP方法后，填写请求URL，系统会自动验证URL格式。参数配置区域分为几部分：查询参数（可视化添加键值对）、请求头（常见请求头预设，支持自定义）、请求体（支持JSON、XML、表单数据等多种格式）、认证设置（Basic Auth、Bearer Token等）。每个配置项都有清晰的说明和示例。实时代码预览区会即时显示生成的curl命令，语法高亮便于查看。一键复制功能可将命令直接复制到剪贴板。工具还支持反向操作，粘贴现有curl命令会解析显示各个配置项，便于学习和分析。所有生成和解析都在浏览器本地完成，保护API信息和敏感参数安全。',
         pros: [
             '可视化配置，降低编写难度',
             '支持复杂请求参数，专业级功能',
@@ -1590,5 +1590,8 @@ export const EXTENDED_TOOL_SEO: Record<ToolType, ExtendedToolSEO> = {
         comparison: '相比输入法的拼音功能，我们提供更专业的多音字识别和更灵活的输出格式。与专业语文软件相比，我们更专注拼音转换功能，操作更简单，适合日常快速使用。'
     },
     'relationship-calculator': createDefaultSEO('亲戚关系计算'),
-    'ascii-art': createDefaultSEO('ASCII艺术字')
+    'ascii-art': createDefaultSEO('ASCII艺术字'),
+    'drawing': createDefaultSEO('绘图画布'),
+    'vram-calculator': createDefaultSEO('显存计算器'),
+    'bmi-calculator': createDefaultSEO('BMI计算器')
 };

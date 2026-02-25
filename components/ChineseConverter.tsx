@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 type ConversionMode = 's2t' | 't2s';
 

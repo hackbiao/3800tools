@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 import mammoth from 'mammoth';
 
 interface DiffLine {
