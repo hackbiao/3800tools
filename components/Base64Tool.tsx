@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 const Base64Tool: React.FC = () => {
     const [inputText, setInputText] = useState<string>('');
@@ -28,7 +29,7 @@ const Base64Tool: React.FC = () => {
         try {
             await navigator.clipboard.writeText(outputText);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: 'Base64Tool', action: 'copy' });
         }
     };
 

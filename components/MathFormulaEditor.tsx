@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { loadKatex } from '../utils/loadKatex';
+import { errorHandler } from '../utils/errorHandler';
 
 // Declare KaTeX global
 declare global {
@@ -233,11 +234,9 @@ const MathFormulaEditor: React.FC = () => {
             setMathmlOutput(mathml);
 
             setError(null);
-        } catch (err: any) {
-            console.error('KaTeX render error:', err);
-            setError(err.message || '公式渲染失败');
-            setRenderedHtml('');
-            setMathmlOutput('');
+} catch (err: any) {
+            errorHandler.error('KaTeX 加载失败', err, { component: 'MathFormulaEditor', action: 'load' });
+            setError('KaTeX 加载失败，请刷新页面重试');
         }
     }, []);
 
@@ -303,7 +302,7 @@ const MathFormulaEditor: React.FC = () => {
 
         navigator.clipboard.writeText(textToCopy).then(() => {
             showNotification('已复制 LaTeX 格式到剪贴板!');
-        }).catch(err => console.error('Failed to copy LaTeX: ', err));
+        }).catch(err => errorHandler.error('复制LaTeX失败', err, { component: 'MathFormulaEditor', action: 'copy-late' }));
     }, [latexInput, latexWrapper, showNotification]);
 
     const handleCopyForWord = useCallback(async () => {
@@ -321,12 +320,12 @@ const MathFormulaEditor: React.FC = () => {
             showNotification('已复制到 Word 格式!');
         } catch (err) {
             // 如果浏览器不支持 ClipboardItem，回退到普通复制
-            console.error('Failed to copy for Word with ClipboardItem: ', err);
+            errorHandler.error('复制Word格式失败', err, { component: 'MathFormulaEditor', action: 'copy-word' });
             try {
                 await navigator.clipboard.writeText(mathmlOutput);
                 showNotification('已复制到 Word 格式!');
             } catch (fallbackErr) {
-                console.error('Failed to copy for Word: ', fallbackErr);
+                errorHandler.error('复制Word格式失败(fallback)', fallbackErr, { component: 'MathFormulaEditor', action: 'copy-word-fallback' });
             }
         }
     }, [mathmlOutput, showNotification]);
@@ -456,7 +455,7 @@ const MathFormulaEditor: React.FC = () => {
                                         });
                                     }
                                 } catch (err) {
-                                    console.error('Template render error:', err);
+                                    errorHandler.error('模板渲染错误', err, { component: 'MathFormulaEditor', action: 'template-render' });
                                 }
 
                                 return (

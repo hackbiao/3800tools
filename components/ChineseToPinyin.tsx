@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 import { pinyin } from 'pinyin-pro';
 
 const ChineseToPinyin: React.FC = () => {
@@ -35,7 +36,7 @@ const ChineseToPinyin: React.FC = () => {
         try {
             await navigator.clipboard.writeText(text);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

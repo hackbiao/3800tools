@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 import { parseGIF, decompressFrames } from 'gifuct-js';
 
 interface GifFrame {
@@ -75,7 +76,7 @@ const GifSplitter: React.FC = () => {
 
             setFrames(generatedFrames);
         } catch (error) {
-            console.error('Failed to parse GIF:', error);
+            errorHandler.error('GIF解析失败', error, { component: 'GifSplitter', action: 'parse' });
         }
 
         setIsProcessing(false);

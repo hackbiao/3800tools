@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { highlightCode } from '../services/highlightService';
+import { errorHandler } from '../utils/errorHandler';
 
 const LANGUAGES = [
     "Python", "JavaScript", "HTML", "CSS", "SQL", "TypeScript", "JSX", "JSON", "Markdown", "Go", "Rust", "Java", "C++"
@@ -31,8 +32,8 @@ const CodeHighlightTool: React.FC = () => {
             const result = await highlightCode(codeText, lang);
             setHighlightedCode(result);
         } catch (err) {
-            console.error(err);
-            setError("代码高亮失败,请检查控制台获取更多信息。");
+            errorHandler.error('代码高亮失败', err, { component: 'CodeHighlightTool', action: 'highlight' });
+            setError("代码高亮失败");
         } finally {
             setIsLoading(false);
         }
@@ -80,7 +81,7 @@ const CodeHighlightTool: React.FC = () => {
                 setIsNotificationFadingOut(false);
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy text: ', err);
+            errorHandler.error('复制文本失败', err, { component: 'CodeHighlightTool', action: 'copy-text' });
             setError("复制代码失败。");
         });
     }, [highlightedCode]);
@@ -160,7 +161,7 @@ const CodeHighlightTool: React.FC = () => {
                 setIsNotificationFadingOut(false);
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy as HTML: ', err);
+            errorHandler.error('复制HTML失败', err, { component: 'CodeHighlightTool', action: 'copy-html' });
             handleCopyAsText();
         });
     }, [highlightedCode, code, handleCopyAsText]);

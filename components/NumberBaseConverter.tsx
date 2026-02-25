@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 type Base = 2 | 8 | 10 | 16;
 
@@ -77,7 +78,7 @@ const NumberBaseConverter: React.FC = () => {
         try {
             await navigator.clipboard.writeText(text);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

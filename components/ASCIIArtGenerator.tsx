@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 const ASCII_ART_FONTS: Record<string, string[][]> = {
     standard: [
@@ -85,7 +86,7 @@ const ASCIIArtGenerator: React.FC = () => {
         try {
             await navigator.clipboard.writeText(outputText);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: 'ASCIIArtGenerator', action: 'copy' });
         }
     };
 

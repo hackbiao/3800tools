@@ -225,7 +225,7 @@ const ImageWatermarkRemoverTool: React.FC = () => {
             setStatusMessage('');
             setModelCached(true);
         } catch (e) {
-            console.error('Model loading failed:', e);
+            errorHandler.error('模型加载失败', e, { component: 'ImageWatermarkRemoverTool', action: 'load-model' });
             setError('模型加载失败，请检查网络后重试');
             setStatus('idle');
         }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 const IPSubnetCalculator: React.FC = () => {
     const [ip, setIP] = useState<string>('192.168.1.1');
@@ -70,7 +71,7 @@ const IPSubnetCalculator: React.FC = () => {
         try {
             await navigator.clipboard.writeText(text);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 interface JsonNode {
     key: string;
@@ -102,7 +103,7 @@ const JsonFormatterTool: React.FC = () => {
                 setIsNotificationFadingOut(false);
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy text: ', err);
+            errorHandler.error('复制文本失败', err, { component: '"$(basename $file .tsx)"', action: 'copy-text' });
         });
     }, [parsedJson, indentSize]);
 

@@ -59,7 +59,7 @@ const RegexTester: React.FC = () => {
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

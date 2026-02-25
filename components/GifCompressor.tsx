@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 import { parseGIF, decompressFrames } from 'gifuct-js';
 
 const GifCompressor: React.FC = () => {
@@ -106,7 +107,7 @@ const GifCompressor: React.FC = () => {
             };
             document.head.appendChild(script);
         } catch (error) {
-            console.error('Failed to compress GIF:', error);
+            errorHandler.error('GIF压缩失败', error, { component: 'GifCompressor', action: 'compress' });
             setIsProcessing(false);
         }
     };

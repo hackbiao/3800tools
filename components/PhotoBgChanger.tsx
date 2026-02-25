@@ -62,7 +62,7 @@ const PhotoBgChanger: React.FC = () => {
             segmenterRef.current = segmenter;
             setLoadingProgress(100);
         } catch (err) {
-            console.error('Failed to load model:', err);
+            errorHandler.error('模型加载失败', err, { component: 'PhotoBgChanger', action: 'load-model' });
             setError('AI模型加载失败，请刷新页面重试');
         } finally {
             setIsProcessing(false);

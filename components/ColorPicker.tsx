@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 interface RGB {
     r: number;
@@ -132,7 +133,7 @@ const ColorPicker: React.FC = () => {
             setCopied(type);
             setTimeout(() => setCopied(''), 2000);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

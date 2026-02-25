@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 interface ParsedURL {
     protocol: string;
@@ -61,7 +62,7 @@ const URLParser: React.FC = () => {
         try {
             await navigator.clipboard.writeText(text);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

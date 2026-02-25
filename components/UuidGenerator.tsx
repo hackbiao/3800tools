@@ -49,7 +49,7 @@ const UuidGenerator: React.FC = () => {
         try {
             await navigator.clipboard.writeText(uuids.join('\n'));
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 
@@ -57,7 +57,7 @@ const UuidGenerator: React.FC = () => {
         try {
             await navigator.clipboard.writeText(uuid);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

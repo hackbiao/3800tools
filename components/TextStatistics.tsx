@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 interface TextStats {
     characters: number;
@@ -43,7 +44,7 @@ const TextStatistics: React.FC = () => {
         try {
             await navigator.clipboard.writeText(str);
         } catch (err) {
-            console.error('复制失败:', err);
+            errorHandler.error('复制失败', err, { component: '"$(basename $file .tsx)"', action: 'copy' });
         }
     };
 

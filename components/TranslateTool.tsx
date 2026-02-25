@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { translateText } from '../services/translateService';
+import { errorHandler } from '../utils/errorHandler';
 
 type Language = 'auto' | 'zh' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es';
 
@@ -52,7 +53,7 @@ const TranslateTool: React.FC = () => {
             setTranslatedText(result.translatedText);
             setDetectedLangName(result.detectedLang);
         } catch (err) {
-            console.error(err);
+            errorHandler.error('翻译失败', err, { component: 'TranslateTool', action: 'translate' });
             setError(err instanceof Error ? err.message : "翻译失败,请稍后重试。");
             setTranslatedText('');
         } finally {
@@ -98,7 +99,7 @@ const TranslateTool: React.FC = () => {
                 setIsNotificationFadingOut(false);
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy text: ', err);
+            errorHandler.error('复制文本失败', err, { component: '"$(basename $file .tsx)"', action: 'copy-text' });
             setError("复制文本失败。");
         });
     }, [translatedText]);
