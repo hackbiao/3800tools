@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { errorHandler } from '../utils/errorHandler';
 
 interface Props {
     children: ReactNode;
@@ -21,8 +22,14 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        // 可以在这里发送错误到日志服务
-        console.error('ErrorBoundary caught an error:', error, errorInfo);
+        errorHandler.error('组件边界错误', error, {
+            component: 'ErrorBoundary',
+            action: 'component-did-catch',
+            errorInfo: {
+                componentStack: errorInfo.componentStack,
+                errorBoundary: this.toString()
+            }
+        });
     }
 
     render() {

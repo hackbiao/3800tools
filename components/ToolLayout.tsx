@@ -13,6 +13,7 @@ import ExampleIO from './seo/ExampleIO';
 import UsageSteps from './seo/UsageSteps';
 import FAQSection from './seo/FAQSection';
 import SEOEnhancement from './seo/SEOEnhancement';
+import ToolWrapper from './ToolWrapper';
 
 interface ToolLayoutProps {
     children: React.ReactNode;
@@ -83,7 +84,9 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({ children }) => {
                 )}
 
                 <div className="w-full">
-                    {children}
+                    <ToolWrapper toolName={tool?.name || 'Unknown'}>
+                        {children}
+                    </ToolWrapper>
                 </div>
 
                 {seoContent && (
