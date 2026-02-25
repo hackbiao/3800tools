@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { errorHandler } from '../utils/errorHandler';
+import { isValidUrl, sanitizeInput } from '../utils/xssProtection';
 
 interface ParsedURL {
     protocol: string;
@@ -23,9 +24,15 @@ const URLParser: React.FC = () => {
         setError('');
         setParsedURL(null);
 
-        let urlToParse = inputURL.trim();
+        let urlToParse = sanitizeInput(inputURL.trim(), 2048);
         if (!urlToParse) {
             setError('请输入URL');
+            return;
+        }
+
+        // 验证URL安全性
+        if (!isValidUrl(urlToParse)) {
+            setError('请输入有效的HTTP/HTTPS URL');
             return;
         }
 

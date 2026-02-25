@@ -1,4 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { errorHandler } from '../utils/errorHandler';
+import { sanitizeInput } from '../utils/xssProtection';
 
 const TextFormatterTool: React.FC = () => {
     const [inputText, setInputText] = useState<string>('');
@@ -15,8 +17,11 @@ const TextFormatterTool: React.FC = () => {
             return;
         }
 
+        // 清理用户输入
+        const sanitizedText = sanitizeInput(text, 50000); // 限制50KB文本
+
         // 移除所有换行符、制表符和多余空格
-        let result = text;
+        let result = sanitizedText;
 
         // 移除所有换行符
         result = result.replace(/[\r\n]+/g, '');
@@ -66,7 +71,7 @@ const TextFormatterTool: React.FC = () => {
                 setIsNotificationFadingOut(false);
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy text: ', err);
+            errorHandler.error('复制文本失败', err, { component: '"$(basename $file .tsx)"', action: 'copy-text' });
         });
     }, [formattedText]);
 
