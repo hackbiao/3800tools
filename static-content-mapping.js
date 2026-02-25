@@ -237,9 +237,9 @@ const toolSEOConfig = {
         description: '免费在线颜色转换色板取色工具',
         keyword: '颜色转换色板取色RGBHEXHSL颜色选器调色板',
         experience: '设计师实用工具，支持取色、配色、调色，适合网页和UI设计使用。',
-        pros: '实时取色功能配方案调色板转换种颜色代码支持格式代码复制',
-        cons: '取色需手动色盲友好度有限配方案需专业知识',
-        recommendation: '适合设计师、前端开发者、UI设计师使用'
+        pros: '实时取色功能|配色方案|调色板|转换多种颜色代码|支持格式|代码复制',
+        cons: '取色需手动|色盲友好度有限|配色方案需专业知识',
+        recommendation: '适合设计师|前端开发者|UI设计师使用'
     },
     
     'id-card-parser': {
@@ -247,19 +247,19 @@ const toolSEOConfig = {
         description: '免费在线身份证号码解析工具，解析获取出生日期、性别、籍贯信息',
         keyword: '身份证解析身份证查询真伪身份证信息身份证校验',
         experience: '准确解析身份证编码信息，帮助验证身份证真伪合法性。',
-        pros: '信息解读准地区码数据库校验功能隐私保护',
-        cons: '新身份证验证需更新无法验证真伪',
-        recommendation: '适合人资源核、身份验证等合场使用'
+        pros: '信息解读准确|地区码数据库|校验功能|隐私保护',
+        cons: '新身份证验证需更新|无法验证真伪',
+        recommendation: '适合人力资源|身份验证等场合使用'
     },
     
     'unit-converter': {
         title: '单位换算器 - 长度重量温度',
         description: '免费在线单位转换工具',
         keyword: '单位换算长度换重量换温度换面积换数据储换算',
-        experience: '换算准确率日常生活、学习工作转换需求。',
-        pros: '支持单位类实时转换结果准界面清使无需注册',
-        cons: '专业需手单位支持有限历史录功能',
-        recommendation: '适学生、工程日常转换需求使用'
+        experience: '换算准确率高，满足日常生活、学习工作转换需求。',
+        pros: '支持单位类全|实时转换|结果准确|界面清晰|使用简单|无需注册',
+        cons: '专业单位需手动|支持有限|无历史记录功能',
+        recommendation: '适合学生|工程师|日常转换需求使用'
     },
     
     'hash-calculator': {
@@ -267,9 +267,9 @@ const toolSEOConfig = {
         description: '免费在线Hash计算工具，计算MD5、SHA-1、SHA-256、SHA-512等哈希值',
         keyword: 'Hash计算,MD5计算,SHA-256哈希值文件校验,加密哈希',
         experience: '文件校验必备工具，支持文件上传和文本输入，计算速度快',
-        pros: '支持主流算法文件文本支持批量处理计算准本地安全',
-        cons: '不支持解密仅支持验大文件处理限',
-        recommendation: '适合开发者、IT管理员、用户验证文件完整性'
+        pros: '支持主流算法|文件文本支持|批量处理|计算准确|本地安全',
+        cons: '不支持解密|仅支持验证|大文件处理有限',
+        recommendation: '适合开发者|IT管理员|用户验证文件完整性'
     },
     
     'regex-tester': {
@@ -302,14 +302,14 @@ const toolSEOConfig = {
         recommendation: '适需保护敏感信息开发者和普通用户使用'
     },
     
-    'cron-parser': {
+'cron-parser': {
         title: 'Cron表达式解析器 - 定时任务',
         description: '免费在线Cron表达式解析工具，解析Linux定时任务表达式',
         keyword: 'Cron表达式,Cron解析,定时任务,Linux定时,计划任务表达式',
         experience: '运维必备工具，解析准确，支持中文说明，适合定时任务调试。',
-        pros: '解析准确详细执行时间说明支持中文界面友好',
-        cons: '语法支持有限复杂表达式需专业',
-        recommendation: '适合系统管理员、运维工程师、开发者使用'
+        pros: '解析准确|详细执行时间|说明支持中文|界面友好',
+        cons: '语法支持有限|复杂表达式需专业',
+        recommendation: '适合系统管理员|运维工程师|开发者使用'
     },
     
     'stopwatch': {
@@ -317,9 +317,9 @@ const toolSEOConfig = {
         description: '免费在线秒表计时器，精确到毫秒，支持计次功能',
         keyword: '秒表,计时器,在线秒表,精确计时,体育计时',
         experience: '计时精确，适合运动、学习、会议等场景，界面简洁易用。',
-        pros: '毫秒级精度计次功能声音提醒界面简洁',
-        cons: '无数据历史后台运行限制',
-        recommendation: '适合运动训练、学习计时、会议管理使用'
+        pros: '毫秒级精度|计次功能|声音提醒|界面简洁',
+        cons: '无数据历史|后台运行限制',
+        recommendation: '适合运动训练|学习计时|会议管理使用'
     },
     
     'countdown-timer': {
@@ -327,9 +327,9 @@ const toolSEOConfig = {
         description: '免费在线倒计时器，设置自定义时间，声音提醒',
         keyword: '倒计时器,在线倒计时,时间提醒,定时器,番茄钟',
         experience: '时间管理工具，适合工作学习专注，提醒准确，界面友好。',
-        pros: '自定义时间声音提醒界面美观专注模式',
-        cons: '无多任务同步历史记录有限',
-        recommendation: '适合番茄工作法、运动训练、活动倒计时'
+        pros: '自定义时间|声音提醒|界面美观|专注模式',
+        cons: '无多任务同步|历史记录有限',
+        recommendation: '适合番茄工作法|运动训练|活动倒计时'
     },
     
     'world-clock': {
@@ -337,9 +337,9 @@ const toolSEOConfig = {
         description: '免费在线世界时钟，查看全球各时区当前时间',
         keyword: '世界时钟,时区转换,全球时间,国际时间,时区查询',
         experience: '商务和旅行必备工具，时区显示准确，支持多城市同步查看。',
-        pros: '多时区同显时间准确城市丰富夏令时自动',
-        cons: '夏令时更新延网络依赖需手',
-        recommendation: '适合跨国企业、外贸人员、旅行者使用'
+        pros: '多时区同显|时间准确|城市丰富|夏令时自动',
+        cons: '夏令时更新延迟|网络依赖|需手动',
+        recommendation: '适合跨国企业|外贸人员|旅行者使用'
     },
     
     'number-generator': {
@@ -347,9 +347,9 @@ const toolSEOConfig = {
         description: '免费在线随机数生成工具，生成指定范围的随机数字',
         keyword: '随机数生成器,伪随机数,批量随机,数字生成器,随机序列',
         experience: '科学研究和游戏测试工具，生成随机性强，批量生成效率高。',
-        pros: '参数灵活批量生成随机性强本地安分布均匀',
-        cons: '非真随机仅限数字无历史记录',
-        recommendation: '适合科研、游戏、抽奖、测试数据生成'
+        pros: '参数灵活|批量生成|随机性强|本地安全|分布均匀',
+        cons: '非真随机|仅限数字|无历史记录',
+        recommendation: '适合科研|游戏|抽奖|测试数据生成'
     },
     
     'encoding-converter': {
@@ -357,9 +357,9 @@ const toolSEOConfig = {
         description: '免费在线文本编码转换工具，支持UTF-8、GBK、Big5等编码互转',
         keyword: '编码转换,UTF-8转换,GBK编码,Big5编码,字符编码转换',
         experience: '解决乱码问题工具，转换准确，支持多编码，适合编程和文档处理。',
-        pros: '支持主流编码乱码检测批量转换结果准确',
-        cons: '罕见编码支持有限编码丢失风险',
-        recommendation: '适合程序员、网站开发者、文档处理使用'
+        pros: '支持主流编码|乱码检测|批量转换|结果准确',
+        cons: '罕见编码支持有限|编码丢失风险',
+        recommendation: '适合程序员|网站开发者|文档处理使用'
     },
     
     // 文本类别
@@ -744,9 +744,9 @@ const toolSEOConfig = {
         description: '免费在线词云生成工具，根据文本内容生成可视化词云图',
         keyword: '词云生成,文字云,词云制作,文本可视化,云图',
         experience: '数据可视化工具，效果美观，自定义丰富，适合数据展示。',
-        pros: '可视化效果强自定义丰富字体颜色多样本地生成',
-        cons: '布局控制有限文本处理复杂大文本处理慢',
-        recommendation: '适合数据展示,报告分析,教育演示'
+        pros: '可视化效果强|自定义丰富|字体颜色多样|本地生成',
+        cons: '布局控制有限|文本处理复杂|大文本处理慢',
+        recommendation: '适合数据展示|报告分析|教育演示'
     },
     
     'grid-image-cutter': {
@@ -785,9 +785,9 @@ const toolSEOConfig = {
         description: '免费在线简历制作工具，多套精美模板，快速生成简历',
         keyword: '简历生成器,在线简历,简历制作,简历模板,免费简历',
         experience: '求职工具，模板专业，编辑简单，快速制作专业简历。',
-        pos: '模板丰富专业设计编辑简单多格式导出一键生成',  
-        cons: '自定义有限模板依赖高级功能付费',
-        recommendation: '适合求职者、毕业生、职场人士'
+        pros: '模板丰富|专业设计|编辑简单|多格式导出|一键生成',  
+        cons: '自定义有限|模板依赖|高级功能付费',
+        recommendation: '适合求职者|毕业生|职场人士'
     },
     
     'mbti-test': {
@@ -795,9 +795,9 @@ const toolSEOConfig = {
         description: '免费在线MBTI人格测试，专业性格测试问卷，分析性格类型',
         keyword: 'MBTI测试,人格测试,性格测试,MBTI分析,性格类型',
         experience: '心理测试工具，题目专业，结果详细，了解自己性格类型。',
-        pos: '题目专业分析详细类型解读结果准确本地安',
-        cons: '仅供参考专业咨询更准确题数固化定期更新',
-        recommendation: '适合个人认知、团队建设、职业规划'  
+        pros: '题目专业|分析详细|类型解读|结果准确|本地安全',
+        cons: '仅供参考|专业咨询更准确|题数固化|定期更新',
+        recommendation: '适合个人认知|团队建设|职业规划'  
     }
 };
 
