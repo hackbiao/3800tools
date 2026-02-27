@@ -48,12 +48,39 @@ export default defineConfig(({ mode }) => {
                     manualChunks: {
                         'react-vendor': ['react', 'react-dom', 'react-router-dom'],
                         'pdf-vendor': ['pdfjs-dist', 'pptxgenjs'],
+                        'crypto-vendor': ['crypto-js'],
+                        'qrcode-vendor': ['qrcode'],
+                        'gif-vendor': ['gifuct-js', 'gif.js'],
+                        'editor-vendor': ['mammoth'],
                     },
+                    assetFileNames: (assetInfo) => {
+                        const info = assetInfo.name.split('.');
+                        const extType = info[info.length - 1];
+                        if (/png|jpe?g|svg|gif|ico|webp/i.test(extType)) {
+                            return 'assets/images/[name]-[hash][extname]';
+                        }
+                        if (/woff2?|ttf|otf/i.test(extType)) {
+                            return 'assets/fonts/[name]-[hash][extname]';
+                        }
+                        return 'assets/[name]-[hash][extname]';
+                    },
+                    chunkFileNames: 'assets/js/[name]-[hash].js',
+                    entryFileNames: 'assets/js/[name]-[hash].js',
                 },
             },
             cssCodeSplit: true,
             sourcemap: mode !== 'production',
-            chunkSizeWarningLimit: 1000,
+            chunkSizeWarningLimit: 1500,
+            minify: 'terser',
+            terserOptions: {
+                compress: {
+                    drop_console: true,
+                    drop_debugger: true,
+                },
+            },
+        },
+        optimizeDeps: {
+            include: ['react', 'react-dom', 'react-router-dom'],
         },
     };
 });
