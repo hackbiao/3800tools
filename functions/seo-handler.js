@@ -1,14 +1,32 @@
 // EdgeOne Pages 边缘函数 - SEO 动态渲染
 // 为每个工具页面注入 SSR meta 标签和预渲染内容
-// 注意：这是适配 EdgeOne 标准的版本
+// 版本：适配 EdgeOne 标准，修复 545 错误
 
 export async function onRequest(context) {
   try {
     const { request } = context;
     const url = new URL(request.url);
-    const path = url.pathname.replace(/\/$/, ''); // 移除末尾斜杠
+    const path = url.pathname;
 
-    // 工具 SEO 配置（精简版，避免超过 EdgeOne 限制）
+    // ===== 第1步：直接排除静态资源请求 =====
+    const staticExtensions = /\.(ico|png|jpg|jpeg|gif|webp|svg|css|js|woff|woff2|ttf|eot|otf|json|xml|txt|pdf|zip|gz|br)$/i;
+    const staticPaths = /^\/(assets|libs|logo\.)/;
+
+    if (staticExtensions.test(path) || staticPaths.test(path)) {
+      // 静态资源直接返回，不处理
+      return fetch(request);
+    }
+
+    // ===== 第2步：标准化路径 =====
+    // 移除末尾斜杠，统一处理
+    let normalizedPath = path.replace(/\/$/, '');
+
+    // 如果路径为空，说明是首页
+    if (normalizedPath === '') {
+      normalizedPath = '/';
+    }
+
+    // ===== 第3步：工具 SEO 配置 =====
     const seoConfig = {
       '/': {
         title: '三八零零 - 在线免费工具箱 | 80+ 实用工具大全',
@@ -39,6 +57,12 @@ export async function onRequest(context) {
         description: '在线代码语法高亮工具，支持Python、JavaScript、Java、C++等多种编程语言，一键复制高亮代码。',
         keywords: '代码高亮,语法高亮,代码美化,程序员工具,在线代码,代码显示,编程工具',
         h1: '代码高亮工具'
+      },
+      '/text-formatter': {
+        title: '文本格式化 - 大小写转换/去空格/排序 | 三八零零',
+        description: '免费在线文本格式化工具，支持大小写转换、去除空格、字数统计、文本排序等多种文本处理功能。',
+        keywords: '文本格式化,大小写转换,去空格,字数统计,文本处理,在线文本工具,文本转换',
+        h1: '文本格式化工具'
       },
       '/mortgage-calculator': {
         title: '房贷计算器 - 等额本息/本金精确计算 | 三八零零',
@@ -552,10 +576,15 @@ export async function onRequest(context) {
       }
     };
 
-    // 检查是否是工具页面
-    const seo = seoConfig[path] || seoConfig['/'];
+    // 检查是否是已配置的工具页面
+    const seo = seoConfig[normalizedPath];
 
-    // 如果是爬虫请求，注入 SSR meta 标签
+    // 如果不是已配置的页面，直接返回原始请求（不处理）
+    if (!seo) {
+      return fetch(request);
+    }
+
+    // ===== 第4步：检查是否是爬虫请求 =====
     const userAgent = request.headers.get('User-Agent') || '';
     const crawlers = [
       'googlebot', 'bingbot', 'baiduspider', 'yandex', 'duckduckbot',
@@ -566,42 +595,31 @@ export async function onRequest(context) {
 
     const isCrawler = crawlers.some(c => userAgent.toLowerCase().includes(c.toLowerCase()));
 
-    // 获取原始 index.html - 使用 try-catch 防止 fetch 失败
+    // 如果不是爬虫，直接返回原始请求
+    if (!isCrawler) {
+      return fetch(request);
+    }
+
+    // ===== 第5步：获取原始 HTML =====
     let html;
     try {
-      const originResponse = await fetch(`${url.origin}/index.html`, {
-        headers: {
-          'User-Agent': 'EdgeOne-SEO-Function/1.0'
-        }
-      });
+      const originResponse = await fetch(`${url.origin}/index.html`);
 
       if (!originResponse.ok) {
-        // 如果获取失败，直接返回原始响应
-        return originResponse;
+        // 如果获取失败，直接透传原始请求
+        return fetch(request);
       }
 
       html = await originResponse.text();
     } catch (e) {
-      // fetch 失败，返回 500 错误
-      return new Response(`Error fetching origin: ${e.message}`, {
-        status: 500,
-        headers: { 'Content-Type': 'text/plain' }
-      });
+      // fetch 失败，透传原始请求
+      return fetch(request);
     }
 
-    // 如果不是爬虫，直接返回原始 HTML
-    if (!isCrawler) {
-      return new Response(html, {
-        headers: {
-          'Content-Type': 'text/html;charset=UTF-8'
-        }
-      });
-    }
+    // ===== 第6步：注入 SEO 标签 =====
+    const currentUrl = `https://tools.3800ai.com${normalizedPath === '/' ? '' : normalizedPath}/`;
 
-    // 以下是爬虫的 SEO 注入逻辑
-    const currentUrl = `https://tools.3800ai.com${path === '/' ? '' : path}/`;
-
-    // 替换所有 SEO 相关标签（使用占位符方式更精确）
+    // 替换所有 SEO 相关标签
     html = html.replace(/<title>.*?<\/title>/i, `<title>${seo.title}</title>`);
     html = html.replace(/<meta\s+name="title"\s+content="[^"]*"\s*\/?>/i, `<meta name="title" content="${seo.title}">`);
     html = html.replace(/<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i, `<meta name="description" content="${seo.description}">`);
@@ -624,7 +642,7 @@ export async function onRequest(context) {
     // Canonical
     html = html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${currentUrl}">`);
 
-    // 生成工具特定的 JSON-LD
+    // ===== 第7步：注入 JSON-LD 结构化数据 =====
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "WebApplication",
@@ -646,7 +664,6 @@ export async function onRequest(context) {
       }
     };
 
-    // 替换或添加 JSON-LD
     const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(jsonLd, null, 2)}\n</script>`;
     if (html.includes('application/ld+json')) {
       html = html.replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i, jsonLdScript);
@@ -654,7 +671,7 @@ export async function onRequest(context) {
       html = html.replace('</head>', `${jsonLdScript}\n</head>`);
     }
 
-    // 注入 SSR 内容到 root div 内（爬虫可见但用户会被 React 覆盖）
+    // ===== 第8步：注入 SSR 内容（供爬虫索引） =====
     const ssrContent = `
 <div data-ssr="true" style="position:absolute;left:-9999px;visibility:hidden;" aria-hidden="true">
   <h1>${seo.h1} - 三八零零在线工具</h1>
@@ -667,9 +684,10 @@ export async function onRequest(context) {
 
     html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
 
-    // 添加爬虫标识注释
+    // 添加爬虫标识
     html = html.replace('<html', '<html data-rendered-by="edgeone-seo" ');
 
+    // ===== 第9步：返回注入后的 HTML =====
     return new Response(html, {
       headers: {
         'Content-Type': 'text/html;charset=UTF-8',
@@ -680,12 +698,8 @@ export async function onRequest(context) {
     });
 
   } catch (error) {
-    // 全局错误处理
-    return new Response(`Edge Function Error: ${error.message}`, {
-      status: 500,
-      headers: {
-        'Content-Type': 'text/plain;charset=UTF-8'
-      }
-    });
+    // ===== 全局错误处理 =====
+    // 发生任何错误时，透传原始请求，确保网站正常访问
+    return fetch(context.request);
   }
 }
