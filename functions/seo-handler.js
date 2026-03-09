@@ -638,11 +638,11 @@ async function handleRequest(request) {
     // 删除旧的 property="twitter:*" 格式标签（避免重复）
     html = html.replace(/<meta\s+property="twitter:[^"]*"\s+content="[^"]*"\s*\/?>\s*/gi, '');
 
-    // JSON-LD
+    // JSON-LD - WebApplication 结构化数据
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": seo.h1,
+      "name": seo.title,
       "description": seo.description,
       "url": currentUrl,
       "applicationCategory": "ProductivityApplication",
@@ -655,12 +655,36 @@ async function handleRequest(request) {
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.8",
-        "ratingCount": "128"
+        "ratingCount": "128",
+        "bestRating": "5",
+        "worstRating": "1"
       }
     };
 
-    const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
-    html = html.replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i, jsonLdScript);
+    // 面包屑结构化数据
+    const breadcrumbJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://tools.3800ai.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": seo.h1,
+          "item": currentUrl
+        }
+      ]
+    };
+
+    // 插入结构化数据到 </head> 前
+    const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n`;
+    const breadcrumbScript = `<script type="application/ld+json">${JSON.stringify(breadcrumbJsonLd)}</script>\n`;
+    html = html.replace('</head>', jsonLdScript + breadcrumbScript + '</head>');
 
     // 删除 SEO 占位符 meta 标签 ({{TITLE}}, {{DESCRIPTION}} 等)
     html = html.replace(/<meta\s+name="seo:title"\s+content="\{\{TITLE\}\}"\s*\/?>\s*/i, '');
@@ -668,7 +692,10 @@ async function handleRequest(request) {
     html = html.replace(/<meta\s+name="seo:keywords"\s+content="\{\{KEYWORDS\}\}"\s*\/?>\s*/i, '');
     html = html.replace(/<meta\s+name="seo:canonical"\s+content="\{\{CANONICAL\}\}"\s*\/?>\s*/i, '');
 
-    // SSR内容
+    // 删除页面上的通用H1标签，解决双重H1问题
+    html = html.replace(/<h1[^>]*>AI工具导航知识门户<\/h1>/i, '');
+
+    // SSR内容 - 添加页面特定的H1（隐藏，供爬虫识别）
     const ssrContent = `<div data-ssr="true" style="display:none"><h1>${seo.h1}</h1><p>${seo.description}</p></div>`;
     html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
 
