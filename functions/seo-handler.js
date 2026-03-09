@@ -28,6 +28,12 @@ const seoConfig = {
     keywords: 'JSON格式化,JSON校验,JSON压缩,JSON解析,JSON在线工具,开发者工具,JSON编辑器',
     h1: 'JSON 格式化工具'
   },
+  '/xml-formatter': {
+    title: 'XML 格式化 - 在线美化/校验/压缩工具 | 三八零零',
+    description: '免费在线XML格式化工具，支持XML数据格式化、校验、压缩，一键美化XML代码。',
+    keywords: 'XML格式化,XML校验,XML压缩,XML解析,XML在线工具,XML编辑器',
+    h1: 'XML 格式化工具'
+  },
   '/code-highlight': {
     title: '代码高亮 - 在线语法高亮/美化工具 | 三八零零',
     description: '在线代码语法高亮工具，支持Python、JavaScript、Java、C++等多种编程语言，一键复制高亮代码。',
@@ -411,6 +417,12 @@ const seoConfig = {
     description: '免费在线多图拼接工具，将多张图片自由拼接成长图，支持横向纵向拼接，自定义布局。',
     keywords: '图片拼接,长图制作,拼图,多图拼接,在线拼图,图片合成,长图生成',
     h1: '多图拼接工具'
+  },
+  '/image-editor': {
+    title: '图片快速编辑 - 在线裁剪/旋转/调整大小 | 三八零零',
+    description: '免费在线图片编辑工具，支持图片裁剪、旋转、调整大小、调整亮度对比度，无需下载软件。',
+    keywords: '图片编辑,在线P图,图片裁剪,图片旋转,在线修图,图片处理',
+    h1: '图片快速编辑工具'
   },
   '/image-round-corner': {
     title: '图片圆角 - 圆角图片生成处理 | 三八零零',
