@@ -613,8 +613,9 @@ async function handleRequest(request) {
     html = html.replace(/<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i, `<meta name="description" content="${seo.description}">`);
     html = html.replace(/<meta\s+name="keywords"\s+content="[^"]*"\s*\/?>/i, `<meta name="keywords" content="${seo.keywords}">`);
 
-    // 修复 canonical
-    html = html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${currentUrl}">`);
+    // 修复 canonical - 删除所有现存的 canonical 标签，然后插入正确的
+    html = html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>\s*/gi, '');
+    html = html.replace('</head>', `<link rel="canonical" href="${currentUrl}">\n</head>`);
 
     // Open Graph - 修复 og:url
     html = html.replace(/<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:title" content="${seo.title}">`);
