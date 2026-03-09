@@ -635,6 +635,9 @@ async function handleRequest(request) {
       html = html.replace(/<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:description" content="${seo.description}">`);
     }
 
+    // 删除旧的 property="twitter:*" 格式标签（避免重复）
+    html = html.replace(/<meta\s+property="twitter:[^"]*"\s+content="[^"]*"\s*\/?>\s*/gi, '');
+
     // JSON-LD
     const jsonLd = {
       "@context": "https://schema.org",
