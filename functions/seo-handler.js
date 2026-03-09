@@ -564,7 +564,7 @@ const crawlers = [
 const staticExtensions = /\.(ico|png|jpg|jpeg|gif|webp|svg|css|js|woff|woff2|ttf|eot|otf|json|xml|txt|pdf|zip|gz|br|map)$/i;
 
 // 主处理函数
-async function handleRequest(request, event) {
+async function handleRequest(request) {
   const url = new URL(request.url);
   const path = url.pathname;
 
@@ -591,24 +591,6 @@ async function handleRequest(request, event) {
 
   if (!isCrawler) {
     return fetch(request);
-  }
-
-  // 5. 缓存检查 - 使用 EdgeOne 边缘缓存
-  const cacheKey = new URL(request.url);
-  const cache = caches.default;
-
-  // 尝试从缓存获取
-  let cachedResponse = await cache.match(cacheKey);
-  if (cachedResponse) {
-    // 添加缓存命中标记
-    const newHeaders = new Headers(cachedResponse.headers);
-    newHeaders.set('X-Cache-Status', 'HIT');
-    newHeaders.set('X-Edge-SEO', 'cached');
-    return new Response(cachedResponse.body, {
-      status: cachedResponse.status,
-      statusText: cachedResponse.statusText,
-      headers: newHeaders
-    });
   }
 
   // 5. 获取HTML并注入SEO
@@ -694,21 +676,15 @@ async function handleRequest(request, event) {
     html = html.replace('<div id="root"></div>', `${ssrContent}\n<div id="root"></div>`);
 
     // 构建响应
-    const response = new Response(html, {
+    return new Response(html, {
       headers: {
         'Content-Type': 'text/html;charset=UTF-8',
         'Cache-Control': 'public, max-age=3600, s-maxage=3600',
         'X-Robots-Tag': 'index, follow',
         'X-Edge-SEO': 'enabled',
-        'X-Cache-Status': 'MISS',
         'Vary': 'User-Agent'
       }
     });
-
-    // 存入边缘缓存（克隆响应，因为 Response 只能读取一次）
-    event.waitUntil(cache.put(cacheKey, response.clone()));
-
-    return response;
   } catch (e) {
     return fetch(request);
   }
@@ -716,5 +692,5 @@ async function handleRequest(request, event) {
 
 // EdgeOne 标准入口
 addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request, event));
+  event.respondWith(handleRequest(event.request));
 });
