@@ -605,13 +605,34 @@ async function handleRequest(request) {
 
     // 替换SEO标签
     html = html.replace(/<title>.*?<\/title>/i, `<title>${seo.title}</title>`);
+
+    // 修复 meta name="title"
+    html = html.replace(/<meta\s+name="title"\s+content="[^"]*"\s*\/?>/i, `<meta name="title" content="${seo.title}">`);
+
+    // 修复 description 和 keywords
     html = html.replace(/<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i, `<meta name="description" content="${seo.description}">`);
     html = html.replace(/<meta\s+name="keywords"\s+content="[^"]*"\s*\/?>/i, `<meta name="keywords" content="${seo.keywords}">`);
+
+    // 修复 canonical
     html = html.replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${currentUrl}">`);
 
-    // Open Graph
+    // Open Graph - 修复 og:url
     html = html.replace(/<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:title" content="${seo.title}">`);
     html = html.replace(/<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:description" content="${seo.description}">`);
+    html = html.replace(/<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/gi, `<meta property="og:url" content="${currentUrl}">`);
+
+    // 添加/修复 Twitter Card 标签
+    if (!html.includes('name="twitter:title"')) {
+      const twitterTags = `
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${seo.title}">
+<meta name="twitter:description" content="${seo.description}">
+<meta name="twitter:image" content="https://tools.3800ai.com/logo.png">`;
+      html = html.replace('</head>', `${twitterTags}\n</head>`);
+    } else {
+      html = html.replace(/<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:title" content="${seo.title}">`);
+      html = html.replace(/<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:description" content="${seo.description}">`);
+    }
 
     // JSON-LD
     const jsonLd = {
@@ -644,7 +665,10 @@ async function handleRequest(request) {
     return new Response(html, {
       headers: {
         'Content-Type': 'text/html;charset=UTF-8',
-        'Cache-Control': 'public, max-age=3600'
+        'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+        'X-Robots-Tag': 'index, follow',
+        'X-Edge-SEO': 'enabled',
+        'Vary': 'User-Agent'
       }
     });
   } catch (e) {
