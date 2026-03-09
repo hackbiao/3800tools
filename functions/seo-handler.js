@@ -681,10 +681,51 @@ async function handleRequest(request) {
       ]
     };
 
+    // FAQ结构化数据 - 提升搜索结果展示
+    const faqJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `${seo.h1}是免费的吗？`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `是的，三八零零提供的${seo.h1}完全免费，无需注册登录，打开网页即可使用。所有数据在本地处理，保护您的隐私安全。`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `${seo.h1}需要下载安装吗？`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `不需要下载安装，${seo.h1}是在线网页工具，支持电脑浏览器和手机浏览器访问，随时随地使用。`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `${seo.h1}安全吗？数据会上传吗？`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `${seo.h1}采用本地处理技术，您的数据不会上传到服务器，所有操作都在您的浏览器中完成，确保数据安全。`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `${seo.h1}支持手机使用吗？`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `支持手机使用，${seo.h1}采用响应式设计，完美适配iPhone、Android手机和平板电脑。`
+          }
+        }
+      ]
+    };
+
     // 插入结构化数据到 </head> 前
     const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n`;
     const breadcrumbScript = `<script type="application/ld+json">${JSON.stringify(breadcrumbJsonLd)}</script>\n`;
-    html = html.replace('</head>', jsonLdScript + breadcrumbScript + '</head>');
+    const faqScript = `<script type="application/ld+json">${JSON.stringify(faqJsonLd)}</script>\n`;
+    html = html.replace('</head>', jsonLdScript + breadcrumbScript + faqScript + '</head>');
 
     // 删除 SEO 占位符 meta 标签 ({{TITLE}}, {{DESCRIPTION}} 等)
     html = html.replace(/<meta\s+name="seo:title"\s+content="\{\{TITLE\}\}"\s*\/?>\s*/i, '');
