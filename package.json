@@ -10,7 +10,9 @@
     "build:edgeone": "BASE_URL=/ vite build && BASE_URL=/ node generate-static.js",
     "build:pages": "BASE_URL=/ vite build && BASE_URL=/ node generate-static.js",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify:seo": "node verify-seo.js",
+    "sitemap:generate": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@google/genai": "^1.29.1",
