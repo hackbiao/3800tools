@@ -668,18 +668,14 @@ async function handleRequest(request) {
     html = html.replace(/<meta\s+name="seo:keywords"\s+content="\{\{KEYWORDS\}\}"\s*\/?>\s*/i, '');
     html = html.replace(/<meta\s+name="seo:canonical"\s+content="\{\{CANONICAL\}\}"\s*\/?>\s*/i, '');
 
-    // SSR内容 - 替换页面上的通用H1，而不是添加隐藏的H1
-    // 删除页面上的通用H1
-    html = html.replace(/<h1[^>]*>AI工具导航知识门户<\/h1>/i, '');
-    // 在 root 容器前添加页面特定的H1（可见）
-    const ssrContent = `<div data-ssr="true"><h1 style="font-size:24px;font-weight:bold;margin:20px 0;text-align:center;color:#333;">${seo.h1}</h1><p style="text-align:center;color:#666;margin-bottom:20px;">${seo.description}</p></div>`;
-    html = html.replace('<div id="root"></div>', `${ssrContent}\n<div id="root"></div>`);
+    // SSR内容
+    const ssrContent = `<div data-ssr="true" style="display:none"><h1>${seo.h1}</h1><p>${seo.description}</p></div>`;
+    html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
 
-    // 构建响应
     return new Response(html, {
       headers: {
         'Content-Type': 'text/html;charset=UTF-8',
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+        'Cache-Control': 'public, max-age=86400, s-maxage=86400',
         'X-Robots-Tag': 'index, follow',
         'X-Edge-SEO': 'enabled',
         'Vary': 'User-Agent'
