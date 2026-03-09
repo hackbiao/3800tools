@@ -658,6 +658,12 @@ async function handleRequest(request) {
     const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
     html = html.replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i, jsonLdScript);
 
+    // 删除 SEO 占位符 meta 标签 ({{TITLE}}, {{DESCRIPTION}} 等)
+    html = html.replace(/<meta\s+name="seo:title"\s+content="\{\{TITLE\}\}"\s*\/?>\s*/i, '');
+    html = html.replace(/<meta\s+name="seo:description"\s+content="\{\{DESCRIPTION\}\}"\s*\/?>\s*/i, '');
+    html = html.replace(/<meta\s+name="seo:keywords"\s+content="\{\{KEYWORDS\}\}"\s*\/?>\s*/i, '');
+    html = html.replace(/<meta\s+name="seo:canonical"\s+content="\{\{CANONICAL\}\}"\s*\/?>\s*/i, '');
+
     // SSR内容
     const ssrContent = `<div data-ssr="true" style="display:none"><h1>${seo.h1}</h1><p>${seo.description}</p></div>`;
     html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
