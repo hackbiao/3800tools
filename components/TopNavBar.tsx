@@ -18,6 +18,7 @@ const TopNavBar: React.FC = () => {
     const searchInputRef = useRef<HTMLInputElement>(null);
     const searchRef = useRef<HTMLDivElement>(null);
     const categoryRefs = useRef<Record<string, HTMLAnchorElement>>({});
+    const closeDropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -51,6 +52,11 @@ const TopNavBar: React.FC = () => {
     }, [searchQuery]);
 
     const handleCategoryHover = (categoryId: string, element: HTMLAnchorElement | null) => {
+        // 取消之前的关闭计时器
+        if (closeDropdownTimeoutRef.current) {
+            clearTimeout(closeDropdownTimeoutRef.current);
+            closeDropdownTimeoutRef.current = null;
+        }
         if (element) {
             const rect = element.getBoundingClientRect();
             setDropdownPosition({
@@ -62,6 +68,22 @@ const TopNavBar: React.FC = () => {
     };
 
     const handleCategoryLeave = () => {
+        // 延迟关闭下拉菜单，给用户时间移动到菜单上
+        closeDropdownTimeoutRef.current = setTimeout(() => {
+            setActiveDropdown(null);
+        }, 150);
+    };
+
+    const handleDropdownEnter = () => {
+        // 鼠标进入下拉菜单，取消关闭计时器
+        if (closeDropdownTimeoutRef.current) {
+            clearTimeout(closeDropdownTimeoutRef.current);
+            closeDropdownTimeoutRef.current = null;
+        }
+    };
+
+    const handleDropdownLeave = () => {
+        // 鼠标离开下拉菜单，关闭它
         setActiveDropdown(null);
     };
 
@@ -233,14 +255,14 @@ const TopNavBar: React.FC = () => {
 
             {/* 下拉菜单 - fixed定位避免被裁剪 */}
             {activeDropdown && (
-                <div 
+                <div
                     className="fixed z-[100000] pointer-events-auto"
-                    style={{ 
-                        top: dropdownPosition.top, 
-                        left: dropdownPosition.left 
+                    style={{
+                        top: dropdownPosition.top,
+                        left: dropdownPosition.left
                     }}
-                    onMouseEnter={() => setActiveDropdown(activeDropdown)}
-                    onMouseLeave={handleCategoryLeave}
+                    onMouseEnter={handleDropdownEnter}
+                    onMouseLeave={handleDropdownLeave}
                 >
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 w-56 py-2 max-h-80 overflow-y-auto">
                         {TOOL_CATEGORIES.find(c => c.id === activeDropdown)?.tools.map((tool) => (
